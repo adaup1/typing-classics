@@ -2,6 +2,7 @@
 
 import { useCallback } from "react";
 import { actionTypes, countType } from "./context/types.d";
+import { CharacterRenderer } from "./CharacterRender";
 import {
   withTypingContextProvider,
   useTypingContext,
@@ -26,7 +27,7 @@ const TypingView = () => {
 
   return (
     <>
-      Hi there
+      <CharacterRenderer />
       <div>
         <button onClick={onCountAllChar}>All Characters</button>
         {state.allCharacters}

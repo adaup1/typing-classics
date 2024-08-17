@@ -1,12 +1,9 @@
-import React from "react";
 import TypingView from "./TypingView";
 
-export const Type = () => {
+export default function Type() {
   return (
     <div>
       <TypingView />
     </div>
   );
-};
-
-export default Type;
+}

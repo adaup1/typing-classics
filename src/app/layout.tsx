@@ -6,11 +6,11 @@ export const metadata: Metadata = {
   description: "Type along to your favorite public-domain books!",
 };
 
-const RootLayout = ({
+export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) => {
+}>) {
   return (
     <html lang="en">
       <body className={`${anonymousPro.className} antialiased`}>
@@ -18,6 +18,4 @@ const RootLayout = ({
       </body>
     </html>
   );
-};
-
-export default RootLayout;
+}
