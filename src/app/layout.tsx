@@ -5,12 +5,12 @@ export const metadata: Metadata = {
   title: "Typing Classics",
   description: "Type along to your favorite public-domain books!",
 };
-console.log(anonymousPro);
-export default function RootLayout({
+
+const RootLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
-}>) {
+}>) => {
   return (
     <html lang="en">
       <body className={`${anonymousPro.className} antialiased`}>
@@ -18,4 +18,6 @@ export default function RootLayout({
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;
