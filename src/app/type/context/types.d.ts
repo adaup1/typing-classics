@@ -60,4 +60,5 @@ export const DEFAULT_STATE: TypingState = {
 export interface TypingContextProps {
   state: TypingState;
   dispatch: Dispatch<reducerProps>;
+  countChar: ({ countType, characterCount: number }) => void;
 }
