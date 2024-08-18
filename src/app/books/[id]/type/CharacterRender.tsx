@@ -8,23 +8,22 @@ import React, {
 } from "react";
 import styled from "styled-components";
 import { FixedSizeList } from "react-window";
-import { useDebounce, usePrevious } from "../helpers/hooks";
+import { usePrevious, useDebounce } from "@/app/helpers/hooks";
 import { actionTypes, countType } from "./context/types.d";
 import { useTypingContext } from "./context/TypingContext";
-import { romeoAndJuliet } from "../dummydata/romeoJuliet";
 
 // const text =
-//   "hello there here is some text. I would appreciate it if you typed this text correctly";
-
-const text = romeoAndJuliet.text;
+// "hello there here is some text. I would appreciate it if you typed this text correctly";
 
 interface LetterProps {
   index: number;
   style: any;
   data: any;
+  text: string;
 }
 
 const Letter = ({ index, style, data }: LetterProps) => {
+  const { text } = data;
   return (
     <StyledLetterContainer
       className={index % 2 ? "ListItemOdd" : "ListItemEven"}
@@ -43,7 +42,7 @@ const Letter = ({ index, style, data }: LetterProps) => {
   );
 };
 
-export const CharacterRenderer = () => {
+export const CharacterRenderer = ({ text }: { text: string }) => {
   const { state, dispatch } = useTypingContext();
   const previousInputState = usePrevious(state.input);
 
@@ -65,7 +64,7 @@ export const CharacterRenderer = () => {
         .getElementById(`text-item-${stateLetter.stateIndex}`)
         .scrollIntoView({ behavior: "smooth", inline: "center" });
     }
-  }, [stateLetter.stateIndex]);
+  }, [stateLetter.stateIndex, text.length]);
 
   const onCountAllChar = useCallback(() => {
     dispatch({
@@ -117,7 +116,7 @@ export const CharacterRenderer = () => {
         width={900}
         overscanCount={15}
         style={{ color: "#000000" }}
-        itemData={{ stateLetter }}
+        itemData={{ stateLetter, text }}
         // ref={listRef}
       >
         {Letter}

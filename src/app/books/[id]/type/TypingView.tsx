@@ -8,7 +8,7 @@ import {
   useTypingContext,
 } from "./context/TypingContext";
 
-const TypingView = () => {
+const TypingView = ({ text }: { text: string }) => {
   const { state, dispatch, countChar } = useTypingContext();
 
   const onCountAllChar = useCallback(() => {
@@ -16,18 +16,18 @@ const TypingView = () => {
       countType: countType.allCharacters,
       characterCount: state.correctCharacters + 1,
     });
-  }, []);
+  }, [countChar, state.correctCharacters]);
 
   const onCountCorrectChar = useCallback(() => {
     countChar({
       countType: countType.correctCharacters,
       characterCount: state.correctCharacters + 1,
     });
-  }, []);
+  }, [countChar, state.correctCharacters]);
 
   return (
     <>
-      <CharacterRenderer />
+      <CharacterRenderer text={text} />
       <div>
         <button onClick={onCountAllChar}>All Characters</button>
         {state.allCharacters}
