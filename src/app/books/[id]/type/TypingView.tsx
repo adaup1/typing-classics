@@ -2,7 +2,7 @@
 
 import { useCallback } from "react";
 import { actionTypes, countType } from "./context/types.d";
-import { CharacterRenderer } from "./CharacterRender";
+import { CharacterRenderer } from "./NewCharacterRenderer";
 import {
   withTypingContextProvider,
   useTypingContext,

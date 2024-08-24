@@ -1,13 +1,36 @@
 "use client";
 
 import React, { useRef, useState, useCallback, useLayoutEffect } from "react";
-import { VirtualizedList } from "./VirtualizedList";
+import { FixedSizeList } from "react-window";
+import AutoSizer from "react-virtualized-auto-sizer";
 import isEmpty from "lodash/isEmpty";
+import get from "lodash/get";
 import styled from "styled-components";
 
 interface VirtualizedTextProps {
   text: string;
 }
+
+interface RowProps {
+  index: number;
+  style: React.CSSProperties;
+  data: {
+    lines: string[];
+  };
+}
+
+const Row = ({ data, index, style }: RowProps) => {
+  console.log("lines", data);
+
+  if (!(get(data, "lines") && data.lines.length)) {
+    return <div style={style}></div>;
+  }
+  return (
+    <div style={style} key={data.lines[index]}>
+      {data.lines[index]}
+    </div>
+  );
+};
 
 const VirtualizedText: React.FC<VirtualizedTextProps> = ({
   text,
@@ -92,15 +115,23 @@ const VirtualizedText: React.FC<VirtualizedTextProps> = ({
 
   return (
     <StyledContainer ref={parentRef}>
-      <VirtualizedList
-        totalItems={lines.length}
-        itemHeight={30}
-        windowHeight={500}
-        renderItem={({ index }: { index: number }) => {
-          return <div key={index}>{lines[index]}</div>;
-        }}
-        overscan={10}
-      />
+      <AutoSizer disableHeight>
+        {({ width }) => (
+          <FixedSizeList
+            className="List"
+            height={320}
+            itemCount={lines.length}
+            layout="vertical"
+            overscanCount={20}
+            style={{ color: "#000000" }}
+            itemSize={24}
+            itemData={{ lines }}
+            width={width}
+          >
+            {Row}
+          </FixedSizeList>
+        )}
+      </AutoSizer>
     </StyledContainer>
   );
 };

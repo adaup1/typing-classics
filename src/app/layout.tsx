@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { anonymousPro } from "./ui/fonts";
+import { robotoMono } from "./ui/fonts";
 
 export const metadata: Metadata = {
   title: "Typing Classics",
@@ -13,9 +13,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${anonymousPro.className} antialiased`}>
-        {children}
-      </body>
+      <body className={`${robotoMono.className} antialiased`}>{children}</body>
     </html>
   );
 }
