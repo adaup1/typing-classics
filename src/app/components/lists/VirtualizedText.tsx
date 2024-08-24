@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useState, useCallback, useLayoutEffect } from "react";
-import { FixedSizeList } from "react-window";
+import { FixedSizeList, FixedSizeListProps } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 import isEmpty from "lodash/isEmpty";
 import get from "lodash/get";
@@ -117,7 +117,7 @@ const VirtualizedText: React.FC<VirtualizedTextProps> = ({
     <StyledContainer ref={parentRef}>
       <AutoSizer disableHeight>
         {({ width }) => (
-          <FixedSizeList
+          <StyledFixedSizedList
             className="List"
             height={320}
             itemCount={lines.length}
@@ -129,7 +129,7 @@ const VirtualizedText: React.FC<VirtualizedTextProps> = ({
             width={width}
           >
             {Row}
-          </FixedSizeList>
+          </StyledFixedSizedList>
         )}
       </AutoSizer>
     </StyledContainer>
@@ -141,4 +141,11 @@ export default VirtualizedText;
 const StyledContainer = styled.div`
   white-space: pre-wrap;
   font: inherit;
+  overflow-x: none;
+  overflow-y: hidden;
+`;
+
+const StyledFixedSizedList = styled(FixedSizeList)<FixedSizeListProps>`
+  overflow-x: none;
+  overflow-y: hidden !important;
 `;

@@ -1,29 +1,23 @@
 // @ts-nocheck
 
-import React, {
-  useCallback,
-  useMemo,
-  // useRef,
-  useEffect,
-} from "react";
+import React, { useCallback, useMemo, useEffect } from "react";
 import styled from "styled-components";
-import { FixedSizeList } from "react-window";
+import { VariableSizeGrid as Grid } from "react-window";
+import AutoSizer from "react-virtualized-auto-sizer";
 import { usePrevious, useDebounce } from "@/app/helpers/hooks";
 import { actionTypes, countType } from "./context/types.d";
 import { useTypingContext } from "./context/TypingContext";
 
-// const text =
-// "hello there here is some text. I would appreciate it if you typed this text correctly";
-
 interface LetterProps {
-  index: number;
+  columnIndex: number;
+  rowIndex: number;
   style: any;
   data: any;
-  text: string;
 }
 
-const Letter = ({ index, style, data }: LetterProps) => {
+const Letter = ({ columnIndex, rowIndex, style, data }: LetterProps) => {
   const { text } = data;
+  const index = rowIndex * data.columnCount + columnIndex;
   return (
     <StyledLetterContainer
       className={index % 2 ? "ListItemOdd" : "ListItemEven"}
@@ -32,7 +26,6 @@ const Letter = ({ index, style, data }: LetterProps) => {
       <StyledSpan
         index={index}
         data={data}
-        //@ts-ignore
         text={text}
         id={`text-item-${index}`}
       >
@@ -58,6 +51,7 @@ export const CharacterRenderer = ({ text }: { text: string }) => {
     const letter = state.input[stateIndex] || "";
     return { stateIndex, letter, state: state.input };
   }, [state]);
+
   const handleScroll = useCallback(() => {
     if (stateLetter.stateIndex <= text.length && stateLetter.stateIndex > 0) {
       document
@@ -107,20 +101,25 @@ export const CharacterRenderer = ({ text }: { text: string }) => {
 
   return (
     <>
-      <StyledFixedSizeList
-        className="List"
-        height={32}
-        itemCount={text.length}
-        itemSize={20}
-        layout="horizontal"
-        width={900}
-        overscanCount={15}
-        style={{ color: "#000000" }}
-        itemData={{ stateLetter, text }}
-        // ref={listRef}
-      >
-        {Letter}
-      </StyledFixedSizeList>
+      <AutoSizer>
+        {({ height, width }) => (
+          <StyledGrid
+            columnCount={Math.floor(width / 20)}
+            columnWidth={() => 20}
+            height={height}
+            rowCount={Math.ceil(text.length / Math.floor(width / 20))}
+            rowHeight={() => 32}
+            width={width}
+            itemData={{
+              stateLetter,
+              text,
+              columnCount: Math.floor(width / 20),
+            }}
+          >
+            {Letter}
+          </StyledGrid>
+        )}
+      </AutoSizer>
       <StyledInput
         onChange={handleOnInputChange}
         defaultValue={state.input}
@@ -136,11 +135,10 @@ const StyledLetterContainer = styled.div`
   font-family: monospace;
 `;
 
-const StyledFixedSizeList = styled(FixedSizeList)`
+const StyledGrid = styled(Grid)`
   border: solid black;
   padding: 1rem;
   overflow: hidden !important;
-  display: flex;
 `;
 
 const StyledInput = styled.input`
