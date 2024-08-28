@@ -1,4 +1,4 @@
-// @ts-nocheck
+//@ts-nocheck
 
 import React, { useCallback, useMemo, useEffect } from "react";
 import styled from "styled-components";

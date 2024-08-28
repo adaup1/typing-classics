@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback } from "react";
+import { styled } from "@panda/jsx";
 import { actionTypes, countType } from "./context/types.d";
 import { CharacterRenderer } from "./NewCharacterRenderer";
 import {
@@ -27,7 +28,13 @@ const TypingView = ({ text }: { text: string }) => {
 
   return (
     <>
-      <CharacterRenderer text={text} />
+      <StyledContainer>
+        <StyledSideContainer></StyledSideContainer>
+        <StyledCenterContainer>
+          <CharacterRenderer text={text} />
+        </StyledCenterContainer>
+        <StyledSideContainer></StyledSideContainer>
+      </StyledContainer>
       <div>
         <button onClick={onCountAllChar}>All Characters</button>
         {state.allCharacters}
@@ -41,3 +48,18 @@ const TypingView = ({ text }: { text: string }) => {
 };
 
 export default withTypingContextProvider(TypingView);
+
+const StyledContainer = styled("div", {
+  base: { display: "flex" },
+});
+
+const StyledCenterContainer = styled("div", {
+  base: {
+    width: "50vw",
+    height: "100%",
+  },
+});
+
+const StyledSideContainer = styled("div", {
+  base: { width: "25vw" },
+});

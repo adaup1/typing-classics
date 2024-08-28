@@ -1,12 +1,21 @@
 "use client";
 
-import React, { useRef, useState, useCallback, useLayoutEffect } from "react";
-import { FixedSizeList, FixedSizeListProps } from "react-window";
+import React, {
+  useRef,
+  useState,
+  useCallback,
+  useMemo,
+  useLayoutEffect,
+} from "react";
+import {
+  FixedSizeList,
+  FixedSizeListProps,
+  ListChildComponentProps,
+} from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 import isEmpty from "lodash/isEmpty";
 import get from "lodash/get";
-import styled from "styled-components";
-
+import { styled } from "@panda/jsx";
 interface VirtualizedTextProps {
   text: string;
 }
@@ -19,15 +28,13 @@ interface RowProps {
   };
 }
 
-const Row = ({ data, index, style }: RowProps) => {
+const Row = ({ data, index, style }: ListChildComponentProps) => {
   console.log("lines", data);
-
-  if (!(get(data, "lines") && data.lines.length)) {
-    return <div style={style}></div>;
-  }
+  const { lines } = data;
+  const line = useMemo(() => lines[index], [index, lines]);
   return (
-    <div style={style} key={data.lines[index]}>
-      {data.lines[index]}
+    <div style={style} key={line}>
+      {line}
     </div>
   );
 };
@@ -115,11 +122,11 @@ const VirtualizedText: React.FC<VirtualizedTextProps> = ({
 
   return (
     <StyledContainer ref={parentRef}>
-      <AutoSizer disableHeight>
-        {({ width }) => (
-          <StyledFixedSizedList
+      <AutoSizer>
+        {({ width, height }) => (
+          <FixedSizeList
             className="List"
-            height={320}
+            height={height}
             itemCount={lines.length}
             layout="vertical"
             overscanCount={20}
@@ -129,7 +136,7 @@ const VirtualizedText: React.FC<VirtualizedTextProps> = ({
             width={width}
           >
             {Row}
-          </StyledFixedSizedList>
+          </FixedSizeList>
         )}
       </AutoSizer>
     </StyledContainer>
@@ -138,14 +145,14 @@ const VirtualizedText: React.FC<VirtualizedTextProps> = ({
 
 export default VirtualizedText;
 
-const StyledContainer = styled.div`
-  white-space: pre-wrap;
-  font: inherit;
-  overflow-x: none;
-  overflow-y: hidden;
-`;
-
-const StyledFixedSizedList = styled(FixedSizeList)<FixedSizeListProps>`
-  overflow-x: none;
-  overflow-y: hidden !important;
-`;
+const StyledContainer = styled("div", {
+  base: {
+    whiteSpace: "pre-wrap",
+    font: "inherit",
+    overflowX: "hidden",
+    height: "70vh",
+    "& .List": {
+      scrollbarWidth: "none", // Hide scrollbar for Firefox
+    },
+  },
+});
