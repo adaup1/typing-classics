@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback } from "react";
-import { styled } from "@panda/jsx";
+import { styled } from "css-template-components/client";
 import { actionTypes, countType } from "./context/types.d";
 import { CharacterRenderer } from "./NewCharacterRenderer";
 import {
@@ -49,17 +49,26 @@ const TypingView = ({ text }: { text: string }) => {
 
 export default withTypingContextProvider(TypingView);
 
-const StyledContainer = styled("div", {
-  base: { display: "flex" },
-});
+const StyledContainer = styled(
+  "div",
+  `
+  display: flex;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+`
+);
 
-const StyledCenterContainer = styled("div", {
-  base: {
-    width: "50vw",
-    height: "100%",
-  },
-});
+const StyledCenterContainer = styled(
+  "div",
+  `
+  width: 50vw;
+  height: 100%;
+`
+);
 
-const StyledSideContainer = styled("div", {
-  base: { width: "25vw" },
-});
+const StyledSideContainer = styled(
+  "div",
+  `
+  width: 25vw;
+`
+);

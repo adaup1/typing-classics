@@ -7,21 +7,22 @@ import React, {
   useMemo,
   useLayoutEffect,
 } from "react";
-import {
-  FixedSizeList,
-  FixedSizeListProps,
-  ListChildComponentProps,
-} from "react-window";
+import { FixedSizeList, ListChildComponentProps } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 import isEmpty from "lodash/isEmpty";
 import get from "lodash/get";
-import { styled } from "@panda/jsx";
+import map from "lodash/map";
+import uniqueId from "lodash/uniqueId";
+import { styled } from "css-template-components/client";
+import { theme } from "@/app/theme";
 interface VirtualizedTextProps {
   text: string;
+  inputIndex: number;
+  inputValue: string;
 }
 
 interface RowProps {
-  index: number;
+  lineFirstCharIndex: number;
   style: React.CSSProperties;
   data: {
     lines: string[];
@@ -29,21 +30,50 @@ interface RowProps {
 }
 
 const Row = ({ data, index, style }: ListChildComponentProps) => {
-  console.log("lines", data);
-  const { lines } = data;
-  const line = useMemo(() => lines[index], [index, lines]);
+  const { text, lineFirstCharIndex } = useMemo(
+    () => get(data, ["lines", index], {}),
+    [data, index]
+  );
+  const inputIndex = useMemo(() => get(data, "inputIndex", 0), [data]);
+  const inputValue = useMemo(() => get(data, "inputValue", ""), [data]);
+  const fullText = useMemo(() => get(data, "fullText", ""), [data]);
+
   return (
-    <div style={style} key={line}>
-      {line}
+    <div style={style} key={uniqueId()}>
+      <>
+        {map(text, (character, charIndex) => {
+          const currentCharIndex = charIndex + lineFirstCharIndex;
+          return (
+            <StyledSpan
+              inputIndex={inputIndex}
+              index={currentCharIndex}
+              text={fullText}
+              key={uniqueId()}
+              inputValue={inputValue}
+              character={character}
+            >
+              {character}
+            </StyledSpan>
+          );
+        })}
+      </>
+      <StyledInputValueContainer>
+        {inputValue.substring(
+          lineFirstCharIndex,
+          lineFirstCharIndex + text.length
+        )}
+      </StyledInputValueContainer>
     </div>
   );
 };
 
 const VirtualizedText: React.FC<VirtualizedTextProps> = ({
   text,
+  inputIndex,
+  inputValue,
 }: VirtualizedTextProps) => {
   const parentRef = useRef<HTMLDivElement>(null);
-  const [lines, setLines] = useState<string[]>([]);
+  const [lines, setLines] = useState<any[]>([]);
 
   const splitTextIntoLines = useCallback(() => {
     if (!parentRef.current) {
@@ -64,10 +94,11 @@ const VirtualizedText: React.FC<VirtualizedTextProps> = ({
     context.font = fontStyle;
 
     const words = text.split(" ");
-    const newLines: string[] = [];
+    const newLines: { lineFirstCharIndex: number; text: string }[] = [];
     let currentLine = "";
+    let currentIndex = 0; // Track the current index in the original string
 
-    words.forEach((word) => {
+    words.forEach((word, wordIndex) => {
       const testLine = currentLine.length > 0 ? `${currentLine} ${word}` : word;
       const testLineWidth = context.measureText(testLine).width;
 
@@ -76,14 +107,18 @@ const VirtualizedText: React.FC<VirtualizedTextProps> = ({
         currentLine = testLine;
       } else {
         // If it doesn't fit, push the current line and start a new one
-        newLines.push(currentLine);
+        newLines.push({ lineFirstCharIndex: currentIndex, text: currentLine });
         currentLine = word; // Start a new line with the current word
+        currentIndex += currentLine.length + 1; // Update index to the start of the new line
       }
+
+      // Adjust the current index to reflect word placement
+      currentIndex = text.indexOf(currentLine, currentIndex);
     });
 
     // Add the last line to the array
     if (currentLine.length > 0) {
-      newLines.push(currentLine);
+      newLines.push({ lineFirstCharIndex: currentIndex, text: currentLine });
     }
 
     // Update state with the new lines for rendering
@@ -121,38 +156,75 @@ const VirtualizedText: React.FC<VirtualizedTextProps> = ({
   }, [splitTextIntoLines]);
 
   return (
-    <StyledContainer ref={parentRef}>
-      <AutoSizer>
-        {({ width, height }) => (
-          <FixedSizeList
-            className="List"
-            height={height}
-            itemCount={lines.length}
-            layout="vertical"
-            overscanCount={20}
-            style={{ color: "#000000" }}
-            itemSize={24}
-            itemData={{ lines }}
-            width={width}
-          >
-            {Row}
-          </FixedSizeList>
-        )}
-      </AutoSizer>
-    </StyledContainer>
+    <StyledOuterContainer>
+      <StyledContainer ref={parentRef}>
+        <AutoSizer>
+          {({ width, height }) => (
+            <StyledFixedSizeList
+              height={height}
+              itemCount={lines.length}
+              layout="vertical"
+              overscanCount={2}
+              style={{ color: "#000000" }}
+              itemSize={60}
+              itemData={{ lines, inputIndex, inputValue, fullText: text }}
+              width={width}
+            >
+              {Row}
+            </StyledFixedSizeList>
+          )}
+        </AutoSizer>
+      </StyledContainer>
+    </StyledOuterContainer>
   );
 };
 
 export default VirtualizedText;
 
-const StyledContainer = styled("div", {
-  base: {
-    whiteSpace: "pre-wrap",
-    font: "inherit",
-    overflowX: "hidden",
-    height: "70vh",
-    "& .List": {
-      scrollbarWidth: "none", // Hide scrollbar for Firefox
-    },
-  },
-});
+const StyledOuterContainer = styled(
+  "div",
+  `
+  padding: 1rem;
+  border: solid black 1px;
+`
+);
+
+const StyledContainer = styled(
+  "div",
+  `
+  white-space: pre-wrap;
+  font: inherit;
+  overflow-x: hidden;
+  height: 60vh;
+`
+);
+
+const StyledFixedSizeList = styled(
+  FixedSizeList,
+  `
+  scrollbar-width: none;
+`
+);
+
+const StyledSpan = styled(
+  "span",
+  ({ index, inputValue, text, inputIndex, character }) =>
+    `
+  background-color: ${
+    index <= inputIndex
+      ? character === inputValue[index]
+        ? theme["green"]
+        : theme["red"]
+      : "transparent"
+  };
+`
+);
+
+const StyledInputValueContainer = styled(
+  "div",
+  `
+    color: ${theme["gray"]};
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  `
+);

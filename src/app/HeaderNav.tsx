@@ -1,4 +1,4 @@
-import { styled } from "@panda/jsx";
+import { styled } from "css-template-components/server";
 
 export default function HeaderNav() {
   return (
@@ -16,24 +16,28 @@ export default function HeaderNav() {
   );
 }
 
-const StyledHeader = styled("div", {
-  base: {
-    width: "100%",
-    padding: "1rem",
-  },
-});
+const StyledHeader = styled(
+  "div",
+  `
+    width: 100%;
+    padding: 1rem;
+    background-color lightgray;
+ `
+);
 
-const StyledFlexContainer = styled("div", {
-  base: {
-    display: "flex",
-    justifyContent: "space-between",
-  },
-});
+const StyledFlexContainer = styled(
+  "div",
+  `
+    display: flex;
+    justify-content: space-between;
+`
+);
 
-const StyledNav = styled("div", {
-  base: {
-    display: "flex",
-    justifyContent: "space-evenly",
-    gap: "1rem",
-  },
-});
+const StyledNav = styled(
+  "div",
+  `
+    display: flex;
+    justify-content: space-evenly;
+    gap: 1rem;
+`
+);

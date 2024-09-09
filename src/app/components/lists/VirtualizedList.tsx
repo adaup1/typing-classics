@@ -1,7 +1,7 @@
 "client";
 
 import { SetStateAction, useState } from "react";
-import { styled } from "@panda/jsx";
+import { styled } from "css-template-components/client";
 
 interface VirtualizedListProps {
   totalItems: number;
@@ -52,15 +52,17 @@ export const VirtualizedList = ({
   );
 };
 
-const StyledContainer = styled("div", {
-  base: {
-    overflowY: "auto",
-  },
-});
+const StyledContainer = styled(
+  "div",
+  `
+    overflow-y: auto;
+`
+);
 
-const StyledInnerContainer = styled("div", {
-  base: {
-    position: "relative",
-    height: "100vh",
-  },
-});
+const StyledInnerContainer = styled(
+  "div",
+  `
+    position: relative;
+    height: 100vh;
+`
+);

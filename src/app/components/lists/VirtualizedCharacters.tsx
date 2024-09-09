@@ -87,6 +87,7 @@ const StyledContainer = styled.div`
   font: inherit;
   height: 100vh; /* Ensure the container takes up the full viewport height */
   overflow-x: hidden; /* Prevent horizontal scrolling */
+  width: 50vw;
 `;
 
 interface SpanProps {

@@ -8,18 +8,15 @@ import { useDebounce } from "@/app/helpers/hooks";
 export const CharacterRenderer = ({ text }: { text: string }) => {
   const [inputValue, setInputValue] = useState("");
   const [debouncedValue, setDebouncedValue] = useState("");
-  const currentLetterIndex = useMemo(
-    () => inputValue.length - 1,
-    [inputValue.length]
-  );
+  const inputIndex = useMemo(() => inputValue.length - 1, [inputValue.length]);
 
   const debouncedChange = useDebounce(
     (value: string) => setDebouncedValue(value),
-    50
+    150
   );
 
   const handleOnInputChange = useCallback(
-    (e) => {
+    (e: { target: { value: any } }) => {
       const { value } = e.target;
       setInputValue(value);
       debouncedChange(value);
@@ -29,7 +26,11 @@ export const CharacterRenderer = ({ text }: { text: string }) => {
 
   return (
     <div>
-      <VirtualizedText text={text} currentLetterIndex={currentLetterIndex} />
+      <VirtualizedText
+        text={text}
+        inputIndex={inputIndex}
+        inputValue={inputValue}
+      />
       <AlwaysFocussedInput value={inputValue} onChange={handleOnInputChange} />
     </div>
   );
