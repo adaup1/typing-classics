@@ -4,76 +4,50 @@ import React, {
   useRef,
   useState,
   useCallback,
-  useMemo,
   useLayoutEffect,
+  useEffect,
 } from "react";
-import { FixedSizeList, ListChildComponentProps } from "react-window";
+import { FixedSizeList } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 import isEmpty from "lodash/isEmpty";
-import get from "lodash/get";
-import map from "lodash/map";
-import uniqueId from "lodash/uniqueId";
 import { styled } from "css-template-components/client";
-import { theme } from "@/app/theme";
+import { Row } from "./Row";
+
 interface VirtualizedTextProps {
   text: string;
   inputIndex: number;
-  inputValue: string;
+  inputArray: Array<string>;
 }
-
-interface RowProps {
-  lineFirstCharIndex: number;
-  style: React.CSSProperties;
-  data: {
-    lines: string[];
-  };
-}
-
-const Row = ({ data, index, style }: ListChildComponentProps) => {
-  const { text, lineFirstCharIndex } = useMemo(
-    () => get(data, ["lines", index], {}),
-    [data, index]
-  );
-  const inputIndex = useMemo(() => get(data, "inputIndex", 0), [data]);
-  const inputValue = useMemo(() => get(data, "inputValue", ""), [data]);
-  const fullText = useMemo(() => get(data, "fullText", ""), [data]);
-
-  return (
-    <div style={style} key={uniqueId()}>
-      <>
-        {map(text, (character, charIndex) => {
-          const currentCharIndex = charIndex + lineFirstCharIndex;
-          return (
-            <StyledSpan
-              inputIndex={inputIndex}
-              index={currentCharIndex}
-              text={fullText}
-              key={uniqueId()}
-              inputValue={inputValue}
-              character={character}
-            >
-              {character}
-            </StyledSpan>
-          );
-        })}
-      </>
-      <StyledInputValueContainer>
-        {inputValue.substring(
-          lineFirstCharIndex,
-          lineFirstCharIndex + text.length
-        )}
-      </StyledInputValueContainer>
-    </div>
-  );
-};
 
 const VirtualizedText: React.FC<VirtualizedTextProps> = ({
   text,
   inputIndex,
-  inputValue,
+  inputArray,
 }: VirtualizedTextProps) => {
   const parentRef = useRef<HTMLDivElement>(null);
+  const innerRef = useRef<HTMLDivElement>(null);
   const [lines, setLines] = useState<any[]>([]);
+
+  const handleScroll = useCallback(() => {
+    if (inputIndex <= text.length && inputIndex > 0) {
+      const targetElement = document.getElementById(`text-item-${inputIndex}`);
+      if (targetElement && innerRef.current) {
+        requestAnimationFrame(() => {
+          targetElement.scrollIntoView({
+            behavior: "smooth",
+            inline: "nearest",
+            block: "start",
+          });
+        });
+      }
+    }
+  }, [inputIndex, text.length]);
+
+  useEffect(() => {
+    if (inputIndex) {
+      handleScroll();
+    }
+  }, [handleScroll, inputIndex]);
 
   const splitTextIntoLines = useCallback(() => {
     if (!parentRef.current) {
@@ -167,8 +141,13 @@ const VirtualizedText: React.FC<VirtualizedTextProps> = ({
               overscanCount={2}
               style={{ color: "#000000" }}
               itemSize={60}
-              itemData={{ lines, inputIndex, inputValue, fullText: text }}
+              itemData={{
+                lines,
+                inputIndex,
+                inputArray,
+              }}
               width={width}
+              ref={innerRef}
             >
               {Row}
             </StyledFixedSizeList>
@@ -202,29 +181,8 @@ const StyledContainer = styled(
 const StyledFixedSizeList = styled(
   FixedSizeList,
   `
-  scrollbar-width: none;
+  > * {
+   scrollbar-width: none;
+}
 `
-);
-
-const StyledSpan = styled(
-  "span",
-  ({ index, inputValue, text, inputIndex, character }) =>
-    `
-  background-color: ${
-    index <= inputIndex
-      ? character === inputValue[index]
-        ? theme["green"]
-        : theme["red"]
-      : "transparent"
-  };
-`
-);
-
-const StyledInputValueContainer = styled(
-  "div",
-  `
-    color: ${theme["gray"]};
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-  `
 );

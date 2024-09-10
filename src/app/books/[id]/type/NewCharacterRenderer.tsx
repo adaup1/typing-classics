@@ -3,25 +3,47 @@
 import React, { useState, useCallback, useMemo } from "react";
 import VirtualizedText from "@/app/components/lists/VirtualizedText";
 import { AlwaysFocussedInput } from "@/app/components/inputs";
-import { useDebounce } from "@/app/helpers/hooks";
 
 export const CharacterRenderer = ({ text }: { text: string }) => {
-  const [inputValue, setInputValue] = useState("");
-  const [debouncedValue, setDebouncedValue] = useState("");
-  const inputIndex = useMemo(() => inputValue.length - 1, [inputValue.length]);
-
-  const debouncedChange = useDebounce(
-    (value: string) => setDebouncedValue(value),
-    150
+  const [inputArray, setInputArray] = useState([""]);
+  const [inputIndex, setInputIndex] = useState(-1);
+  // Chunk the input text to avoid rendering entire book text in input
+  const currentValue = useMemo(
+    () => inputArray[inputArray.length - 1],
+    [inputArray]
   );
 
   const handleOnInputChange = useCallback(
     (e: { target: { value: any } }) => {
       const { value } = e.target;
-      setInputValue(value);
-      debouncedChange(value);
+      const currentArrayIndex = inputArray.length - 1;
+      const currentChunk = inputArray[currentArrayIndex];
+
+      if (value.length < currentChunk.length) {
+        if (value.length > 0 || inputArray.length === 1) {
+          setInputArray((prev) => {
+            const newArr = [...prev];
+            newArr[currentArrayIndex] = value;
+            return newArr;
+          });
+        } else if (inputArray.length > 1) {
+          setInputArray((prev) => prev.slice(0, -1));
+        }
+        setInputIndex((prev) => prev - 1);
+      } else {
+        if (currentChunk.length <= 100) {
+          setInputArray((prev) => {
+            const newArr = [...prev];
+            newArr[currentArrayIndex] = value;
+            return newArr;
+          });
+        } else {
+          setInputArray((prev) => [...prev, value.slice(101)]);
+        }
+        setInputIndex((prev) => prev + 1);
+      }
     },
-    [debouncedChange]
+    [inputArray]
   );
 
   return (
@@ -29,9 +51,12 @@ export const CharacterRenderer = ({ text }: { text: string }) => {
       <VirtualizedText
         text={text}
         inputIndex={inputIndex}
-        inputValue={inputValue}
+        inputArray={inputArray}
       />
-      <AlwaysFocussedInput value={inputValue} onChange={handleOnInputChange} />
+      <AlwaysFocussedInput
+        value={currentValue}
+        onChange={handleOnInputChange}
+      />
     </div>
   );
 };
