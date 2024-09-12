@@ -21,7 +21,7 @@ const StyledHeader = styled(
   `
     width: 100%;
     padding: 1rem;
-    background-color lightgray;
+    background-color: lightgray;
  `
 );
 

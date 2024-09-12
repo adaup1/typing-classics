@@ -134,23 +134,26 @@ const VirtualizedText: React.FC<VirtualizedTextProps> = ({
       <StyledContainer ref={parentRef}>
         <AutoSizer>
           {({ width, height }) => (
-            <StyledFixedSizeList
-              height={height}
-              itemCount={lines.length}
-              layout="vertical"
-              overscanCount={2}
-              style={{ color: "#000000" }}
-              itemSize={60}
-              itemData={{
-                lines,
-                inputIndex,
-                inputArray,
-              }}
-              width={width}
-              ref={innerRef}
-            >
-              {Row}
-            </StyledFixedSizeList>
+            <>
+              <StyledFixedSizeList
+                height={height}
+                itemCount={lines.length}
+                layout="vertical"
+                overscanCount={2}
+                style={{ color: "#000000" }}
+                itemSize={60}
+                itemData={{
+                  lines,
+                  inputIndex,
+                  inputArray,
+                }}
+                width={width}
+                ref={innerRef}
+              >
+                {Row}
+              </StyledFixedSizeList>
+              <StyledGradient width={width} height={height} />
+            </>
           )}
         </AutoSizer>
       </StyledContainer>
@@ -168,9 +171,24 @@ const StyledOuterContainer = styled(
 `
 );
 
+const StyledGradient = styled(
+  "div",
+  ({ width, height }: { width: string; height: string }) =>
+    `
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: ${width}px;
+    height: ${height}px;
+    z-index: 10; 
+    background: linear-gradient(0deg, #fff 0%, transparent 90%);
+`
+);
+
 const StyledContainer = styled(
   "div",
   `
+  position: relative; 
   white-space: pre-wrap;
   font: inherit;
   overflow-x: hidden;
@@ -183,6 +201,6 @@ const StyledFixedSizeList = styled(
   `
   > * {
    scrollbar-width: none;
-}
+  }
 `
 );

@@ -3,6 +3,7 @@
 import React, { useState, useCallback, useMemo } from "react";
 import VirtualizedText from "@/app/components/lists/VirtualizedText";
 import { AlwaysFocussedInput } from "@/app/components/inputs";
+import { dummyInput, dummyIndex } from "./DummyInput";
 
 export const CharacterRenderer = ({ text }: { text: string }) => {
   const [inputArray, setInputArray] = useState([""]);

@@ -68,11 +68,10 @@ export const Row = ({ data, index, style }: ListChildComponentProps) => {
           });
 
           return (
-            <StyledInnerFlexContainer>
+            <StyledInnerFlexContainer key={uniqueId()}>
               <StyledCharacter
                 inputIndex={inputIndex}
                 index={currentCharIndex}
-                key={uniqueId()}
                 inputValue={result?.character || ""}
                 character={character}
                 id={`text-item-${currentCharIndex}`}
