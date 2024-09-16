@@ -2,6 +2,7 @@ import { Dispatch } from "react";
 
 export enum actionTypes {
   changeInput = "changeInput",
+  updateInput = "updateInput",
   countChar = "countChar",
   countCorrectChar = "countCorrectChar",
   countAllChar = "countAllChar",
@@ -24,7 +25,9 @@ export interface reducerProps {
   type: actionTypes;
   text?: Array<string>;
   input?: string;
-  countType: countType;
+  inputArray?: Array<string>;
+  inputIndex?: number;
+  countType?: countType;
   characterCount?: number;
   timerSeconds?: number;
   timerInterval?: number;
@@ -35,7 +38,8 @@ export interface reducerProps {
 
 export interface TypingState {
   text: Array<string>;
-  input: string;
+  inputArray: Array<string>;
+  inputIndex: number;
   correctCharacters: number;
   allCharacters: number;
   timerSeconds: number;
@@ -47,7 +51,8 @@ export interface TypingState {
 
 export const DEFAULT_STATE: TypingState = {
   text: [""],
-  input: "",
+  inputArray: [""],
+  inputIndex: -1,
   correctCharacters: 0,
   allCharacters: 0,
   timerSeconds: 0,
@@ -61,4 +66,11 @@ export interface TypingContextProps {
   state: TypingState;
   dispatch: Dispatch<reducerProps>;
   countChar: ({ countType, characterCount: number }) => void;
+  updateInput: ({
+    inputArray,
+    inputIndex,
+  }: {
+    inputArray: Array<string>;
+    inputIndex: number;
+  }) => void;
 }

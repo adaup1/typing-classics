@@ -2,10 +2,16 @@ import { reducerProps, actionTypes } from "./types.d";
 
 export const reducer = (state: any, action: reducerProps) => {
   switch (action.type) {
-    case actionTypes.changeInput:
-      return { ...state, input: action.input };
+    // case actionTypes.changeInput:
+    //   return { ...state, input: action.input };
+    case actionTypes.updateInput:
+      return {
+        ...state,
+        inputArray: action.inputArray,
+        inputIndex: action.inputIndex,
+      };
     case actionTypes.countChar:
-      return { ...state, [action.countType]: action.characterCount };
+      return { ...state, countType: action.characterCount };
     case actionTypes.setTimer:
       return state;
     case actionTypes.setPauseTimer:

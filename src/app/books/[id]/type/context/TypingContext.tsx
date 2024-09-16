@@ -21,6 +21,7 @@ const TypingContext = createContext<TypingContextProps>({
   state: DEFAULT_STATE,
   dispatch: () => {},
   countChar: () => {},
+  updateInput: () => {},
 });
 
 interface TypingContextProviderProps {
@@ -36,6 +37,23 @@ export const TypingContextProvider = ({
   children,
 }: TypingContextProviderProps) => {
   const [state, dispatch] = useReducer(reducer, DEFAULT_STATE);
+  console.log("state", state.inputArray);
+  const updateInput = useCallback(
+    ({
+      inputArray,
+      inputIndex,
+    }: {
+      inputArray: Array<string>;
+      inputIndex: number;
+    }) => {
+      dispatch({
+        type: actionTypes.updateInput,
+        inputArray,
+        inputIndex,
+      });
+    },
+    []
+  );
 
   const countChar = useCallback(
     ({ countType, characterCount }: countCharProps) => {
@@ -48,7 +66,7 @@ export const TypingContextProvider = ({
     []
   );
 
-  const value = { state, dispatch, countChar };
+  const value = { state, dispatch, countChar, updateInput };
 
   return (
     <TypingContext.Provider value={value}>{children}</TypingContext.Provider>

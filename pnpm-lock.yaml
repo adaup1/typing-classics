@@ -12,8 +12,8 @@ importers:
         specifier: ^0.9.0
         version: 0.9.0
       css-template-components:
-        specifier: ^0.1.2
-        version: 0.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: file:../css-template-components
+        version: file:../css-template-components(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
@@ -537,8 +537,8 @@ packages:
     resolution: {integrity: sha512-iRDPJKUPVEND7dHPO8rkbOnPpyDygcDFtWjpeWNCgy8WP2rXcxXL8TskReQl6OrB2G7+UJrags1q15Fudc7G6w==}
     engines: {node: '>= 8'}
 
-  css-template-components@0.1.2:
-    resolution: {integrity: sha512-gLvvbT3cp3CWNMoXbMe8MQgHkxqEtU1eXxmwAyCvENbplIA9r+qCFfqmIOrNOLvzXaowrdK3Hp3V17RXsUEP8g==}
+  css-template-components@file:../css-template-components:
+    resolution: {directory: ../css-template-components, type: directory}
     peerDependencies:
       react: ^18.0.0
       react-dom: ^18.0.0
@@ -2266,7 +2266,7 @@ snapshots:
       shebang-command: 2.0.0
       which: 2.0.2
 
-  css-template-components@0.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  css-template-components@file:../css-template-components(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@types/node': 22.5.4
       react: 18.3.1

@@ -55,39 +55,78 @@ export const Row = ({ data, index, style }: ListChildComponentProps) => {
   );
   const inputIndex = useMemo(() => get(data, "inputIndex", -1), [data]);
   const inputArray = useMemo(() => get(data, "inputArray", [""]), [data]);
+  const visibleStartIndex = useMemo(
+    () => get(data, "visibleStartIndex", 0),
+    [data]
+  );
   const { findCharacterLocation } = useFindChunk();
 
-  return (
-    <StyledFlexContainer style={style} key={uniqueId()}>
-      <>
-        {map(text, (character, charIndex) => {
-          const currentCharIndex = charIndex + lineFirstCharIndex;
-          const result = findCharacterLocation({
-            stringArray: inputArray,
-            characterLocation: parseInt(currentCharIndex, 10),
-          });
+  const applyExtraStyles = useMemo(
+    () => index <= visibleStartIndex + 1,
+    [visibleStartIndex, index]
+  );
 
-          return (
-            <StyledInnerFlexContainer key={uniqueId()}>
-              <StyledCharacter
-                inputIndex={inputIndex}
-                index={currentCharIndex}
-                inputValue={result?.character || ""}
-                character={character}
-                id={`text-item-${currentCharIndex}`}
-              >
-                {character}
-              </StyledCharacter>
-              <StyledInputValueContainer>
-                {result?.character || ""}
-              </StyledInputValueContainer>
-            </StyledInnerFlexContainer>
-          );
-        })}
-      </>
-    </StyledFlexContainer>
+  return (
+    <div id={`line-item-${index}`}>
+      <StyledFlexContainer style={style} key={uniqueId()}>
+        <>
+          {map(text, (character, charIndex) => {
+            const currentCharIndex = charIndex + lineFirstCharIndex;
+            const result = findCharacterLocation({
+              stringArray: inputArray,
+              characterLocation: parseInt(currentCharIndex, 10),
+            });
+            return (
+              <>
+                {applyExtraStyles ? (
+                  <StyledInnerFlexContainer key={uniqueId()}>
+                    <StyledCharacter
+                      inputIndex={inputIndex}
+                      index={currentCharIndex}
+                      inputValue={result?.character || ""}
+                      character={character}
+                      id={`text-item-${currentCharIndex}`}
+                    >
+                      {character}
+                    </StyledCharacter>
+                    <StyledInputValueContainer
+                      currentCharIndex={currentCharIndex}
+                      inputIndex={inputIndex}
+                    >
+                      <StyledInputCharacter>
+                        {result?.character}
+                      </StyledInputCharacter>
+                      <StyledCursor
+                        currentCharIndex={currentCharIndex}
+                        inputIndex={inputIndex}
+                      />
+                    </StyledInputValueContainer>
+                  </StyledInnerFlexContainer>
+                ) : (
+                  <>{character}</>
+                )}
+              </>
+            );
+          })}
+        </>
+      </StyledFlexContainer>
+      {/* ) : (
+        <div style={style} key={uniqueId()}>
+          {text}
+        </div>
+      )} */}
+    </div>
   );
 };
+
+const StyledRowContainer = styled(
+  "div",
+  `
+  padding-bottom: 40px;
+  // position: relative;
+  // top: 200px;
+`
+);
 
 const StyledFlexContainer = styled(
   "div",
@@ -120,10 +159,18 @@ const StyledCharacter = styled(
 
 const StyledInputValueContainer = styled(
   "div",
-  `
+  ({
+    currentCharIndex = -1,
+    inputIndex,
+  }: {
+    currentCharIndex: number;
+    inputIndex: number;
+  }) =>
+    `
     color: ${theme["gray"]};
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
+    display: flex;
   `
 );
 
@@ -133,4 +180,26 @@ const StyledInnerFlexContainer = styled(
     display: flex;
     flex-direction: column;
 `
+);
+
+const StyledInputCharacter = styled(
+  "span",
+  `
+  width: 0.5rem;
+`
+);
+
+const StyledCursor = styled(
+  "div",
+  ({
+    currentCharIndex,
+    inputIndex,
+  }: {
+    currentCharIndex: number;
+    inputIndex: number;
+  }) =>
+    `
+      border-left: ${currentCharIndex === inputIndex || !currentCharIndex ? "solid black 1px" : "none"};
+      height: 20px;
+    `
 );

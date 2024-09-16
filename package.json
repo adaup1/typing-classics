@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@vercel/postgres": "^0.9.0",
-    "css-template-components": "^0.1.2",
+    "css-template-components": "file:../css-template-components",
     "lodash": "^4.17.21",
     "lru-cache": "^11.0.0",
     "next": "14",

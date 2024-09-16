@@ -28,13 +28,22 @@ const VirtualizedText: React.FC<VirtualizedTextProps> = ({
   const innerRef = useRef<HTMLDivElement>(null);
   const [lines, setLines] = useState<any[]>([]);
 
+  const visibleStartIndexRef = useRef(0);
+
+  const handleItemsRendered = useCallback(
+    ({ visibleStartIndex }: { visibleStartIndex: number }) => {
+      visibleStartIndexRef.current = visibleStartIndex;
+    },
+    []
+  );
+
   const handleScroll = useCallback(() => {
     if (inputIndex <= text.length && inputIndex > 0) {
       const targetElement = document.getElementById(`text-item-${inputIndex}`);
       if (targetElement && innerRef.current) {
         requestAnimationFrame(() => {
           targetElement.scrollIntoView({
-            behavior: "smooth",
+            behavior: "auto",
             inline: "nearest",
             block: "start",
           });
@@ -146,9 +155,11 @@ const VirtualizedText: React.FC<VirtualizedTextProps> = ({
                   lines,
                   inputIndex,
                   inputArray,
+                  visibleStartIndex: visibleStartIndexRef.current,
                 }}
                 width={width}
                 ref={innerRef}
+                onItemsRendered={handleItemsRendered}
               >
                 {Row}
               </StyledFixedSizeList>
@@ -168,6 +179,7 @@ const StyledOuterContainer = styled(
   `
   padding: 1rem;
   border: solid black 1px;
+  position absolute;
 `
 );
 
