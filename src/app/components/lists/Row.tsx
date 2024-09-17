@@ -67,7 +67,7 @@ export const Row = ({ data, index, style }: ListChildComponentProps) => {
   );
 
   return (
-    <div id={`line-item-${index}`}>
+    <StyledContainer id={`line-item-${index}`}>
       <StyledFlexContainer style={style} key={uniqueId()}>
         <>
           {map(text, (character, charIndex) => {
@@ -103,7 +103,7 @@ export const Row = ({ data, index, style }: ListChildComponentProps) => {
                     </StyledInputValueContainer>
                   </StyledInnerFlexContainer>
                 ) : (
-                  <>{character}</>
+                  <div id={`text-item-${currentCharIndex}`}>{character}</div>
                 )}
               </>
             );
@@ -115,9 +115,16 @@ export const Row = ({ data, index, style }: ListChildComponentProps) => {
           {text}
         </div>
       )} */}
-    </div>
+    </StyledContainer>
   );
 };
+
+const StyledContainer = styled(
+  "div",
+  `
+  color: ${theme["white"]};
+`
+);
 
 const StyledRowContainer = styled(
   "div",
@@ -199,7 +206,8 @@ const StyledCursor = styled(
     inputIndex: number;
   }) =>
     `
-      border-left: ${currentCharIndex === inputIndex || !currentCharIndex ? "solid black 1px" : "none"};
+      border-left: ${currentCharIndex === inputIndex || !currentCharIndex ? `solid #bfbfbf 1px` : "none"};
       height: 20px;
+      animation: blink 1s steps(1, start) infinite;
     `
 );

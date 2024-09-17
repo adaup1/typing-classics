@@ -1,16 +1,19 @@
 "use client";
 
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { styled } from "css-template-components/client";
 import { actionTypes, countType } from "./context/types.d";
 import { CharacterRenderer } from "./NewCharacterRenderer";
+import { Book } from "@/app/lib/types";
+import { CoverImage } from "@/app/components/images/CoverImage";
 import {
   withTypingContextProvider,
   useTypingContext,
 } from "./context/TypingContext";
 
-const TypingView = ({ text }: { text: string }) => {
+const TypingView = ({ bookData }: { bookData: Book }) => {
   const { state, dispatch, countChar } = useTypingContext();
+  const { text = "", cover_image_url = "", title_short } = bookData;
 
   const onCountAllChar = useCallback(() => {
     countChar({
@@ -29,7 +32,12 @@ const TypingView = ({ text }: { text: string }) => {
   return (
     <>
       <StyledContainer>
-        <StyledSideContainer></StyledSideContainer>
+        <StyledLeftContainer>
+          <CoverImage
+            src={cover_image_url}
+            alt={`Cover image of ${title_short}`}
+          />
+        </StyledLeftContainer>
         <StyledCenterContainer>
           <CharacterRenderer text={text} />
         </StyledCenterContainer>
@@ -71,4 +79,14 @@ const StyledSideContainer = styled(
   `
   width: 25vw;
 `
+);
+
+const StyledLeftContainer = styled(
+  "div",
+  `
+  width: 25vw;
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 2rem;
+  `
 );

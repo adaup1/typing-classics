@@ -6,11 +6,13 @@ import React, {
   useCallback,
   useLayoutEffect,
   useEffect,
+  Suspense,
 } from "react";
 import { FixedSizeList } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 import isEmpty from "lodash/isEmpty";
 import { styled } from "css-template-components/client";
+import { theme } from "@/app/theme";
 import { Row } from "./Row";
 
 interface VirtualizedTextProps {
@@ -43,7 +45,7 @@ const VirtualizedText: React.FC<VirtualizedTextProps> = ({
       if (targetElement && innerRef.current) {
         requestAnimationFrame(() => {
           targetElement.scrollIntoView({
-            behavior: "auto",
+            behavior: "smooth",
             inline: "nearest",
             block: "start",
           });
@@ -53,10 +55,14 @@ const VirtualizedText: React.FC<VirtualizedTextProps> = ({
   }, [inputIndex, text.length]);
 
   useEffect(() => {
-    if (inputIndex) {
+    if (
+      lines &&
+      inputIndex &&
+      document.getElementById(`text-item-${inputIndex}`)
+    ) {
       handleScroll();
     }
-  }, [handleScroll, inputIndex]);
+  }, [handleScroll, inputIndex, lines]);
 
   const splitTextIntoLines = useCallback(() => {
     if (!parentRef.current) {
@@ -141,32 +147,34 @@ const VirtualizedText: React.FC<VirtualizedTextProps> = ({
   return (
     <StyledOuterContainer>
       <StyledContainer ref={parentRef}>
-        <AutoSizer>
-          {({ width, height }) => (
-            <>
-              <StyledFixedSizeList
-                height={height}
-                itemCount={lines.length}
-                layout="vertical"
-                overscanCount={2}
-                style={{ color: "#000000" }}
-                itemSize={60}
-                itemData={{
-                  lines,
-                  inputIndex,
-                  inputArray,
-                  visibleStartIndex: visibleStartIndexRef.current,
-                }}
-                width={width}
-                ref={innerRef}
-                onItemsRendered={handleItemsRendered}
-              >
-                {Row}
-              </StyledFixedSizeList>
-              <StyledGradient width={width} height={height} />
-            </>
-          )}
-        </AutoSizer>
+        <Suspense fallback={<div>hello there this is it</div>}>
+          <AutoSizer>
+            {({ width, height }) => (
+              <>
+                <StyledFixedSizeList
+                  height={height}
+                  itemCount={lines.length}
+                  layout="vertical"
+                  overscanCount={2}
+                  style={{ color: theme["white"] }}
+                  itemSize={60}
+                  itemData={{
+                    lines,
+                    inputIndex,
+                    inputArray,
+                    visibleStartIndex: visibleStartIndexRef.current,
+                  }}
+                  width={width}
+                  ref={innerRef}
+                  onItemsRendered={handleItemsRendered}
+                >
+                  {Row}
+                </StyledFixedSizeList>
+                <StyledGradient width={width} height={height} />
+              </>
+            )}
+          </AutoSizer>
+        </Suspense>
       </StyledContainer>
     </StyledOuterContainer>
   );
@@ -178,7 +186,9 @@ const StyledOuterContainer = styled(
   "div",
   `
   padding: 1rem;
-  border: solid black 1px;
+  background: ${theme["ultraDarkPurple"]};
+  border-radius: 0.5rem;
+  filter: drop-shadow(0 0 0.5rem ${theme["gray"]});
   position absolute;
 `
 );
@@ -193,7 +203,7 @@ const StyledGradient = styled(
     width: ${width}px;
     height: ${height}px;
     z-index: 10; 
-    background: linear-gradient(0deg, #fff 0%, transparent 90%);
+    background: linear-gradient(0deg, ${theme["ultraDarkPurple"]} 0%, transparent 90%);
 `
 );
 

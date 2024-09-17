@@ -1,1 +1,16 @@
 @layer reset, base, tokens, recipes, utilities;
+
+@keyframes blink {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: inherit;
+  }
+}
+
+body {
+  background-color: #2f2e5f;
+  color: #fdfdfd;
+}
