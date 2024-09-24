@@ -1,6 +1,11 @@
 "use client";
 
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useCallback } from "react";
+
+const blockAction = (e: { preventDefault: () => void }) => {
+  e.preventDefault();
+  return false;
+};
 
 export const AlwaysFocussedInput = (
   props: React.InputHTMLAttributes<HTMLInputElement>
@@ -55,5 +60,17 @@ export const AlwaysFocussedInput = (
     };
   }, []);
 
-  return <input ref={inputRef} {...props} />;
+  return (
+    <input
+      ref={inputRef}
+      {...props}
+      autoComplete="off"
+      autoCorrect="off"
+      autoCapitalize="off"
+      onPaste={blockAction}
+      onCopy={blockAction}
+      onDrag={blockAction}
+      onDrop={blockAction}
+    />
+  );
 };

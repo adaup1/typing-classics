@@ -12,8 +12,10 @@ export const reducer = (state: any, action: reducerProps) => {
       };
     case actionTypes.countChar:
       return { ...state, countType: action.characterCount };
+    case actionTypes.countCorrectChar:
+      return { ...state, correctCharacters: action.correctCharacters };
     case actionTypes.setTimer:
-      return state;
+      return { ...state, time: action.time };
     case actionTypes.setPauseTimer:
       return state;
     case actionTypes.timerIncrement:

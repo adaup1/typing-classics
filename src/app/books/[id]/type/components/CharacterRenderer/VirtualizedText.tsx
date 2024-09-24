@@ -14,6 +14,7 @@ import isEmpty from "lodash/isEmpty";
 import { styled } from "css-template-components/client";
 import { theme } from "@/app/theme";
 import { Row } from "./Row";
+import { useCountCorrectCharacters } from "./hooks/useCountCorrectCharacters";
 
 interface VirtualizedTextProps {
   text: string;
@@ -29,6 +30,7 @@ const VirtualizedText: React.FC<VirtualizedTextProps> = ({
   const parentRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
   const [lines, setLines] = useState<any[]>([]);
+  const { setMatchMap } = useCountCorrectCharacters();
 
   const visibleStartIndexRef = useRef(0);
 
@@ -163,6 +165,7 @@ const VirtualizedText: React.FC<VirtualizedTextProps> = ({
                     inputIndex,
                     inputArray,
                     visibleStartIndex: visibleStartIndexRef.current,
+                    setMatchMap,
                   }}
                   width={width}
                   ref={innerRef}
@@ -214,7 +217,8 @@ const StyledContainer = styled(
   white-space: pre-wrap;
   font: inherit;
   overflow-x: hidden;
-  height: 60vh;
+  overflow-y: hidden;
+  height: calc(100vh - 16rem);
 `
 );
 

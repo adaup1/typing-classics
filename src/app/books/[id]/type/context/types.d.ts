@@ -29,6 +29,8 @@ export interface reducerProps {
   inputIndex?: number;
   countType?: countType;
   characterCount?: number;
+  correctCharacters?: number;
+  time?: number;
   timerSeconds?: number;
   timerInterval?: number;
   autoPauseSecond?: number;
@@ -42,6 +44,7 @@ export interface TypingState {
   inputIndex: number;
   correctCharacters: number;
   allCharacters: number;
+  time: number;
   timerSeconds: number;
   timerInterval?: number;
   autoPauseSeconds: number;
@@ -55,6 +58,7 @@ export const DEFAULT_STATE: TypingState = {
   inputIndex: -1,
   correctCharacters: 0,
   allCharacters: 0,
+  time: 0,
   timerSeconds: 0,
   timerInterval: 0,
   autoPauseSeconds: 0,
@@ -73,4 +77,5 @@ export interface TypingContextProps {
     inputArray: Array<string>;
     inputIndex: number;
   }) => void;
+  textLength: number;
 }
