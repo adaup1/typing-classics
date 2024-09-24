@@ -7,6 +7,7 @@ import React, {
   useReducer,
   ReactNode,
   ComponentType,
+  useMemo,
 } from "react";
 import {
   DEFAULT_STATE,
@@ -22,10 +23,12 @@ const TypingContext = createContext<TypingContextProps>({
   dispatch: () => {},
   countChar: () => {},
   updateInput: () => {},
+  textLength: 0,
 });
 
 interface TypingContextProviderProps {
   children: ReactNode;
+  text: string;
 }
 
 interface countCharProps {
@@ -35,9 +38,11 @@ interface countCharProps {
 
 export const TypingContextProvider = ({
   children,
+  text = "",
 }: TypingContextProviderProps) => {
   const [state, dispatch] = useReducer(reducer, DEFAULT_STATE);
-  console.log("state", state.inputArray);
+  const textLength = useMemo(() => text.length, [text]);
+
   const updateInput = useCallback(
     ({
       inputArray,
@@ -66,7 +71,7 @@ export const TypingContextProvider = ({
     []
   );
 
-  const value = { state, dispatch, countChar, updateInput };
+  const value = { state, dispatch, countChar, updateInput, textLength };
 
   return (
     <TypingContext.Provider value={value}>{children}</TypingContext.Provider>
@@ -74,21 +79,3 @@ export const TypingContextProvider = ({
 };
 
 export const useTypingContext = () => useContext(TypingContext);
-
-export const withTypingContextProvider = <P extends object>(
-  Component: ComponentType<P>
-) => {
-  const WrappedComponent = (props: P) => {
-    return (
-      <TypingContextProvider>
-        <Component {...props} />
-      </TypingContextProvider>
-    );
-  };
-
-  WrappedComponent.displayName = `withTypingContextProvider(${
-    Component.displayName || Component.name || "Component"
-  })`;
-
-  return WrappedComponent;
-};

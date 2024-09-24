@@ -1,4 +1,5 @@
 import { useDebounce } from "./useDebounce";
 import { usePrevious } from "./usePrevious";
+import { useThrottle } from "./useThrottle";
 
-export { useDebounce, usePrevious };
+export { useDebounce, usePrevious, useThrottle };
