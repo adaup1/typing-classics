@@ -1,3 +1,3 @@
-import { CharacterRenderer } from "./CharacterRenderer";
+import CharacterRenderer from "./CharacterRenderer";
 
 export { CharacterRenderer };

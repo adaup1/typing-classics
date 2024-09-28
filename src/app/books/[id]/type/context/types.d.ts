@@ -68,14 +68,9 @@ export const DEFAULT_STATE: TypingState = {
 
 export interface TypingContextProps {
   state: TypingState;
-  dispatch: Dispatch<reducerProps>;
-  countChar: ({ countType, characterCount: number }) => void;
-  updateInput: ({
-    inputArray,
-    inputIndex,
-  }: {
-    inputArray: Array<string>;
-    inputIndex: number;
-  }) => void;
   textLength: number;
+}
+
+export interface TypingDispatchContextProps {
+  dispatch: Dispatch<reducerProps>;
 }

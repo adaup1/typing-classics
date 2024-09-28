@@ -1,13 +1,11 @@
-import React, { useEffect, useState, useRef, useMemo } from "react";
+import { useEffect, useState, useRef, useMemo } from "react";
 
 interface UseUpdateContextInputProps {
-  setContextState: any;
   inputArray: Array<string>;
   inputIndex: number;
 }
 
 export const useUpdateContextInput = ({
-  setContextState,
   inputArray,
   inputIndex,
 }: UseUpdateContextInputProps) => {
@@ -37,13 +35,16 @@ export const useUpdateContextInput = ({
   useEffect(() => {
     const interval = setInterval(
       () =>
-        setContextState({
-          inputArray: inputArrayRef.current,
-          inputIndex: inputIndexRef.current,
-        }),
+        window.postMessage(
+          {
+            inputArray: inputArrayRef.current,
+            inputIndex: inputIndexRef.current,
+          },
+          window.location.origin
+        ),
 
       delay
     );
     return () => clearInterval(interval);
-  }, [delay, setContextState]);
+  }, [delay]);
 };

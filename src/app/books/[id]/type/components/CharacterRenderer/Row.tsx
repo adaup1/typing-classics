@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useMemo } from "react";
 import { ListChildComponentProps } from "react-window";
 import get from "lodash/get";
 import map from "lodash/map";
@@ -41,6 +41,10 @@ export const Row = ({ data, index, style }: ListChildComponentProps) => {
   );
 
   let currentMatches = 0;
+  // New line isn't captured as correct character so we have to spoof it
+  if (index > 1) {
+    currentMatches = 1;
+  }
   const handleSetMatchMap = useCallback(
     (count: number) => {
       setMatchMap({ key: index, count: count });
@@ -67,7 +71,9 @@ export const Row = ({ data, index, style }: ListChildComponentProps) => {
               ) {
                 if (character === inputValue) {
                   currentMatches += 1;
-                  handleSetMatchMap(currentMatches);
+                  if (currentCharIndex === inputIndex) {
+                    handleSetMatchMap(currentMatches);
+                  }
                 }
               }
 

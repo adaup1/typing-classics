@@ -1,20 +1,14 @@
-import { useState, useRef, useMemo, useEffect } from "react";
-import { useThrottle } from "@/app/helpers/hooks";
-import { useTypingContext } from "../../../context/TypingContext";
-import { actionTypes } from "../../../context/types.d";
+import { useState, useRef, useMemo, useEffect, useCallback } from "react";
 
 export const useCountCorrectCharacters = () => {
-  const { state, dispatch } = useTypingContext();
   const matchRef = useRef(new Map());
   const [matchMap, setMatchMap] = useState(new Map());
-  const { throttle } = useThrottle();
 
-  const handleSetMatchMap = throttle(
+  const handleSetMatchMap = useCallback(
     ({ key, count }: { key: number; count: number }) => {
       if (matchRef.current.get(key) !== count) {
         matchRef.current.set(key, count);
 
-        // Update state by merging new key and count into existing state
         setMatchMap((prevMatchMap) => {
           const newMatchMap = new Map(prevMatchMap);
           newMatchMap.set(key, count);
@@ -27,8 +21,8 @@ export const useCountCorrectCharacters = () => {
         });
       }
     },
-    500
-  ); // Throttle state updates to every 300ms
+    [setMatchMap]
+  );
 
   const correctCharacters = useMemo(() => {
     let total = 0;
@@ -38,12 +32,13 @@ export const useCountCorrectCharacters = () => {
     return total;
   }, [matchMap]);
 
-  useEffect(() => {
-    dispatch({ type: actionTypes.countCorrectChar, correctCharacters });
-  }, [correctCharacters]);
+  // useEffect(() => {
+  //   window.postMessage({ correctCharacters }, window.location.origin);
+  // }, [correctCharacters]);
 
   return {
     setMatchMap: handleSetMatchMap,
     matchMap,
+    correctCharacters,
   };
 };

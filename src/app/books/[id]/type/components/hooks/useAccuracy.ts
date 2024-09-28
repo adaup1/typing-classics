@@ -1,17 +1,36 @@
-import { useMemo } from "react";
+import { useMemo, useEffect, useRef } from "react";
 import { useTypingContext } from "../../context/TypingContext";
+import { usePrevious } from "@/app/helpers/hooks";
 
-export const useAccuracy = () => {
-  const { state } = useTypingContext();
-  const { inputIndex, correctCharacters } = state;
+interface UseAccuracyProps {
+  inputIndex: number;
+  correctCharacters: number;
+}
 
-  const accuracy = useMemo(() => {
+export const useAccuracy = ({
+  inputIndex,
+  correctCharacters,
+}: UseAccuracyProps) => {
+  // const { state } = useTypingContext();
+  const accuracyRef = useRef(0);
+  const previousInputIndex = usePrevious(inputIndex);
+
+  useEffect(() => {
+    // if (inputIndex !== previousInputIndex) {
+    console.log("input", inputIndex + 1, "cor", correctCharacters);
+
     const totalCharacters = inputIndex + 1;
-    if (correctCharacters > 0 && totalCharacters > 0) {
-      return Math.round((correctCharacters / totalCharacters) * 100);
+    if (
+      totalCharacters > 0 &&
+      correctCharacters > 0 &&
+      correctCharacters <= totalCharacters
+    ) {
+      accuracyRef.current = Math.round(
+        (correctCharacters / totalCharacters) * 100
+      );
     }
-    return 0;
+    //}
   }, [correctCharacters, inputIndex]);
 
-  return { accuracy };
+  return { accuracy: accuracyRef.current };
 };

@@ -9,20 +9,26 @@ import { useTypingContext } from "../context/TypingContext";
 import { useWPM } from "./hooks/useWPM";
 import { useAccuracy } from "./hooks/useAccuracy";
 
-export const Stats = () => {
-  const { state, textLength } = useTypingContext();
-  const { time, isPaused } = useTimer();
+interface StatsProps {
+  correctCharacters: number;
+  inputIndex: number;
+  inputArray: Array<string>;
+  textLength: number;
+}
+
+export const Stats = ({
+  correctCharacters,
+  inputIndex,
+  inputArray,
+  textLength,
+}: StatsProps) => {
+  // const { state, textLength } = useTypingContext();
+  const { formattedTime, isPaused, wpm } = useTimer({ correctCharacters });
   const percentComplete = usePercentComplete({
-    inputIndex: state.inputIndex,
+    inputIndex,
     textLength,
   });
-  const { wpm } = useWPM();
-  const { accuracy } = useAccuracy();
-
-  const formattedTime = useMemo(
-    () => new Date(time * 1000).toISOString().slice(11, 19),
-    [time]
-  );
+  const { accuracy } = useAccuracy({ correctCharacters, inputIndex });
 
   return (
     <>

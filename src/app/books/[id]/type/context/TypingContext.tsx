@@ -15,25 +15,22 @@ import {
   TypingState,
   TypingContextProps,
   countType,
+  TypingDispatchContextProps,
 } from "./types.d";
 import { reducer } from "./reducer";
 
 const TypingContext = createContext<TypingContextProps>({
   state: DEFAULT_STATE,
-  dispatch: () => {},
-  countChar: () => {},
-  updateInput: () => {},
   textLength: 0,
+});
+
+const TypingDispatchContext = createContext<TypingDispatchContextProps>({
+  dispatch: () => {},
 });
 
 interface TypingContextProviderProps {
   children: ReactNode;
   text: string;
-}
-
-interface countCharProps {
-  countType: countType;
-  characterCount: number;
 }
 
 export const TypingContextProvider = ({
@@ -43,39 +40,18 @@ export const TypingContextProvider = ({
   const [state, dispatch] = useReducer(reducer, DEFAULT_STATE);
   const textLength = useMemo(() => text.length, [text]);
 
-  const updateInput = useCallback(
-    ({
-      inputArray,
-      inputIndex,
-    }: {
-      inputArray: Array<string>;
-      inputIndex: number;
-    }) => {
-      dispatch({
-        type: actionTypes.updateInput,
-        inputArray,
-        inputIndex,
-      });
-    },
-    []
-  );
-
-  const countChar = useCallback(
-    ({ countType, characterCount }: countCharProps) => {
-      dispatch({
-        type: actionTypes.countChar,
-        countType,
-        characterCount,
-      });
-    },
-    []
-  );
-
-  const value = { state, dispatch, countChar, updateInput, textLength };
+  const value = { state, textLength };
+  const dispatchValue = { dispatch };
 
   return (
-    <TypingContext.Provider value={value}>{children}</TypingContext.Provider>
+    <TypingContext.Provider value={value}>
+      <TypingDispatchContext.Provider value={dispatchValue}>
+        {children}
+      </TypingDispatchContext.Provider>
+    </TypingContext.Provider>
   );
 };
 
 export const useTypingContext = () => useContext(TypingContext);
+
+export const useTypingDispatchContext = () => useContext(TypingDispatchContext);

@@ -1,15 +1,17 @@
-import { useMemo } from "react";
+import { useCallback, useRef } from "react";
 import { useTypingContext } from "../../context/TypingContext";
 
-export const useWPM = () => {
+export const useWPM = ({ time }: { time: number }) => {
   const { state } = useTypingContext();
-  const { correctCharacters, time } = state;
+  const correctCharactersRef = useRef(state.correctCharacters);
 
-  // Average word is 5 characters
-  const words = useMemo(() => correctCharacters / 5, [correctCharacters]);
-  const minutes = useMemo(() => time / 60, [time]);
+  // const { correctCharacters, time } = state;
 
-  const wpm = useMemo(() => Math.round(words / minutes) || 0, [words, minutes]);
+  const getWpm = useCallback(() => {
+    const words = correctCharactersRef.current / 5;
+    const minutes = time / 60;
+    return Math.round(words / minutes) || 0;
+  }, []);
 
-  return { wpm };
+  return { getWpm };
 };

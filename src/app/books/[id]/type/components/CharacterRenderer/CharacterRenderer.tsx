@@ -13,16 +13,23 @@ import { useTypingContext } from "../../context/TypingContext";
 import { styled } from "css-template-components/client";
 import { dummyIndex, dummyInput } from "../DummyInputB";
 import { useUpdateContextInput } from "../hooks/useUpdateContextInput";
+import { useCountCorrectCharacters } from "./hooks/useCountCorrectCharacters";
+import { Stats } from "../Stats";
+import { MobileStats } from "../MobileStats";
+import { useMediaQuery } from "react-responsive";
 
-export const CharacterRenderer = ({ text }: { text: string }) => {
-  const { updateInput } = useTypingContext();
+const CharacterRenderer = ({ text }: { text: string }) => {
   const [inputArray, setInputArray] = useState([""]);
   const [inputIndex, setInputIndex] = useState(-1);
+  const textLength = useMemo(() => text.length, [text]);
+  const isMobile = useMediaQuery({ maxWidth: 1000 });
+
   useUpdateContextInput({
-    setContextState: updateInput,
     inputArray,
     inputIndex,
   });
+
+  const { setMatchMap, correctCharacters } = useCountCorrectCharacters();
 
   // Chunk the input text to avoid rendering entire book text in input
   const currentValue = useMemo(
@@ -64,21 +71,63 @@ export const CharacterRenderer = ({ text }: { text: string }) => {
   );
 
   return (
-    <div>
-      <VirtualizedText
-        text={text}
-        inputIndex={inputIndex}
-        inputArray={inputArray}
-      />
-      <StyledInputContainer>
-        <AlwaysFocussedInput
-          value={currentValue}
-          onChange={handleOnInputChange}
+    <StyledFlexContainer>
+      <div>
+        <StyledTextContainer isMobile={isMobile}>
+          {!!isMobile && (
+            <MobileStats
+              correctCharacters={correctCharacters}
+              inputIndex={inputIndex}
+              inputArray={inputArray}
+              textLength={textLength}
+            />
+          )}
+          <VirtualizedText
+            text={text}
+            inputIndex={inputIndex}
+            inputArray={inputArray}
+            setMatchMap={setMatchMap}
+          />
+          <StyledInputContainer>
+            <AlwaysFocussedInput
+              value={currentValue}
+              onChange={handleOnInputChange}
+            />
+          </StyledInputContainer>
+        </StyledTextContainer>
+      </div>
+      {!isMobile && (
+        <Stats
+          correctCharacters={correctCharacters}
+          inputIndex={inputIndex}
+          inputArray={inputArray}
+          textLength={textLength}
         />
-      </StyledInputContainer>
-    </div>
+      )}
+    </StyledFlexContainer>
   );
 };
+
+const StyledFlexContainer = styled(
+  "div",
+  `
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  height: 100%;
+`
+);
+
+const StyledTextContainer = styled(
+  "div",
+  ({ isMobile }: { isMobile: boolean }) =>
+    `
+    width: ${isMobile ? "calc(100% - 1rem)" : "50vw"};
+    position: relative;
+    display: flex;
+    flex-direction: column;
+`
+);
 
 const StyledInputContainer = styled(
   "div",
@@ -89,3 +138,5 @@ const StyledInputContainer = styled(
   transform: translate(-50%, -50%);
 `
 );
+
+export default CharacterRenderer;

@@ -14,23 +14,23 @@ import isEmpty from "lodash/isEmpty";
 import { styled } from "css-template-components/client";
 import { theme } from "@/app/theme";
 import { Row } from "./Row";
-import { useCountCorrectCharacters } from "./hooks/useCountCorrectCharacters";
 
 interface VirtualizedTextProps {
   text: string;
   inputIndex: number;
   inputArray: Array<string>;
+  setMatchMap: ({ key, count }: { key: number; count: number }) => void;
 }
 
 const VirtualizedText: React.FC<VirtualizedTextProps> = ({
   text,
   inputIndex,
   inputArray,
+  setMatchMap,
 }: VirtualizedTextProps) => {
   const parentRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
   const [lines, setLines] = useState<any[]>([]);
-  const { setMatchMap } = useCountCorrectCharacters();
 
   const visibleStartIndexRef = useRef(0);
 
@@ -89,7 +89,7 @@ const VirtualizedText: React.FC<VirtualizedTextProps> = ({
     let currentLine = "";
     let currentIndex = 0; // Track the current index in the original string
 
-    words.forEach((word, wordIndex) => {
+    words.forEach((word) => {
       const testLine = currentLine.length > 0 ? `${currentLine} ${word}` : word;
       const testLineWidth = context.measureText(testLine).width;
 
@@ -157,7 +157,7 @@ const VirtualizedText: React.FC<VirtualizedTextProps> = ({
                   height={height}
                   itemCount={lines.length}
                   layout="vertical"
-                  overscanCount={2}
+                  overscanCount={2} // This prop is used here
                   style={{ color: theme["white"] }}
                   itemSize={60}
                   itemData={{
