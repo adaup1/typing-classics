@@ -1,6 +1,4 @@
 import { useEffect, useState, useRef, useMemo } from "react";
-import { useTypingDispatchContext, useTypingContext } from "../TypingContext";
-import { actionTypes } from "../types.d";
 
 export const useTimer = ({
   correctCharacters,
@@ -10,34 +8,41 @@ export const useTimer = ({
   const [time, setTime] = useState(0);
   const typingTimeout = useRef<NodeJS.Timeout | null>(null);
   const [isPaused, setIsPaused] = useState(true);
-  const { dispatch } = useTypingDispatchContext();
-  // const { state } = useTypingContext();
   const correctCharactersRef = useRef(correctCharacters);
+  const isPausedRef = useRef(isPaused); // Ref to track the latest isPaused value
+  const timeRef = useRef(0); // Ref to track the latest time value
   const [wpm, setWpm] = useState(0);
 
   useEffect(() => {
     correctCharactersRef.current = correctCharacters;
   }, [correctCharacters]);
 
+  // Sync the isPaused ref with state
+  useEffect(() => {
+    isPausedRef.current = isPaused;
+  }, [isPaused]);
+
   useEffect(() => {
     const handleKeyPress = () => {
-      setIsPaused(false);
+      setIsPaused(false); // Start the timer when key is pressed
       if (typingTimeout.current) {
         clearTimeout(typingTimeout.current);
       }
       typingTimeout.current = setTimeout(() => {
-        console.log("please");
-        setIsPaused(true);
+        setIsPaused(true); // Pause after 2 seconds of inactivity
       }, 2000);
     };
 
     window.addEventListener("keydown", handleKeyPress);
 
     const newTimerInterval = setInterval(() => {
-      if (!isPaused) {
-        setTime((prev) => prev + 1);
+      if (!isPausedRef.current) {
+        // Only update time when not paused
+        timeRef.current += 1;
+        setTime(timeRef.current); // Update the state based on ref
+
         const words = correctCharactersRef.current / 5;
-        const minutes = time / 60;
+        const minutes = timeRef.current / 60;
         setWpm(minutes > 0 ? Math.round(words / minutes) : 0);
       }
     }, 1000);
@@ -49,11 +54,7 @@ export const useTimer = ({
       }
       window.removeEventListener("keydown", handleKeyPress);
     };
-  }, [isPaused, time]);
-
-  // useEffect(() => {
-  //   dispatch({ type: actionTypes.setTimer, time });
-  // }, [dispatch]);
+  }, []);
 
   const formattedTime = useMemo(
     () => new Date(time * 1000).toISOString().slice(11, 19),

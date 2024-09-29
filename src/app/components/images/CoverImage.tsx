@@ -1,5 +1,4 @@
-import React from "react";
-import { styled } from "css-template-components/client";
+import { styled } from "css-template-components/server";
 import { theme } from "@/app/theme";
 
 export const CoverImage = ({
@@ -15,7 +14,7 @@ export const CoverImage = ({
 const StyledImgContainer = styled(
   "div",
   `
-    width: 18rem;
+    width: 20rem;
 `
 );
 

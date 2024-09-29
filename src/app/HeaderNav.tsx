@@ -1,15 +1,18 @@
 import { styled } from "css-template-components/server";
+import { theme } from "./theme";
+import Link from "next/link";
 
 export default function HeaderNav() {
   return (
     <StyledHeader>
       <StyledFlexContainer>
-        <div>Logo</div>
         <StyledNav>
-          <a href="#">Home</a>
-          <a href="#">About</a>
-          <a href="#">Contact</a>
-          <a href="#">Settings</a>
+          <StyledLink href="/">Home</StyledLink>
+          <StyledLink href="/">Books</StyledLink>
+        </StyledNav>
+        <StyledLogoContainer>Typing Classics</StyledLogoContainer>
+        <StyledNav>
+          <StyledLink href="/">Sign In</StyledLink>
         </StyledNav>
       </StyledFlexContainer>
     </StyledHeader>
@@ -20,8 +23,7 @@ const StyledHeader = styled(
   "div",
   `
     width: 100%;
-    padding: 1rem;
-    background-color: lightgray;
+    background-color: ${theme["white"]};
  `
 );
 
@@ -30,6 +32,15 @@ const StyledFlexContainer = styled(
   `
     display: flex;
     justify-content: space-between;
+    padding: 1rem;
+`
+);
+
+const StyledLogoContainer = styled(
+  "div",
+  `
+  color: ${theme["darkerPurple"]};
+  font-weight: 700;
 `
 );
 
@@ -37,7 +48,23 @@ const StyledNav = styled(
   "div",
   `
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     gap: 1rem;
+`
+);
+
+const StyledLink = styled(
+  Link,
+  `
+  a {
+    color: ${theme["darkerPurple"]};
+    text-decoration: none;
+
+   
+  }
+
+  :hover {
+    color: ${theme["gray"]};
+  }
 `
 );
