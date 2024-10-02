@@ -30,7 +30,9 @@ const VirtualizedText: React.FC<VirtualizedTextProps> = ({
 }: VirtualizedTextProps) => {
   const parentRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
-  const [lines, setLines] = useState<any[]>([]);
+  const [lines, setLines] = useState<
+    { lineFirstCharIndex: number; text: string }[]
+  >([]);
 
   const visibleStartIndexRef = useRef(0);
 
@@ -157,7 +159,7 @@ const VirtualizedText: React.FC<VirtualizedTextProps> = ({
                   height={height}
                   itemCount={lines.length}
                   layout="vertical"
-                  overscanCount={2} // This prop is used here
+                  overscanCount={2}
                   style={{ color: theme["white"] }}
                   itemSize={60}
                   itemData={{

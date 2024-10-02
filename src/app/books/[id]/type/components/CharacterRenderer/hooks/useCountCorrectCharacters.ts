@@ -1,4 +1,4 @@
-import { useState, useRef, useMemo, useEffect, useCallback } from "react";
+import { useState, useRef, useMemo, useCallback } from "react";
 
 export const useCountCorrectCharacters = () => {
   const matchRef = useRef(new Map());
@@ -31,10 +31,6 @@ export const useCountCorrectCharacters = () => {
     });
     return total;
   }, [matchMap]);
-
-  // useEffect(() => {
-  //   window.postMessage({ correctCharacters }, window.location.origin);
-  // }, [correctCharacters]);
 
   return {
     setMatchMap: handleSetMatchMap,

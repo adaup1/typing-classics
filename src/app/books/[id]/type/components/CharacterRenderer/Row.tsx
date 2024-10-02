@@ -8,6 +8,7 @@ import uniqueId from "lodash/uniqueId";
 import { styled } from "css-template-components/client";
 import { theme } from "@/app/theme";
 import { useFindChunk } from "./hooks/useFindChunk";
+import { useMatchCharacters } from "./hooks/useMatchCharacters";
 
 export const Row = ({ data, index, style }: ListChildComponentProps) => {
   const { text, lineFirstCharIndex } = useMemo(
@@ -29,7 +30,11 @@ export const Row = ({ data, index, style }: ListChildComponentProps) => {
       ),
     [data]
   );
+
   const { findCharacterLocation } = useFindChunk();
+  const { matchCharacters } = useMatchCharacters({
+    easySpecialCharacters: true,
+  });
 
   const applyExtraStyles = useMemo(
     () => index <= visibleStartIndex + 1,
@@ -65,11 +70,16 @@ export const Row = ({ data, index, style }: ListChildComponentProps) => {
               });
               const inputValue = result?.character || "";
 
+              const charactersMatch = matchCharacters({
+                inputCharacter: inputValue,
+                characterToMatch: character,
+              });
+
               if (
                 index === visibleStartIndex &&
                 currentCharIndex <= inputIndex
               ) {
-                if (character === inputValue) {
+                if (charactersMatch) {
                   currentMatches += 1;
                   if (currentCharIndex === inputIndex) {
                     handleSetMatchMap(currentMatches);
@@ -86,6 +96,7 @@ export const Row = ({ data, index, style }: ListChildComponentProps) => {
                         index={currentCharIndex}
                         inputValue={inputValue}
                         character={character}
+                        charactersMatch={charactersMatch}
                         id={`text-item-${currentCharIndex}`}
                       >
                         {character}
@@ -139,14 +150,21 @@ interface StyledSpanProps {
   inputValue: string;
   character: string;
   inputCharacter: string;
+  charactersMatch: boolean;
 }
 
 const StyledCharacter = styled(
   "div",
-  ({ index, inputValue, inputIndex, character }: StyledSpanProps) => `
+  ({
+    index,
+    inputValue,
+    inputIndex,
+    character,
+    charactersMatch,
+  }: StyledSpanProps) => `
     background-color: ${
       index <= inputIndex
-        ? character === inputValue
+        ? charactersMatch
           ? theme["green"]
           : theme["red"]
         : "transparent"
