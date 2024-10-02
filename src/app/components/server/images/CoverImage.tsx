@@ -2,19 +2,21 @@ import { styled } from "css-template-components/server";
 import { theme } from "@/app/theme";
 
 export const CoverImage = ({
-  ...props
+  width,
+  ...restOfProps
 }: React.ImgHTMLAttributes<HTMLImageElement>) => {
   return (
-    <StyledImgContainer>
-      <StyledImg {...props} />
+    <StyledImgContainer width={width}>
+      <StyledImg {...restOfProps} />
     </StyledImgContainer>
   );
 };
 
 const StyledImgContainer = styled(
   "div",
-  `
-    width: 20rem;
+  ({ width = "20rem" }: { width: string }) =>
+    `
+    width: ${width};
 `
 );
 

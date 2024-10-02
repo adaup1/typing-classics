@@ -1,13 +1,6 @@
 import { sql } from "@vercel/postgres";
 import get from "lodash/get";
-
-const minimizeString = (input: string) => {
-  return input
-    .replace(/\s+/g, " ")
-    .replace(/[“”]/g, '"')
-    .replace(/[‘’]/g, "'")
-    .trim();
-};
+import { minimizeBookText } from "./helpers/minimizeBookText";
 
 export const upgradeBookText = async () => {
   const bookCount = await sql`
@@ -25,7 +18,7 @@ export const upgradeBookText = async () => {
     const bookText = get(book, ["rows", 0, "text"]);
 
     if (bookText) {
-      const newText = minimizeString(bookText);
+      const newText = minimizeBookText(bookText);
 
       await sql`
           UPDATE tc_books

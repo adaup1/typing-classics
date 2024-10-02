@@ -6,4 +6,10 @@ export type Book = {
   author_last_name?: string;
   cover_image_url?: string;
   text?: string;
+  word_count?: number;
 };
+
+export enum SortOrder {
+  titleAsc = "titleAsc",
+  titleDesc = "titleDesc",
+}

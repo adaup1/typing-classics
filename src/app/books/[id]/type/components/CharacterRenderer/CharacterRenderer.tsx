@@ -8,7 +8,7 @@ import React, {
   useRef,
 } from "react";
 import VirtualizedText from "@/app/books/[id]/type/components/CharacterRenderer/VirtualizedText";
-import { AlwaysFocussedInput } from "@/app/components/inputs";
+import { AlwaysFocussedInput } from "@/app/components/client/inputs/AlwaysFocussedInput";
 import { useTypingContext } from "../../context/TypingContext";
 import { styled } from "css-template-components/client";
 import { dummyIndex, dummyInput } from "../DummyInputB";
@@ -38,7 +38,7 @@ const CharacterRenderer = ({ text }: { text: string }) => {
   );
 
   const handleOnInputChange = useCallback(
-    (e: { target: { value: any } }) => {
+    (e) => {
       const { value } = e.target;
       const currentArrayIndex = inputArray.length - 1;
       const currentChunk = inputArray[currentArrayIndex];

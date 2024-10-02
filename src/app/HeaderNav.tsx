@@ -1,6 +1,8 @@
 import { styled } from "css-template-components/server";
 import { theme } from "./theme";
 import Link from "next/link";
+import { faUser } from "@fortawesome/free-regular-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function HeaderNav() {
   return (
@@ -8,11 +10,12 @@ export default function HeaderNav() {
       <StyledFlexContainer>
         <StyledNav>
           <StyledLink href="/">Home</StyledLink>
-          <StyledLink href="/">Books</StyledLink>
+          <StyledLink href="/books">Books</StyledLink>
         </StyledNav>
         <StyledLogoContainer>Typing Classics</StyledLogoContainer>
         <StyledNav>
           <StyledLink href="/">Sign In</StyledLink>
+          {/* <FontAwesomeIcon icon={faUser} color={theme["darkerPurple"]} /> */}
         </StyledNav>
       </StyledFlexContainer>
     </StyledHeader>
@@ -59,8 +62,6 @@ const StyledLink = styled(
   a {
     color: ${theme["darkerPurple"]};
     text-decoration: none;
-
-   
   }
 
   :hover {

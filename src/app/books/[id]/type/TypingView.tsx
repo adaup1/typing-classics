@@ -1,6 +1,6 @@
 import { styled } from "css-template-components/server";
 import { Book } from "@/app/lib/types";
-import { CoverImage } from "@/app/components/images/CoverImage";
+import { CoverImage } from "@/app/components/server/images/CoverImage";
 import dynamic from "next/dynamic";
 import { CharacterRenderer } from "./components/CharacterRenderer";
 

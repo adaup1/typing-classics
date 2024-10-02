@@ -2,7 +2,7 @@
 
 import React, { useRef, useEffect, useCallback } from "react";
 
-const blockAction = (e: { preventDefault: () => void }) => {
+const blockAction = (e) => {
   e.preventDefault();
   return false;
 };
@@ -33,7 +33,7 @@ export const AlwaysFocussedInput = (
       }
     };
 
-    const handleKeyDown = (event: KeyboardEvent) => {
+    const handleKeyDown = () => {
       if (inputRef.current) {
         const length = inputRef.current.value.length;
         inputRef.current.setSelectionRange(length, length);
