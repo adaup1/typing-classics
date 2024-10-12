@@ -1,5 +1,6 @@
 import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
+import get from "lodash/get";
 
 export enum SortOrder {
   titleAsc = "titleAsc",
@@ -41,8 +42,27 @@ export async function GET(request: Request) {
       result = await sql.query(query, [limit, offset]);
     }
 
-    return NextResponse.json({ result: result.rows }, { status: 200 });
+    let total;
+    if (q) {
+      const query = `
+        SELECT count(book_id)
+        FROM tc_books
+        WHERE to_tsvector('english', lower(title) || ' ' || lower(author_first_name) || ' ' || lower(author_last_name)) @@ phraseto_tsquery('english', lower($1))
+      `;
+      total = await sql.query(query, [q]);
+    } else {
+      const query = `
+        SELECT count(book_id)
+        FROM tc_books
+      `;
+      total = await sql.query(query, []);
+    }
+
+    return NextResponse.json(
+      { result: result.rows, total: get(total, ["rows", 0, "count"], 0) },
+      { status: 200 }
+    );
   } catch (error) {
-    return NextResponse.json({ error: error.message }, { status: 500 });
+    return NextResponse.json({ error }, { status: 500 });
   }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState, useMemo } from "react";
+import { useCallback, useState, useMemo, useEffect } from "react";
 import { SortOrder } from "@/app/lib/types.d";
 import { styled } from "css-template-components/client";
 import { useBooks } from "@/app/lib/queries/hooks/useBooks";
@@ -13,10 +13,11 @@ import { BooksFilters } from "./BooksFilters";
 
 const PAGE_SIZE = 10;
 
-export const BooksSort = ({ totalBooks }: { totalBooks: number }) => {
+export const BooksSort = () => {
   const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.titleAsc);
   const [searchInput, setSearchInput] = useState("");
   const [page, setPage] = useState(1);
+  const [totalBooks, setTotalBooks] = useState(0);
   const [debouncedSearchInput, setDebouncedSearchInput] = useState(searchInput);
   const setDebouncedSearch = useCallback((value) => {
     setDebouncedSearchInput(value);
@@ -30,18 +31,22 @@ export const BooksSort = ({ totalBooks }: { totalBooks: number }) => {
     [offset, totalBooks]
   );
 
-  const { data, loading } = useBooks({
+  const { data, total, loading } = useBooks({
     sortOrder,
     q: debouncedSearchInput,
     limit: PAGE_SIZE,
     offset: offset,
   });
 
+  useEffect(() => {
+    setTotalBooks(total);
+  }, [total]);
+
   const handleNextPage = useCallback(() => {
     if (!disableNextPage) {
       setPage((prev) => prev + 1);
     }
-  }, []);
+  }, [disableNextPage]);
 
   const handleLastPage = useCallback(() => {
     if (page > 1) {
