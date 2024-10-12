@@ -16,9 +16,6 @@ export const useAccuracy = ({
   const previousInputIndex = usePrevious(inputIndex);
 
   useEffect(() => {
-    // if (inputIndex !== previousInputIndex) {
-    console.log("input", inputIndex + 1, "cor", correctCharacters);
-
     const totalCharacters = inputIndex + 1;
     if (
       totalCharacters > 0 &&

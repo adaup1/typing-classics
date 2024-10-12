@@ -3,9 +3,9 @@
 import { useMemo } from "react";
 import { theme } from "@/app/theme";
 import { styled } from "css-template-components/client";
-import { useTimer } from "../context/hooks.ts/useTimer";
-import { useAccuracy } from "./hooks/useAccuracy";
-import { usePercentComplete } from "./hooks/usePercentComplete";
+import { useTimer } from "../../../context/hooks.ts/useTimer";
+import { useAccuracy } from "../../hooks/useAccuracy";
+import { usePercentComplete } from "../../hooks/usePercentComplete";
 import { faGear } from "@fortawesome/free-solid-svg-icons/faGear";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 

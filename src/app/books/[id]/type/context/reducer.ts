@@ -30,6 +30,10 @@ export const reducer = (state: any, action: reducerProps) => {
       return state;
     case actionTypes.startTimers:
       return state;
+    case actionTypes.easySpecialCharacters:
+      console.log("easych", action.easySpecialCharacters);
+
+      return { ...state, easySpecialCharacters: action.easySpecialCharacters };
     default:
       throw new Error();
   }

@@ -17,6 +17,10 @@ export const Row = ({ data, index, style }: ListChildComponentProps) => {
   );
   const inputIndex = useMemo(() => get(data, "inputIndex", -1), [data]);
   const inputArray = useMemo(() => get(data, "inputArray", [""]), [data]);
+  const easySpecialCharacters = useMemo(
+    () => get(data, "easySpecialCharacters", false),
+    [data]
+  );
   const visibleStartIndex = useMemo(
     () => get(data, "visibleStartIndex", 0),
     [data]
@@ -33,7 +37,7 @@ export const Row = ({ data, index, style }: ListChildComponentProps) => {
 
   const { findCharacterLocation } = useFindChunk();
   const { matchCharacters } = useMatchCharacters({
-    easySpecialCharacters: true,
+    easySpecialCharacters,
   });
 
   const applyExtraStyles = useMemo(
@@ -88,9 +92,9 @@ export const Row = ({ data, index, style }: ListChildComponentProps) => {
               }
 
               return (
-                <>
+                <div key={uniqueId()}>
                   {applyExtraStyles ? (
-                    <StyledInnerFlexContainer key={uniqueId()}>
+                    <StyledInnerFlexContainer>
                       <StyledCharacter
                         inputIndex={inputIndex}
                         index={currentCharIndex}
@@ -115,7 +119,7 @@ export const Row = ({ data, index, style }: ListChildComponentProps) => {
                   ) : (
                     <div id={`text-item-${currentCharIndex}`}>{character}</div>
                   )}
-                </>
+                </div>
               );
             })}
           </>

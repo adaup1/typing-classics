@@ -29,4 +29,5 @@ body {
   color: #fdfdfd;
   padding: none;
   margin: none;
+  overscroll-behavior: none;
 }

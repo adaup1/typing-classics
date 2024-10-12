@@ -14,13 +14,16 @@ import { styled } from "css-template-components/client";
 import { dummyIndex, dummyInput } from "../DummyInputB";
 import { useUpdateContextInput } from "../hooks/useUpdateContextInput";
 import { useCountCorrectCharacters } from "./hooks/useCountCorrectCharacters";
-import { Stats } from "../Stats";
-import { MobileStats } from "../MobileStats";
+import { Stats } from "./Stats/Stats";
+import { MobileStats } from "./Stats/MobileStats";
 import { useMediaQuery } from "react-responsive";
+import { EasySpecialCharacters } from "./EasySpecialCharacters";
+import { TypingContextProvider } from "../../context/TypingContext";
 
 const CharacterRenderer = ({ text }: { text: string }) => {
   const [inputArray, setInputArray] = useState([""]);
   const [inputIndex, setInputIndex] = useState(-1);
+  const [easySpecialaCharacters, setEasySpecialChatacters] = useState(false);
   const textLength = useMemo(() => text.length, [text]);
   const isMobile = useMediaQuery({ maxWidth: 1000 });
 
@@ -87,6 +90,7 @@ const CharacterRenderer = ({ text }: { text: string }) => {
             inputIndex={inputIndex}
             inputArray={inputArray}
             setMatchMap={setMatchMap}
+            easySpecialCharacters={easySpecialaCharacters}
           />
           <StyledInputContainer>
             <AlwaysFocussedInput
@@ -97,12 +101,18 @@ const CharacterRenderer = ({ text }: { text: string }) => {
         </StyledTextContainer>
       </div>
       {!isMobile && (
-        <Stats
-          correctCharacters={correctCharacters}
-          inputIndex={inputIndex}
-          inputArray={inputArray}
-          textLength={textLength}
-        />
+        <div>
+          <Stats
+            correctCharacters={correctCharacters}
+            inputIndex={inputIndex}
+            inputArray={inputArray}
+            textLength={textLength}
+          />
+          <EasySpecialCharacters
+            onChange={setEasySpecialChatacters}
+            value={easySpecialaCharacters}
+          />
+        </div>
       )}
     </StyledFlexContainer>
   );

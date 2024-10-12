@@ -1,22 +1,19 @@
 import { styled } from "css-template-components/server";
 import { theme } from "./theme";
 import Link from "next/link";
-import { faUser } from "@fortawesome/free-regular-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function HeaderNav() {
   return (
     <StyledHeader>
       <StyledFlexContainer>
-        <StyledNav>
+        <StyledNavLeft>
           <StyledLink href="/">Home</StyledLink>
           <StyledLink href="/books">Books</StyledLink>
-        </StyledNav>
+        </StyledNavLeft>
         <StyledLogoContainer>Typing Classics</StyledLogoContainer>
-        <StyledNav>
+        <StyledNavRight>
           <StyledLink href="/">Sign In</StyledLink>
-          {/* <FontAwesomeIcon icon={faUser} color={theme["darkerPurple"]} /> */}
-        </StyledNav>
+        </StyledNavRight>
       </StyledFlexContainer>
     </StyledHeader>
   );
@@ -35,6 +32,7 @@ const StyledFlexContainer = styled(
   `
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 1rem;
 `
 );
@@ -42,16 +40,27 @@ const StyledFlexContainer = styled(
 const StyledLogoContainer = styled(
   "div",
   `
-  color: ${theme["darkerPurple"]};
-  font-weight: 700;
+    color: ${theme["darkerPurple"]};
+    font-weight: 700;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: default;
 `
 );
 
-const StyledNav = styled(
+const StyledNavLeft = styled(
   "div",
   `
     display: flex;
-    justify-content: space-between;
+    gap: 1rem;
+`
+);
+
+const StyledNavRight = styled(
+  "div",
+  `
+    display: flex;
     gap: 1rem;
 `
 );
@@ -64,8 +73,8 @@ const StyledLink = styled(
     text-decoration: none;
   }
 
-  :hover {
-    color: ${theme["gray"]};
-  }
+  // &:hover {
+  //   color: ${theme["gray"]};
+  // }
 `
 );

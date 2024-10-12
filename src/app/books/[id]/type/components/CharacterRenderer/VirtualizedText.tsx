@@ -20,6 +20,7 @@ interface VirtualizedTextProps {
   inputIndex: number;
   inputArray: Array<string>;
   setMatchMap: ({ key, count }: { key: number; count: number }) => void;
+  easySpecialCharacters: boolean;
 }
 
 const VirtualizedText: React.FC<VirtualizedTextProps> = ({
@@ -27,6 +28,7 @@ const VirtualizedText: React.FC<VirtualizedTextProps> = ({
   inputIndex,
   inputArray,
   setMatchMap,
+  easySpecialCharacters,
 }: VirtualizedTextProps) => {
   const parentRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
@@ -168,6 +170,7 @@ const VirtualizedText: React.FC<VirtualizedTextProps> = ({
                     inputArray,
                     visibleStartIndex: visibleStartIndexRef.current,
                     setMatchMap,
+                    easySpecialCharacters,
                   }}
                   width={width}
                   ref={innerRef}

@@ -14,6 +14,7 @@ export enum actionTypes {
   autoPauseTimerReset = "autoPauseTimerReset",
   stopTimers = "stopTimers",
   startTimers = "startTimers",
+  easySpecialCharacters = "easySpecialCharacters",
 }
 
 export enum countType {
@@ -36,6 +37,7 @@ export interface reducerProps {
   autoPauseSecond?: number;
   autoPauseTimerInterval?: number;
   timersRunning?: boolean;
+  easySpecialCharacters?: boolean;
 }
 
 export interface TypingState {
@@ -50,6 +52,7 @@ export interface TypingState {
   autoPauseSeconds: number;
   autoPauseTimerInterval?: number;
   timersRunning: boolean;
+  easySpecialCharacters: boolean;
 }
 
 export const DEFAULT_STATE: TypingState = {
@@ -64,11 +67,11 @@ export const DEFAULT_STATE: TypingState = {
   autoPauseSeconds: 0,
   autoPauseTimerInterval: 0,
   timersRunning: false,
+  easySpecialCharacters: false,
 };
 
 export interface TypingContextProps {
   state: TypingState;
-  textLength: number;
 }
 
 export interface TypingDispatchContextProps {

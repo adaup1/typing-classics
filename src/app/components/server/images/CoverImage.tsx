@@ -14,7 +14,7 @@ export const CoverImage = ({
 
 const StyledImgContainer = styled(
   "div",
-  ({ width = "20rem" }: { width: string }) =>
+  ({ width = "18rem" }: { width: string }) =>
     `
     width: ${width};
 `

@@ -3,11 +3,11 @@
 import { useMemo } from "react";
 import { theme } from "@/app/theme";
 import { styled } from "css-template-components/client";
-import { useTimer } from "../context/hooks.ts/useTimer";
-import { usePercentComplete } from "./hooks/usePercentComplete";
-import { useTypingContext } from "../context/TypingContext";
-import { useWPM } from "./hooks/useWPM";
-import { useAccuracy } from "./hooks/useAccuracy";
+import { useTimer } from "../../../context/hooks.ts/useTimer";
+import { usePercentComplete } from "../../hooks/usePercentComplete";
+import { useTypingContext } from "../../../context/TypingContext";
+import { useWPM } from "../../hooks/useWPM";
+import { useAccuracy } from "../../hooks/useAccuracy";
 
 interface StatsProps {
   correctCharacters: number;
@@ -58,6 +58,7 @@ const StyledContainer = styled(
     padding: 1rem;
     position: relative
     z-index: 1;
+    cursor: default;
 `
 );
 

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { styled } from "css-template-components/client";
 import { theme } from "@/app/theme";
 import { CoverImage } from "@/app/components/client/images/CoverImage";
@@ -39,10 +39,15 @@ export const BookCard = ({
           height={height}
         />
         <StyledInnerContainer width={width} height={height} isMobile={isMobile}>
+          <StyledInnerOverlay className="innerOverlay">
+            <StyledWordCount
+              className="wordCount"
+              isMobile={isMobile}
+            >{`Ready to type ${book.word_count} words?`}</StyledWordCount>
+          </StyledInnerOverlay>
           <StyledTitle isMobile={isMobile}>{book.title_short}</StyledTitle>
           <StyledAuthor isMobile={isMobile}>{author}</StyledAuthor>
         </StyledInnerContainer>
-        {/* <StyledWordCount>{`Ready to type ${book.word_count} words?`}</StyledWordCount> */}
       </Link>
     </StyledContainer>
   );
@@ -50,7 +55,7 @@ export const BookCard = ({
 
 const StyledContainer = styled(
   "div",
-  ({ width }) =>
+  ({ width }: { width: string }) =>
     `
   width: ${width};
   text-align: center;
@@ -61,7 +66,15 @@ const StyledContainer = styled(
 
 const StyledInnerContainer = styled(
   "div",
-  ({ width, height, isMobile }) =>
+  ({
+    width,
+    height,
+    isMobile,
+  }: {
+    width: string;
+    height: string;
+    isMobile: boolean;
+  }) =>
     `
   position: absolute;
   top: 0;
@@ -71,12 +84,43 @@ const StyledInnerContainer = styled(
   width: ${width};
   height: ${height};
   border-radius: 0.5rem; 
+
+  >.wordCount {
+    display: none;
+  }
+
+  >.innerOverlay {
+     opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+  }
+
+  &:hover {
+    >.wordCount {
+      display: block;
+    }
+    >.innerOverlay {
+      opacity: 1;
+    }
+  }
+`
+);
+
+const StyledInnerOverlay = styled(
+  "div",
+  `
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  z-index: 6;
+  background-color: ${theme["ultraDarkPurple"]};
+  transition: opacity 1s ease-in-out;
+  border-radius: 0.5rem;
 `
 );
 
 const StyledTitle = styled(
   "div",
-  ({ isMobile }) =>
+  ({ isMobile }: { isMobile: boolean }) =>
     `
   font-size: ${isMobile ? "0.75rem" : "1rem"};
   width: 95%;
@@ -93,7 +137,7 @@ const StyledTitle = styled(
 
 const StyledAuthor = styled(
   "div",
-  ({ isMobile }) =>
+  ({ isMobile }: { isMobile: boolean }) =>
     `
     width: 95%;
     padding: 0.5rem;
@@ -108,20 +152,19 @@ const StyledAuthor = styled(
   `
 );
 
-// const StyledWordCount = styled(
-//   "div",
-//   `
-//   color: ${theme["white"]};
-//   font-weight: 700;
-
-//   width: 12rem;
-//   position: absolute;
-//   top: -50%;
-//   left: 50%;
-//   transform: translate(-50%, -50%);
-//   z-index: 8;
-
-//   display: none;
-
-//   `
-// );
+const StyledWordCount = styled(
+  "div",
+  ({ isMobile }) =>
+    `
+  color: ${theme["white"]};
+  font-weight: 700;
+  font-size: ${isMobile ? "0.75rem" : "1rem"};
+  width: 70%;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 8;
+  padding: 0.5rem;
+  `
+);

@@ -21,7 +21,6 @@ import { reducer } from "./reducer";
 
 const TypingContext = createContext<TypingContextProps>({
   state: DEFAULT_STATE,
-  textLength: 0,
 });
 
 const TypingDispatchContext = createContext<TypingDispatchContextProps>({
@@ -30,17 +29,14 @@ const TypingDispatchContext = createContext<TypingDispatchContextProps>({
 
 interface TypingContextProviderProps {
   children: ReactNode;
-  text: string;
 }
 
 export const TypingContextProvider = ({
   children,
-  text = "",
 }: TypingContextProviderProps) => {
   const [state, dispatch] = useReducer(reducer, DEFAULT_STATE);
-  const textLength = useMemo(() => text.length, [text]);
-
-  const value = { state, textLength };
+  console.log("the state", state);
+  const value = { state };
   const dispatchValue = { dispatch };
 
   return (
