@@ -18,5 +18,6 @@ const StyledContainer = styled(
   `
   background: ${theme["ultraDarkPurple"]};
   padding-bottom: 2rem;
+  padding-top: 1rem;
 `
 );

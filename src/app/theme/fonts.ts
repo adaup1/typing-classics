@@ -1,5 +1,4 @@
-import { Anonymous_Pro } from "next/font/google";
-import { Roboto_Mono } from "next/font/google";
+import { Anonymous_Pro, Nunito, Roboto_Mono } from "next/font/google";
 
 export const anonymousPro = Anonymous_Pro({
   weight: "400",
@@ -7,5 +6,9 @@ export const anonymousPro = Anonymous_Pro({
 });
 
 export const robotoMono = Roboto_Mono({
+  subsets: ["latin-ext"],
+});
+
+export const nunito = Nunito({
   subsets: ["latin"],
 });

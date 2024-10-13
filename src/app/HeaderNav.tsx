@@ -14,7 +14,7 @@ export default function HeaderNav() {
           <StyledLogo>Typing Classics</StyledLogo>
         </StyledLogoLink>
         <StyledNavRight>
-          <StyledLink href="/">Sign In</StyledLink>
+          {/* <StyledLink href="/">Sign In</StyledLink> */}
         </StyledNavRight>
       </StyledFlexContainer>
     </StyledHeader>

@@ -11,7 +11,7 @@ export const useWPM = ({ time }: { time: number }) => {
     const words = correctCharactersRef.current / 5;
     const minutes = time / 60;
     return Math.round(words / minutes) || 0;
-  }, []);
+  }, [time]);
 
   return { getWpm };
 };

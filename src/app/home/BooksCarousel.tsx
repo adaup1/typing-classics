@@ -11,7 +11,7 @@ export const BooksCarousel = async () => {
   const books = await getHotBooks();
   return (
     <StyledContainer>
-      <StyledLabelContainer>What's hot?</StyledLabelContainer>
+      <StyledLabelContainer>{`What's hot?`}</StyledLabelContainer>
       <StyledBooksContainer>
         {map(books, (book) => (
           <BookCard book={book} isMobile={false} />

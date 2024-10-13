@@ -2,10 +2,10 @@ import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
 import get from "lodash/get";
 
-export enum SortOrder {
-  titleAsc = "titleAsc",
-  titleDesc = "titleDesc",
-}
+// export enum SortOrder {
+//   titleAsc = "titleAsc",
+//   titleDesc = "titleDesc",
+// }
 
 const ORDER_SQL_MAP = {
   titleAsc: "title ASC",
@@ -14,7 +14,7 @@ const ORDER_SQL_MAP = {
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const sortOrder = searchParams.get("sortOrder") || SortOrder.titleAsc;
+  const sortOrder = searchParams.get("sortOrder") || "titleAsc";
   const limit = parseInt(searchParams.get("limit") || "10", 10);
   const offset = parseInt(searchParams.get("offset") || "0", 10);
   const q = searchParams.get("q") || "";

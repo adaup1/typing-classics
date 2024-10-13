@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import get from "lodash/get";
 
 export const useFetch = (url: string) => {
   const [data, setData] = useState(null);
@@ -16,7 +15,7 @@ export const useFetch = (url: string) => {
         const result = await response.json();
         setData(result);
       } catch (error) {
-        setError(error);
+        // setError(error);
       } finally {
         setLoading(false);
       }

@@ -41,7 +41,10 @@ export const BooksFilters = ({
   disableNextPage,
   disableLastPage,
 }: BooksFiltersProps) => {
-  const handleOnChange = useCallback((e) => setSortOrder(e.target.value), []);
+  const handleOnChange = useCallback(
+    (e) => setSortOrder(e.target.value),
+    [setSortOrder]
+  );
 
   const handleInputChange = useCallback(
     (e) => {
