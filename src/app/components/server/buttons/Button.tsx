@@ -1,18 +1,20 @@
-import { styled } from "css-template-components/client";
+import { styled } from "css-template-components/server";
 import { theme } from "@/app/theme";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   text: string;
   version?: string;
+  disabled?: boolean;
 }
 
 export const Button = ({
   text,
   version = "primary",
+  disabled = false,
   ...restOfProps
 }: ButtonProps) => {
   return (
-    <StyledButton version={version} {...restOfProps}>
+    <StyledButton version={version} disabled={disabled} {...restOfProps}>
       {text}
     </StyledButton>
   );
@@ -39,10 +41,20 @@ const StyledButton = styled(
 
     // default to primary
     return `
-        color: ${theme["white"]};
-        background: ${theme["darkerPurple"]};
+        color: ${disabled ? theme["ultraDarkPurple"] : theme["darkerPurple"]};
+        background: ${disabled ? theme["gray"] : theme["white"]};
         font-family: inherit;
-        font-size: 1rem;   
+        font-size: 1rem;  
+        border: none; 
+        padding: 0.5rem;
+        font-weight: 500;
+        border-radius: 0.5rem;
+        cursor: ${disabled ? "default" : "pointer"};
+        filter: drop-shadow(0px 8px 4px ${theme["ultraDarkPurple"]});
+
+        &:hover {
+            color: ${theme["gray"]}; 
+        }
     `;
   }
 );

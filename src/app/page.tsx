@@ -1,20 +1,22 @@
 import { styled } from "css-template-components/server";
-import HeaderNav from "./HeaderNav";
+import { theme } from "./theme";
+import { About, BooksCarousel } from "./home";
 
 export default function Home() {
   return (
     <>
-      <HeaderNav />
-      <StyledDiv name="frank">Hello there</StyledDiv>
-      <StyledDiv name="dave">Hello there</StyledDiv>
+      <BooksCarousel />
+      <StyledContainer>
+        <About />
+      </StyledContainer>
     </>
   );
 }
 
-const StyledDiv = styled(
+const StyledContainer = styled(
   "div",
-  ({ name }) =>
-    `
-  background: ${name === "frank" ? "blue" : "yellow"};
+  `
+  background: ${theme["ultraDarkPurple"]};
+  padding-bottom: 2rem;
 `
 );

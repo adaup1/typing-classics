@@ -59,7 +59,6 @@ const StyledContainer = styled(
     `
   width: ${width};
   text-align: center;
-  margin-bottom: 1rem;
   position: relative;
 `
 );

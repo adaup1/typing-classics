@@ -3,6 +3,7 @@
 import { useCallback, useState, useMemo, useEffect } from "react";
 import { SortOrder } from "@/app/lib/types.d";
 import { styled } from "css-template-components/client";
+import { theme } from "@/app/theme";
 import { useBooks } from "@/app/lib/queries/hooks/useBooks";
 import { useDebounce } from "@/app/helpers/hooks/useDebounce";
 import map from "lodash/map";
@@ -10,6 +11,7 @@ import { BookCard } from "./BookCard";
 import uniqueId from "lodash/uniqueId";
 import { useMediaQuery } from "react-responsive";
 import { BooksFilters } from "./BooksFilters";
+import { BooksPagination } from "./BooksPagination";
 
 const PAGE_SIZE = 10;
 
@@ -66,7 +68,6 @@ export const BooksSort = () => {
         setSortOrder={setSortOrder}
         disableNextPage={disableNextPage}
         disableLastPage={page <= 1}
-        setPage={setPage}
       />
       <StyledOuterContainer>
         <StyledBooksContainer>
@@ -81,6 +82,14 @@ export const BooksSort = () => {
             ))}
         </StyledBooksContainer>
       </StyledOuterContainer>
+      <StyledPaginationContainer>
+        <BooksPagination
+          handleLastPage={handleLastPage}
+          handleNextPage={handleNextPage}
+          disableLastPage={page <= 1}
+          disableNextPage={disableNextPage}
+        />
+      </StyledPaginationContainer>
     </StyledContainer>
   );
 };
@@ -107,6 +116,28 @@ const StyledBooksContainer = styled(
   justify-content: center;
   max-width: 1200px;
   width: fit-content;
-  gap: 1rem;  
+  gap: 1rem;
+  margin-bottom: 1rem;
+  height: 100%;
+`
+);
+
+const StyledPaginationContainer = styled(
+  "div",
+  `
+  width: 100%;
+  padding-top: 0.5rem;
+  background: ${theme["ultraDarkPurple"]};
+`
+);
+
+const BodyContainer = styled(
+  "div",
+  `
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: space-between;
 `
 );

@@ -10,7 +10,9 @@ export default function HeaderNav() {
           <StyledLink href="/">Home</StyledLink>
           <StyledLink href="/books">Books</StyledLink>
         </StyledNavLeft>
-        <StyledLogoContainer>Typing Classics</StyledLogoContainer>
+        <StyledLogoLink href="/">
+          <StyledLogo>Typing Classics</StyledLogo>
+        </StyledLogoLink>
         <StyledNavRight>
           <StyledLink href="/">Sign In</StyledLink>
         </StyledNavRight>
@@ -22,6 +24,7 @@ export default function HeaderNav() {
 const StyledHeader = styled(
   "div",
   `
+    height: 3.5rem;
     width: 100%;
     background-color: ${theme["white"]};
  `
@@ -37,15 +40,26 @@ const StyledFlexContainer = styled(
 `
 );
 
-const StyledLogoContainer = styled(
-  "div",
+const StyledLogoLink = styled(
+  Link,
   `
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+
+  > a {
+    text-decoration: none;
     color: ${theme["darkerPurple"]};
-    font-weight: 700;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    cursor: default;
+  }
+  
+`
+);
+
+const StyledLogo = styled(
+  "h1",
+  `
+  font-weight: 700;
+  font-size: 1.5rem;
 `
 );
 
@@ -71,10 +85,11 @@ const StyledLink = styled(
   a {
     color: ${theme["darkerPurple"]};
     text-decoration: none;
+    font-size: 1.25rem;
   }
 
-  // &:hover {
-  //   color: ${theme["gray"]};
-  // }
+  &:hover {
+    color: ${theme["gray"]};
+  }
 `
 );

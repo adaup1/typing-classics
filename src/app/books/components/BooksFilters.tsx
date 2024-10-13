@@ -5,7 +5,7 @@ import { SortOrder } from "@/app/lib/types.d";
 import { styled } from "css-template-components/client";
 import { theme } from "@/app/theme";
 import { Select } from "@/app/components/client/dropdowns";
-import { Button } from "@/app/components/client/buttons/Button";
+import { BooksPagination } from "./BooksPagination";
 
 interface BooksFiltersProps {
   setSortOrder: (arg: SortOrder) => void;
@@ -17,7 +17,6 @@ interface BooksFiltersProps {
   handleLastPage: () => void;
   disableNextPage: boolean;
   disableLastPage: boolean;
-  setPage: (arg: number) => void;
 }
 
 const OPTIONS = [
@@ -41,7 +40,6 @@ export const BooksFilters = ({
   debouncedSetSearchInput,
   disableNextPage,
   disableLastPage,
-  setPage,
 }: BooksFiltersProps) => {
   const handleOnChange = useCallback((e) => setSortOrder(e.target.value), []);
 
@@ -71,20 +69,12 @@ export const BooksFilters = ({
           />
         </StyledSelectContainer>
       </StyledFlexContainer>
-      <StyledFlexContainer>
-        <Button
-          onClick={handleLastPage}
-          text="< Last Page"
-          version="secondary"
-          disabled={disableLastPage}
-        />
-        <Button
-          onClick={handleNextPage}
-          text="Next Page >"
-          version="secondary"
-          disabled={disableNextPage}
-        />
-      </StyledFlexContainer>
+      <BooksPagination
+        handleLastPage={handleLastPage}
+        handleNextPage={handleNextPage}
+        disableLastPage={disableLastPage}
+        disableNextPage={disableNextPage}
+      />
     </StyledContainer>
   );
 };
@@ -98,6 +88,7 @@ const StyledContainer = styled(
   padding-top: 1rem;
 `
 );
+
 const StyledFlexContainer = styled(
   "div",
   `
@@ -121,7 +112,6 @@ const StyledInput = styled(
   &:focus-visible {
     outline-color: ${theme["purple"]};
   }
-  
 `
 );
 

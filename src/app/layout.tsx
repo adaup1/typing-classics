@@ -1,6 +1,5 @@
 import "@/app/theme/global.css";
 import type { Metadata } from "next";
-import Head from "next/head";
 import { robotoMono } from "./theme/fonts";
 import HeaderNav from "./HeaderNav";
 import Footer from "./Footer";
