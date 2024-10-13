@@ -1,43 +1,41 @@
-"use client";
+import { styled } from "css-template-components/server";
+import { Book } from "@/app/lib/types";
+import { CoverImage } from "@/app/components/server/images/CoverImage";
+import dynamic from "next/dynamic";
+import { CharacterRenderer } from "./components/CharacterRenderer";
 
-import { useCallback } from "react";
-import { actionTypes, countType } from "./context/types.d";
-import { CharacterRenderer } from "./NewCharacterRenderer";
-import {
-  withTypingContextProvider,
-  useTypingContext,
-} from "./context/TypingContext";
-
-const TypingView = ({ text }: { text: string }) => {
-  const { state, dispatch, countChar } = useTypingContext();
-
-  const onCountAllChar = useCallback(() => {
-    countChar({
-      countType: countType.allCharacters,
-      characterCount: state.correctCharacters + 1,
-    });
-  }, [countChar, state.correctCharacters]);
-
-  const onCountCorrectChar = useCallback(() => {
-    countChar({
-      countType: countType.correctCharacters,
-      characterCount: state.correctCharacters + 1,
-    });
-  }, [countChar, state.correctCharacters]);
+const TypingView = ({ bookData }: { bookData: Book }) => {
+  const { text = "", cover_image_url = "", title_short } = bookData;
 
   return (
-    <>
-      <CharacterRenderer text={text} />
+    <StyledContainer>
+      <CoverImage
+        className="coverImage"
+        src={cover_image_url}
+        alt={`Cover of ${title_short}`}
+      />
       <div>
-        <button onClick={onCountAllChar}>All Characters</button>
-        {state.allCharacters}
+        <CharacterRenderer text={text} />
       </div>
-      <div>
-        <button onClick={onCountCorrectChar}>Correct Characters</button>
-        {state.correctCharacters}
-      </div>
-    </>
+    </StyledContainer>
   );
 };
 
-export default withTypingContextProvider(TypingView);
+export default TypingView;
+
+const StyledContainer = styled(
+  "div",
+  `
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  padding-top: 1rem;
+
+  
+  @media (max-width: 1000px) {
+    .coverImage {
+      display: none;
+    }
+  }
+`
+);

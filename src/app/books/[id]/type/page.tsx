@@ -1,13 +1,15 @@
-import { getBookText } from "@/app/lib/data";
-import TypingView from "./TypingView";
+import { getBook } from "@/app/lib/queries/getBook";
+import dynamic from "next/dynamic";
+import TypingViewSkeleton from "@/app/components/server/skeletons/TypingViewSkeleton";
+
+const TypingView = dynamic(() => import("./TypingView"), {
+  ssr: false,
+  loading: () => <TypingViewSkeleton />,
+});
 
 export default async function Type({ params }: { params: { id: string } }) {
   const id = params.id;
-  const text = await getBookText({ bookId: id });
+  const bookData = await getBook({ bookId: id });
 
-  return (
-    <div>
-      <TypingView text={text} />
-    </div>
-  );
+  return <TypingView bookData={bookData} />;
 }

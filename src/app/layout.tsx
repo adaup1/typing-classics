@@ -1,5 +1,10 @@
+import "@/app/theme/global.css";
 import type { Metadata } from "next";
-import { robotoMono } from "./ui/fonts";
+import { robotoMono } from "./theme/fonts";
+import HeaderNav from "./HeaderNav";
+import Footer from "./Footer";
+// import { serverStyleSheet } from "css-template-components/server";
+import { getServerStyles } from "css-template-components/server";
 
 export const metadata: Metadata = {
   title: "Typing Classics",
@@ -11,9 +16,18 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // const serverStyles = serverStyleSheet.getStyleTags(); // Collect all server-side styles
+  const serverStyles = getServerStyles();
   return (
     <html lang="en">
-      <body className={`${robotoMono.className} antialiased`}>{children}</body>
+      <head>
+        <style id="server-styles">{serverStyles}</style>
+      </head>
+      <body className={`${robotoMono.className} antialiased`}>
+        <HeaderNav />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

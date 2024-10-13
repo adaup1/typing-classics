@@ -7,6 +7,7 @@ import React, {
   useReducer,
   ReactNode,
   ComponentType,
+  useMemo,
 } from "react";
 import {
   DEFAULT_STATE,
@@ -14,63 +15,39 @@ import {
   TypingState,
   TypingContextProps,
   countType,
+  TypingDispatchContextProps,
 } from "./types.d";
 import { reducer } from "./reducer";
 
 const TypingContext = createContext<TypingContextProps>({
   state: DEFAULT_STATE,
+});
+
+const TypingDispatchContext = createContext<TypingDispatchContextProps>({
   dispatch: () => {},
-  countChar: () => {},
 });
 
 interface TypingContextProviderProps {
   children: ReactNode;
 }
 
-interface countCharProps {
-  countType: countType;
-  characterCount: number;
-}
-
 export const TypingContextProvider = ({
   children,
 }: TypingContextProviderProps) => {
   const [state, dispatch] = useReducer(reducer, DEFAULT_STATE);
-
-  const countChar = useCallback(
-    ({ countType, characterCount }: countCharProps) => {
-      dispatch({
-        type: actionTypes.countChar,
-        countType,
-        characterCount,
-      });
-    },
-    []
-  );
-
-  const value = { state, dispatch, countChar };
+  console.log("the state", state);
+  const value = { state };
+  const dispatchValue = { dispatch };
 
   return (
-    <TypingContext.Provider value={value}>{children}</TypingContext.Provider>
+    <TypingContext.Provider value={value}>
+      <TypingDispatchContext.Provider value={dispatchValue}>
+        {children}
+      </TypingDispatchContext.Provider>
+    </TypingContext.Provider>
   );
 };
 
 export const useTypingContext = () => useContext(TypingContext);
 
-export const withTypingContextProvider = <P extends object>(
-  Component: ComponentType<P>
-) => {
-  const WrappedComponent = (props: P) => {
-    return (
-      <TypingContextProvider>
-        <Component {...props} />
-      </TypingContextProvider>
-    );
-  };
-
-  WrappedComponent.displayName = `withTypingContextProvider(${
-    Component.displayName || Component.name || "Component"
-  })`;
-
-  return WrappedComponent;
-};
+export const useTypingDispatchContext = () => useContext(TypingDispatchContext);
