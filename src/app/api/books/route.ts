@@ -10,6 +10,8 @@ import get from "lodash/get";
 const ORDER_SQL_MAP = {
   titleAsc: "title ASC",
   titleDesc: "title DESC",
+  lengthAsc: "word_count ASC",
+  lengthDesc: "word_count DESC",
 };
 
 export async function GET(request: Request) {

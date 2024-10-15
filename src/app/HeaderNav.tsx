@@ -1,6 +1,8 @@
 import { styled } from "css-template-components/server";
 import { theme } from "./theme";
 import Link from "next/link";
+import { TypingClassicsLogo } from "./components/svg/TypingClassicsLogo";
+import { TypingClassicsLogoWithTitle } from "./components/svg/TypingClassicsLogoWithTitle";
 
 export default function HeaderNav() {
   return (
@@ -11,7 +13,23 @@ export default function HeaderNav() {
           <StyledLink href="/books">Books</StyledLink>
         </StyledNavLeft>
         <StyledLogoLink href="/">
-          <StyledLogo>Typing Classics</StyledLogo>
+          <div>
+            <StyledLogoLeft>TYPING</StyledLogoLeft>
+          </div>
+          <div>
+            {/* <StyledSVGTitle
+              alt="Typing Classics logo"
+              color={theme["darkerPurple"]}
+              secondaryColor={theme["gray"]}
+            /> */}
+            <StyledSVG
+              color={theme["darkerPurple"]}
+              secondaryColor={theme["gray"]}
+            />
+          </div>
+          <div>
+            <StyledLogoRight>LASSICS</StyledLogoRight>
+          </div>
         </StyledLogoLink>
         <StyledNavRight>
           {/* <StyledLink href="/">Sign In</StyledLink> */}
@@ -35,7 +53,7 @@ const StyledFlexContainer = styled(
   `
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: baseline;
     padding: 1rem;
 `
 );
@@ -44,10 +62,14 @@ const StyledLogoLink = styled(
   Link,
   `
   position: absolute;
+  width: 30rem;
   left: 50%;
   transform: translateX(-50%);
 
   > a {
+    display: flex;
+    justify-content: center;
+    align-items: normal;
     text-decoration: none;
     color: ${theme["darkerPurple"]};
   }
@@ -58,8 +80,30 @@ const StyledLogoLink = styled(
 const StyledLogo = styled(
   "h1",
   `
-  font-weight: 700;
+  font-weight: 900;
   font-size: 1.5rem;
+`
+);
+
+const StyledLogoLeft = styled(
+  "div",
+  `
+  font-weight: 900;
+  font-size: 1.5rem;
+  margin-right: 0.7rem;
+  position: relative;
+  top: -4px;
+`
+);
+
+const StyledLogoRight = styled(
+  "div",
+  `
+  font-weight: 900;
+  font-size: 1.5rem;
+  margin-left: 0.1rem;
+  position: relative;
+  top: -4px;
 `
 );
 
@@ -90,6 +134,32 @@ const StyledLink = styled(
 
   &:hover {
     color: ${theme["gray"]};
+  }
+`
+);
+
+const StyledSVGTitle = styled(
+  TypingClassicsLogoWithTitle,
+  `
+  height: 100%;
+
+  > svg {
+    height: 2rem;
+    width: fit-content;
+  }
+`
+);
+
+const StyledSVG = styled(
+  TypingClassicsLogo,
+  `
+  height: 100%;
+
+  > svg {
+    height: 3rem;
+    width: fit-content;
+    position: relative;
+    bottom: 18%;
   }
 `
 );

@@ -28,6 +28,14 @@ const OPTIONS = [
     value: SortOrder.titleDesc,
     label: "Title Z->A",
   },
+  {
+    value: SortOrder.lengthAsc,
+    label: "Shortest to Longest",
+  },
+  {
+    value: SortOrder.lengthDesc,
+    label: "Longest to Shortest",
+  },
 ];
 
 export const BooksFilters = ({
