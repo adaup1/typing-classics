@@ -12,12 +12,12 @@ import uniqueId from "lodash/uniqueId";
 import { useMediaQuery } from "react-responsive";
 import { BooksFilters } from "./BooksFilters";
 import { BooksPagination } from "./BooksPagination";
-
-const PAGE_SIZE = 10;
+import { Loader } from "@/app/components/svg/Loader";
 
 export const BooksSort = () => {
   const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.titleAsc);
   const [searchInput, setSearchInput] = useState("");
+  const [pageSize, setPageSize] = useState(10);
   const [page, setPage] = useState(1);
   const [totalBooks, setTotalBooks] = useState(0);
   const [debouncedSearchInput, setDebouncedSearchInput] = useState(searchInput);
@@ -27,16 +27,16 @@ export const BooksSort = () => {
   }, []);
   const debouncedSetSearchInput = useDebounce(setDebouncedSearch, 1000);
   const isMobile = useMediaQuery({ maxWidth: 1000 });
-  const offset = useMemo(() => (page - 1) * PAGE_SIZE, [page]);
+  const offset = useMemo(() => (page - 1) * pageSize, [page, pageSize]);
   const disableNextPage = useMemo(
-    () => offset >= totalBooks - PAGE_SIZE,
-    [offset, totalBooks]
+    () => offset >= totalBooks - pageSize,
+    [offset, totalBooks, pageSize]
   );
 
   const { data, total, loading } = useBooks({
     sortOrder,
     q: debouncedSearchInput,
-    limit: PAGE_SIZE,
+    limit: pageSize,
     offset: offset,
   });
 
@@ -60,6 +60,8 @@ export const BooksSort = () => {
     <StyledContainer>
       <BooksFilters
         sortOrder={sortOrder}
+        pageSize={pageSize}
+        setPageSize={setPageSize}
         debouncedSetSearchInput={debouncedSetSearchInput}
         handleLastPage={handleLastPage}
         handleNextPage={handleNextPage}
@@ -70,8 +72,11 @@ export const BooksSort = () => {
         disableLastPage={page <= 1}
       />
       <StyledOuterContainer>
+        {loading && <StyledLoader />}
+        {!loading && !data.length && (
+          <StyledNoResultsContainer>No results</StyledNoResultsContainer>
+        )}
         <StyledBooksContainer>
-          {!loading && !data.length && "No results"}
           {data &&
             map(data, (book) => (
               <BookCard
@@ -100,11 +105,21 @@ const StyledContainer = styled(
 `
 );
 
+const StyledLoader = styled(
+  Loader,
+  `
+  width: 15rem;
+`
+);
+
 const StyledOuterContainer = styled(
   "div",
   `
     display: flex;
     justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: calc(100vh - 18rem);
   `
 );
 
@@ -139,5 +154,12 @@ const BodyContainer = styled(
   display: flex;
   flex-direction: column;
   align-items: space-between;
+`
+);
+
+const StyledNoResultsContainer = styled(
+  "div",
+  `
+  font-size: 2rem;
 `
 );

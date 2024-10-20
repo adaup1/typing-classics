@@ -9,6 +9,8 @@ import { BooksPagination } from "./BooksPagination";
 
 interface BooksFiltersProps {
   setSortOrder: (arg: SortOrder) => void;
+  setPageSize: (arg: number) => void;
+  pageSize: number;
   sortOrder: SortOrder;
   searchInput: string;
   setSearchInput: (arg: string) => void;
@@ -19,7 +21,7 @@ interface BooksFiltersProps {
   disableLastPage: boolean;
 }
 
-const OPTIONS = [
+const SORT_OPTIONS = [
   {
     value: SortOrder.titleAsc,
     label: "Title A->Z",
@@ -29,18 +31,43 @@ const OPTIONS = [
     label: "Title Z->A",
   },
   {
+    value: SortOrder.authorAsc,
+    label: "Author A->Z",
+  },
+  {
+    value: SortOrder.authorDesc,
+    label: "Author Z->A",
+  },
+  {
     value: SortOrder.lengthAsc,
-    label: "Shortest to Longest",
+    label: "Short->Long",
   },
   {
     value: SortOrder.lengthDesc,
-    label: "Longest to Shortest",
+    label: "Long->Short",
+  },
+];
+
+const PAGE_SIZE_OPTIONS = [
+  {
+    value: 10,
+    label: "10",
+  },
+  {
+    value: 25,
+    label: "25",
+  },
+  {
+    value: 50,
+    label: "50",
   },
 ];
 
 export const BooksFilters = ({
   setSortOrder,
   sortOrder,
+  setPageSize,
+  pageSize,
   searchInput,
   setSearchInput,
   handleNextPage,
@@ -49,9 +76,14 @@ export const BooksFilters = ({
   disableNextPage,
   disableLastPage,
 }: BooksFiltersProps) => {
-  const handleOnChange = useCallback(
+  const handleSortOrderChange = useCallback(
     (e) => setSortOrder(e.target.value),
     [setSortOrder]
+  );
+
+  const handlePageSizeChange = useCallback(
+    (e) => setPageSize(e.target.value),
+    [setPageSize]
   );
 
   const handleInputChange = useCallback(
@@ -74,9 +106,17 @@ export const BooksFilters = ({
         <StyledSelectContainer>
           Sort by
           <Select
-            options={OPTIONS}
-            onChange={handleOnChange}
+            options={SORT_OPTIONS}
+            onChange={handleSortOrderChange}
             value={sortOrder}
+          />
+        </StyledSelectContainer>
+        <StyledSelectContainer>
+          Page size
+          <Select
+            options={PAGE_SIZE_OPTIONS}
+            onChange={handlePageSizeChange}
+            value={pageSize}
           />
         </StyledSelectContainer>
       </StyledFlexContainer>

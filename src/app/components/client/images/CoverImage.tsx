@@ -2,16 +2,37 @@
 
 import { styled } from "css-template-components/client";
 import { theme } from "@/app/theme";
+import { BookCoverFallback } from "./BookCoverFallback";
+
+interface CoverImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+  title: string;
+  author: string;
+  width: string;
+  height: string;
+}
 
 export const CoverImage = ({
   width,
   height,
+  title,
+  src,
+  author,
   ...restOfProps
-}: React.ImgHTMLAttributes<HTMLImageElement>) => {
+}: CoverImageProps) => {
+  if (src) {
+    return (
+      <StyledImgContainer width={width} height={height}>
+        <StyledImg src={src} {...restOfProps} height={height} />
+      </StyledImgContainer>
+    );
+  }
   return (
-    <StyledImgContainer width={width} height={height}>
-      <StyledImg {...restOfProps} height={height} />
-    </StyledImgContainer>
+    <BookCoverFallback
+      title={title}
+      author={author}
+      width={width}
+      height={height}
+    />
   );
 };
 

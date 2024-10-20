@@ -1,13 +1,12 @@
 "use client";
 
-import { useMemo } from "react";
 import { theme } from "@/app/theme";
 import { styled } from "css-template-components/client";
 import { useTimer } from "../../../context/hooks.ts/useTimer";
 import { usePercentComplete } from "../../hooks/usePercentComplete";
-import { useTypingContext } from "../../../context/TypingContext";
-import { useWPM } from "../../hooks/useWPM";
 import { useAccuracy } from "../../hooks/useAccuracy";
+import { faCircleQuestion } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface StatsProps {
   correctCharacters: number;
@@ -96,5 +95,14 @@ const StyledGradient = styled(
     padding-top: 1rem;
     font-size: 2rem;
     font-style: italic;
+`
+);
+
+const StyledIcon = styled(
+  FontAwesomeIcon,
+  `
+  font-size: 1rem;
+  width: fit-content;
+  cursor: pointer;
 `
 );

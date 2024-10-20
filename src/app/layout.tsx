@@ -1,15 +1,22 @@
 import "@/app/theme/global.css";
 import type { Metadata } from "next";
-import { robotoMono } from "./theme/fonts";
+import { robotoMono, nunito, raleway, nunitoSans } from "./theme/fonts";
 import HeaderNav from "./HeaderNav";
 import Footer from "./Footer";
 // import { serverStyleSheet } from "css-template-components/server";
-import { getServerStyles } from "css-template-components/server";
+import { getServerStyles, styled } from "css-template-components/server";
 
 export const metadata: Metadata = {
   title: "Typing Classics",
   description: "Type along to your favorite public-domain books!",
 };
+
+const StyledBodyContainer = styled(
+  "div",
+  `
+  min-height: calc(100vh - 7rem);
+`
+);
 
 export default function RootLayout({
   children,
@@ -23,9 +30,11 @@ export default function RootLayout({
       <head>
         <style id="server-styles">{serverStyles}</style>
       </head>
-      <body className={`${robotoMono.className} antialiased`}>
+      <body
+        className={`${robotoMono.className} ${raleway.className} ${nunitoSans.className} antialiased`}
+      >
         <HeaderNav />
-        {children}
+        <StyledBodyContainer>{children}</StyledBodyContainer>
         <Footer />
       </body>
     </html>

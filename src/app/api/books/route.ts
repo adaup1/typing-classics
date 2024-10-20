@@ -12,6 +12,8 @@ const ORDER_SQL_MAP = {
   titleDesc: "title DESC",
   lengthAsc: "word_count ASC",
   lengthDesc: "word_count DESC",
+  authorAsc: "author_last_name ASC, title ASC",
+  authorDesc: "author_last_name DESC, title DESC",
 };
 
 export async function GET(request: Request) {

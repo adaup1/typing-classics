@@ -13,6 +13,9 @@ const TypingView = ({ bookData }: { bookData: Book }) => {
         className="coverImage"
         src={cover_image_url}
         alt={`Cover of ${title_short}`}
+        title={`${bookData.title}`}
+        author={`${bookData.author_first_name} ${bookData.author_last_name}`}
+        width="18rem"
       />
       <div>
         <CharacterRenderer text={text} />

@@ -6,6 +6,7 @@ import { theme } from "@/app/theme";
 import { CoverImage } from "@/app/components/client/images/CoverImage";
 import { Book } from "@/app/lib/types.d";
 import Link from "next/link";
+import { robotoMono } from "@/app/theme/fonts";
 
 export const BookCard = ({
   book,
@@ -23,9 +24,9 @@ export const BookCard = ({
 
   const author = useMemo(
     () =>
-      book.author_last_name
-        ? `${book.author_first_name} ${book.author_last_name}`
-        : book.author_first_name,
+      book.author_first_name
+        ? `${book.author_last_name}, ${book.author_first_name}`
+        : book.author_last_name,
     [book.author_first_name, book.author_last_name]
   );
 
@@ -37,6 +38,8 @@ export const BookCard = ({
           alt={`Cover of ${book.title_short}`}
           width={width}
           height={height}
+          title={`${book.title}`}
+          author={`${book.author_first_name} ${book.author_last_name}`}
         />
         <StyledInnerContainer width={width} height={height} isMobile={isMobile}>
           <StyledInnerOverlay className="innerOverlay">
@@ -60,6 +63,7 @@ const StyledContainer = styled(
   width: ${width};
   text-align: center;
   position: relative;
+  font-family: ${robotoMono.style.fontFamily}, monosapce;
 `
 );
 

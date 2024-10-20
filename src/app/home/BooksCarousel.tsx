@@ -1,27 +1,38 @@
 import React from "react";
 import { styled } from "css-template-components/server";
-import { getHotBooks } from "../lib/queries/getHotBooks";
 import { BookCard } from "../books/components/BookCard";
 import { theme } from "../theme";
 import map from "lodash/map";
 import { Button } from "../components/server/buttons/Button";
 import Link from "next/link";
+import { Book } from "../lib/types.d";
 
-export const BooksCarousel = async () => {
-  const books = await getHotBooks();
+interface BooksCarouselProps {
+  books: Array<Book>;
+  heading: string;
+  showBooksLink?: boolean;
+}
+
+export const BooksCarousel = async ({
+  books,
+  heading,
+  showBooksLink = false,
+}: BooksCarouselProps) => {
   return (
     <StyledContainer>
-      <StyledLabelContainer>{`What's hot?`}</StyledLabelContainer>
+      <StyledLabelContainer>{heading}</StyledLabelContainer>
       <StyledBooksContainer>
         {map(books, (book) => (
           <BookCard book={book} isMobile={false} />
         ))}
       </StyledBooksContainer>
-      <div>
-        <Link href="/books">
-          <Button text="View All Books" />
-        </Link>
-      </div>
+      {showBooksLink && (
+        <div>
+          <Link href="/books">
+            <StyledButton text="View All Books" />
+          </Link>
+        </div>
+      )}
       <StyledLeftGradient />
       <StyledRightGradient />
     </StyledContainer>
@@ -36,7 +47,6 @@ const StyledContainer = styled(
   align-items: center;
   justify-content: center;
   width: 100%;
-  margin-bottom: 2rem;
   position: relative;
 `
 );
@@ -45,10 +55,10 @@ const StyledLabelContainer = styled(
   "h3",
   `
   font-family: inherit;
-  font-weight: 400;
+  font-weight: 500;
   font-size: 1.5rem;
-  padding: 1rem;
-  border-bottom: ${theme["white"]} solid 1px;
+  padding: 0 1rem 1rem 1rem;
+  border-bottom: ${theme["white"]} solid 2px;
 `
 );
 
@@ -60,7 +70,7 @@ const StyledBooksContainer = styled(
   gap: 1rem;
   width: calc(100vw - 4rem);
   overflow: scroll;
-  padding: 1rem;
+  padding:  1rem;
   margin: 1rem;
   background: ${theme["darkerPurple"]};
   border-radius: 1rem;
@@ -88,5 +98,15 @@ const StyledRightGradient = styled(
   width: 2.25rem;
   right: 0;
   z-index: 5;
+`
+);
+
+const StyledButton = styled(
+  Button,
+  `
+  margin-bottom: 2rem;
+  button {
+    font-size: 2rem;
+  }
 `
 );

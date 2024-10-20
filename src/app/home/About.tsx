@@ -54,16 +54,16 @@ const StyledContainer = styled(
 const StyledH3 = styled(
   "h3",
   `
-    font-weight: 400;
+    font-weight: 500;
     font-size: 1.5rem;
-    border-bottom: ${theme["white"]} solid 1px;
+    border-bottom: ${theme["white"]} solid 2px;
     padding-bottom: 1rem;
     width: fit-content;
 `
 );
 
 const StyledParagraph = styled(
-  "p",
+  "div",
   `
     padding-top: 1rem;
     font-size: 1rem;

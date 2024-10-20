@@ -1,4 +1,5 @@
 import { About } from "./About";
 import { BooksCarousel } from "./BooksCarousel";
+import { Heading } from "./Heading";
 
-export { About, BooksCarousel };
+export { About, BooksCarousel, Heading };

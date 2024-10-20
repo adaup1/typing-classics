@@ -6,7 +6,7 @@ import { theme } from "@/app/theme";
 import { styled } from "css-template-components/client";
 
 interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
-  options: { value: string; label: string }[];
+  options: { value: string | number; label: string }[];
 }
 
 export const Select = ({ options, ...restOfProps }: SelectProps) => {
@@ -31,12 +31,11 @@ const StyledSelect = styled(
 	font-weight: 700;
 	color: black;
 	padding: .6em 1.4em .5em .8em;
-	width: 10rem;
+	width: 12rem;
 	max-width: 100%;
 	box-sizing: border-box;
 	border-radius: 0.5rem;
 	background-color: ${theme["white"]};
-	// appearance: none;
 
 	&:focus-visible {
 		outline: none;

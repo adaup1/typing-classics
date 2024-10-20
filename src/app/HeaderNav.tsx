@@ -28,7 +28,9 @@ export default function HeaderNav() {
             />
           </div>
           <div>
-            <StyledLogoRight>LASSICS</StyledLogoRight>
+            <StyledLogoRight>
+              <StyledSpan>C</StyledSpan>LASSICS
+            </StyledLogoRight>
           </div>
         </StyledLogoLink>
         <StyledNavRight>
@@ -65,6 +67,7 @@ const StyledLogoLink = styled(
   width: 30rem;
   left: 50%;
   transform: translateX(-50%);
+  font-family: __Raleway_88131f;
 
   > a {
     display: flex;
@@ -80,7 +83,7 @@ const StyledLogoLink = styled(
 const StyledLogo = styled(
   "h1",
   `
-  font-weight: 900;
+  font-weight: 700;
   font-size: 1.5rem;
 `
 );
@@ -88,7 +91,7 @@ const StyledLogo = styled(
 const StyledLogoLeft = styled(
   "div",
   `
-  font-weight: 900;
+  font-weight: 700;
   font-size: 1.5rem;
   margin-right: 0.7rem;
   position: relative;
@@ -99,7 +102,7 @@ const StyledLogoLeft = styled(
 const StyledLogoRight = styled(
   "div",
   `
-  font-weight: 900;
+  font-weight: 700;
   font-size: 1.5rem;
   margin-left: 0.1rem;
   position: relative;
@@ -159,7 +162,15 @@ const StyledSVG = styled(
     height: 3rem;
     width: fit-content;
     position: relative;
-    bottom: 18%;
+    bottom: 22%;
   }
 `
+);
+
+const StyledSpan = styled(
+  "span",
+  `
+  color: transparent;
+  margin-left: -1rem;
+  `
 );

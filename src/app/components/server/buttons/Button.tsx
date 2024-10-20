@@ -47,7 +47,7 @@ const StyledButton = styled(
         font-size: 1rem;  
         border: none; 
         padding: 0.5rem;
-        font-weight: 500;
+        font-weight: 600;
         border-radius: 0.5rem;
         cursor: ${disabled ? "default" : "pointer"};
         filter: drop-shadow(0px 8px 4px ${theme["ultraDarkPurple"]});

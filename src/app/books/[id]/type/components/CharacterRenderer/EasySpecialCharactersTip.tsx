@@ -118,6 +118,7 @@ const StyledFlexContainer = styled(
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
+  font-family: "__Roboto_Mono_b2aa37", monosapce;
 `
 );
 

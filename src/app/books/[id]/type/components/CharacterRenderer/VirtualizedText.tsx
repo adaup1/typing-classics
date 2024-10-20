@@ -14,6 +14,7 @@ import isEmpty from "lodash/isEmpty";
 import { styled } from "css-template-components/client";
 import { theme } from "@/app/theme";
 import { Row } from "./Row";
+import { robotoMono } from "@/app/theme/fonts";
 
 interface VirtualizedTextProps {
   text: string;
@@ -198,6 +199,11 @@ const StyledOuterContainer = styled(
   border-radius: 0.5rem;
   filter: drop-shadow(0 0 0.5rem ${theme["gray"]});
   position absolute;
+
+  // height: 78.5vh;
+  margin-bottom: 1rem;
+  font-family: ${robotoMono.style.fontFamily}, monosapce;
+
 `
 );
 

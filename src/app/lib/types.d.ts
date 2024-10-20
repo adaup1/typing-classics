@@ -12,6 +12,8 @@ export type Book = {
 export enum SortOrder {
   titleAsc = "titleAsc",
   titleDesc = "titleDesc",
+  authorAsc = "authorAsc",
+  authorDesc = "authorDesc",
   lengthAsc = "lengthAsc",
   lengthDesc = "lengthDesc",
 }

@@ -1,23 +1,69 @@
 import { styled } from "css-template-components/server";
 import { theme } from "./theme";
-import { About, BooksCarousel } from "./home";
+import { About, BooksCarousel, Heading } from "./home";
+import { getHotBooks } from "./lib/queries/getHotBooks";
+import { getLatestBooks } from "./lib/queries/getLatestBooks";
+import { Button } from "./components/server/buttons/Button";
+import Link from "next/link";
 
-export default function Home() {
+export default async function Home() {
+  const hotBooks = await getHotBooks();
+  const latestBooks = await getLatestBooks();
+
   return (
     <>
-      <BooksCarousel />
-      <StyledContainer>
+      <StyledBooksContainer>
+        <Heading />
+        <BooksCarousel books={hotBooks} heading={`What's hot?`} />
+        <br />
+        <br />
+        <BooksCarousel books={latestBooks} heading={`Latest additions!`} />
+      </StyledBooksContainer>
+      <StyledButtonContainer>
+        <Link href="/books">
+          <StyledButton text="View All Books" />
+        </Link>
+      </StyledButtonContainer>
+      <StyledAboutContainer>
         <About />
-      </StyledContainer>
+      </StyledAboutContainer>
     </>
   );
 }
 
-const StyledContainer = styled(
+const StyledBooksContainer = styled(
+  "div",
+  `
+  padding-top: 1rem;
+`
+);
+
+const StyledAboutContainer = styled(
   "div",
   `
   background: ${theme["ultraDarkPurple"]};
   padding-bottom: 2rem;
   padding-top: 1rem;
+`
+);
+
+const StyledButtonContainer = styled(
+  "div",
+  `
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 8rem;
+`
+);
+
+const StyledButton = styled(
+  Button,
+  `
+  margin-bottom: 2rem;
+  button {
+    font-size: 2rem;
+  }
 `
 );
