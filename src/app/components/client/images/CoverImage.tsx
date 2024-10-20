@@ -19,20 +19,19 @@ export const CoverImage = ({
   author,
   ...restOfProps
 }: CoverImageProps) => {
-  if (src) {
-    return (
-      <StyledImgContainer width={width} height={height}>
-        <StyledImg src={src} {...restOfProps} height={height} />
-      </StyledImgContainer>
-    );
-  }
   return (
-    <BookCoverFallback
-      title={title}
-      author={author}
-      width={width}
-      height={height}
-    />
+    <StyledImgContainer width={width} height={height}>
+      {src ? (
+        <StyledImg src={src} {...restOfProps} height={height} />
+      ) : (
+        <BookCoverFallback
+          title={title}
+          author={author}
+          width={width}
+          height={height}
+        />
+      )}
+    </StyledImgContainer>
   );
 };
 
@@ -42,6 +41,8 @@ const StyledImgContainer = styled(
     `
     width: ${width};
     height: ${height};
+    filter: drop-shadow(0 0 0.2rem ${theme["gray"]});
+    border-radius: 0.5rem;
 `
 );
 
@@ -52,7 +53,6 @@ const StyledImg = styled(
   	object-fit: cover;
     object-position: top;
     width: inherit;
-    filter: drop-shadow(0 0 0.2rem ${theme["gray"]});
     border-radius: 0.5rem;
 `
 );
