@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import { styled } from "css-template-components/client";
 import { theme } from "@/app/theme";
-import { CoverImage } from "@/app/components/client/images/CoverImage";
+import { CoverImage } from "@/app/components/images/CoverImage";
 import { Book } from "@/app/lib/types.d";
 import Link from "next/link";
 import { robotoMono } from "@/app/theme/fonts";

@@ -1,7 +1,6 @@
 import { styled } from "css-template-components/server";
 import { Book } from "@/app/lib/types";
-import { CoverImage } from "@/app/components/server/images/CoverImage";
-import dynamic from "next/dynamic";
+import { CoverImage } from "@/app/components/images/CoverImage";
 import { CharacterRenderer } from "./components/CharacterRenderer";
 
 const TypingView = ({ bookData }: { bookData: Book }) => {

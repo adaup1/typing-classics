@@ -1,6 +1,4 @@
-"use client";
-
-import { styled } from "css-template-components/client";
+import { styled } from "next-yak";
 import { theme } from "@/app/theme";
 import { BookCoverFallback } from "./BookCoverFallback";
 
@@ -8,7 +6,7 @@ interface CoverImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   title: string;
   author: string;
   width: string;
-  height: string;
+  height?: string;
 }
 
 export const CoverImage = ({
@@ -24,7 +22,7 @@ export const CoverImage = ({
       {src ? (
         <StyledImg src={src} {...restOfProps} height={height} />
       ) : (
-        <BookCoverFallback
+        <StyledBookCoverFallback
           title={title}
           author={author}
           width={width}
@@ -35,24 +33,25 @@ export const CoverImage = ({
   );
 };
 
-const StyledImgContainer = styled(
-  "div",
-  ({ width = "12rem", height = "12rem" }: { width: string; height: string }) =>
-    `
-    width: ${width};
-    height: ${height};
-    filter: drop-shadow(0 0 0.2rem ${theme["gray"]});
-    border-radius: 0.5rem;
-`
-);
+interface ExtraProps {
+  width?: string;
+  height?: string;
+}
 
-const StyledImg = styled(
-  "img",
-  `
-    height: inherit;
-  	object-fit: cover;
-    object-position: top;
-    width: inherit;
-    border-radius: 0.5rem;
-`
-);
+const StyledImgContainer = styled.div<ExtraProps>`
+  width: ${({ width }) => width || "18rem"};
+  height: ${({ height }) => height || "inherit"};
+  filter: ${() => `drop-shadow(0 0 0.5rem ${theme.gray})`};
+  border-radius: 0.5rem;
+`;
+
+const StyledImg = styled.img<ExtraProps>`
+  object-fit: cover;
+  width: inherit;
+  border-radius: 0.5rem;
+  height: ${({ height }) => height || "inherit"};
+`;
+
+const StyledBookCoverFallback = styled(BookCoverFallback)`
+  border-radius: 0.5rem;
+`;

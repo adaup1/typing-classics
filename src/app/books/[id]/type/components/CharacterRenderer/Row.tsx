@@ -5,10 +5,10 @@ import { ListChildComponentProps } from "react-window";
 import get from "lodash/get";
 import map from "lodash/map";
 import uniqueId from "lodash/uniqueId";
-import { styled } from "css-template-components/client";
 import { theme } from "@/app/theme";
 import { useFindChunk } from "./hooks/useFindChunk";
 import { useMatchCharacters } from "./hooks/useMatchCharacters";
+import { styled } from "next-yak";
 
 export const Row = ({ data, index, style }: ListChildComponentProps) => {
   const { text, lineFirstCharIndex } = useMemo(
@@ -67,7 +67,8 @@ export const Row = ({ data, index, style }: ListChildComponentProps) => {
         <StyledFlexContainer style={style} key={uniqueId()}>
           <>
             {map(text, (character, charIndex) => {
-              const currentCharIndex = charIndex + lineFirstCharIndex;
+              const currentCharIndex =
+                parseInt(charIndex, 10) + lineFirstCharIndex;
               const result = findCharacterLocation({
                 stringArray: inputArray,
                 characterLocation: parseInt(currentCharIndex, 10),
@@ -98,17 +99,12 @@ export const Row = ({ data, index, style }: ListChildComponentProps) => {
                       <StyledCharacter
                         inputIndex={inputIndex}
                         index={currentCharIndex}
-                        inputValue={inputValue}
-                        character={character}
                         charactersMatch={charactersMatch}
                         id={`text-item-${currentCharIndex}`}
                       >
                         {character}
                       </StyledCharacter>
-                      <StyledInputValueContainer
-                        currentCharIndex={currentCharIndex}
-                        inputIndex={inputIndex}
-                      >
+                      <StyledInputValueContainer>
                         {currentCharIndex === inputIndex + 1 ? (
                           <StyledCursor>_</StyledCursor>
                         ) : (
@@ -133,71 +129,44 @@ export const Row = ({ data, index, style }: ListChildComponentProps) => {
   );
 };
 
-const StyledContainer = styled(
-  "div",
-  `
-  color: ${theme["white"]};
-`
-);
+console.log("theme", theme["white"]);
 
-const StyledFlexContainer = styled(
-  "div",
-  `
-    display: flex;
-    justify-content: flex-start;
-`
-);
+const StyledContainer = styled.div`
+  color: ${() => theme["white"]};
+`;
 
-interface StyledSpanProps {
+const StyledFlexContainer = styled.div`
+  display: flex;
+  justify-content: flex-start;
+`;
+
+interface StyledCharacterProps {
   index: number;
   inputIndex: number;
-  inputValue: string;
-  character: string;
-  inputCharacter: string;
   charactersMatch: boolean;
 }
 
-const StyledCharacter = styled(
-  "div",
-  ({
-    index,
-    inputValue,
-    inputIndex,
-    character,
-    charactersMatch,
-  }: StyledSpanProps) => `
-    background-color: ${
-      index <= inputIndex
-        ? charactersMatch
-          ? theme["green"]
-          : theme["red"]
-        : "transparent"
-    };
-`
-);
+const StyledCharacter = styled.div<StyledCharacterProps>`
+  background-color: ${({ index, inputIndex, charactersMatch }) =>
+    index <= inputIndex
+      ? charactersMatch
+        ? theme["green"]
+        : theme["red"]
+      : "transparent"};
+`;
 
-const StyledInputValueContainer = styled(
-  "div",
-  `
-    color: ${theme["gray"]};
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-    display: flex;
-  `
-);
+const StyledInputValueContainer = styled.div`
+  color: ${() => theme["gray"]};
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  display: flex;
+`;
 
-const StyledInnerFlexContainer = styled(
-  "div",
-  `
-    display: flex;
-    flex-direction: column;
-`
-);
+const StyledInnerFlexContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
-const StyledCursor = styled(
-  "div",
-  () =>
-    `
-      animation: blink 1s steps(1, start) infinite;
-    `
-);
+const StyledCursor = styled.div`
+  animation: blink 1s steps(1, start) infinite;
+`;

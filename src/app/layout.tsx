@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { robotoMono, nunito, raleway, nunitoSans } from "./theme/fonts";
 import HeaderNav from "./HeaderNav";
 import Footer from "./Footer";
-// import { serverStyleSheet } from "css-template-components/server";
 import { getServerStyles, styled } from "css-template-components/server";
 
 export const metadata: Metadata = {
@@ -23,7 +22,6 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // const serverStyles = serverStyleSheet.getStyleTags(); // Collect all server-side styles
   const serverStyles = getServerStyles();
   return (
     <html lang="en">

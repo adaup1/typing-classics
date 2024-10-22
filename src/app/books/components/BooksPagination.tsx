@@ -1,6 +1,6 @@
 import React from "react";
 import { styled } from "css-template-components/client";
-import { Button } from "@/app/components/client/buttons/Button";
+import { Button } from "@/app/components/Button";
 
 interface BooksPaginationProps {
   handleNextPage: () => void;

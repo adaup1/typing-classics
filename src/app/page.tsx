@@ -3,7 +3,7 @@ import { theme } from "./theme";
 import { About, BooksCarousel, Heading } from "./home";
 import { getHotBooks } from "./lib/queries/getHotBooks";
 import { getLatestBooks } from "./lib/queries/getLatestBooks";
-import { Button } from "./components/server/buttons/Button";
+import { Button } from "./components/Button";
 import Link from "next/link";
 
 export default async function Home() {

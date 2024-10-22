@@ -3,7 +3,7 @@ import { styled } from "css-template-components/server";
 import { BookCard } from "../books/components/BookCard";
 import { theme } from "../theme";
 import map from "lodash/map";
-import { Button } from "../components/server/buttons/Button";
+import { Button } from "../components/Button";
 import Link from "next/link";
 import { Book } from "../lib/types.d";
 
