@@ -1,9 +1,9 @@
-import { styled } from "css-template-components/server";
+import { styled } from "next-yak";
 import { theme } from "./theme";
 import { About, BooksCarousel, Heading } from "./home";
 import { getHotBooks } from "./lib/queries/getHotBooks";
 import { getLatestBooks } from "./lib/queries/getLatestBooks";
-import { Button } from "./components/Button";
+import { Button } from "./components/buttons";
 import Link from "next/link";
 
 export default async function Home() {
@@ -31,39 +31,25 @@ export default async function Home() {
   );
 }
 
-const StyledBooksContainer = styled(
-  "div",
-  `
+const StyledBooksContainer = styled.div`
   padding-top: 1rem;
-`
-);
+`;
 
-const StyledAboutContainer = styled(
-  "div",
-  `
-  background: ${theme["ultraDarkPurple"]};
+const StyledAboutContainer = styled.div`
+  background: ${() => theme.ultraDarkPurple};
   padding-bottom: 2rem;
   padding-top: 1rem;
-`
-);
+`;
 
-const StyledButtonContainer = styled(
-  "div",
-  `
+const StyledButtonContainer = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 8rem;
-`
-);
+`;
 
-const StyledButton = styled(
-  Button,
-  `
+const StyledButton = styled(Button)`
   margin-bottom: 2rem;
-  button {
-    font-size: 2rem;
-  }
-`
-);
+  font-size: 2rem;
+`;

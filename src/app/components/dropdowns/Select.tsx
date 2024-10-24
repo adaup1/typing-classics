@@ -3,7 +3,7 @@
 import React from "react";
 import map from "lodash/map";
 import { theme } from "@/app/theme";
-import { styled } from "css-template-components/client";
+import { styled } from "next-yak";
 
 interface SelectProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   options: { value: string | number; label: string }[];
@@ -21,34 +21,26 @@ export const Select = ({ options, ...restOfProps }: SelectProps) => {
   );
 };
 
-const StyledSelect = styled(
-  "select",
-  `
-	 
-	display: block;
-	font-size: 16px;
-	font-family: inherit;
-	font-weight: 700;
-	color: black;
-	padding: .6em 1.4em .5em .8em;
-	width: 12rem;
-	max-width: 100%;
-	box-sizing: border-box;
-	border-radius: 0.5rem;
-	background-color: ${theme["white"]};
+const StyledSelect = styled.select`
+  display: block;
+  font-size: 16px;
+  font-family: inherit;
+  font-weight: 700;
+  color: ${() => theme.black};
+  padding: 0.6em 1.4em 0.5em 0.8em;
+  width: 12rem;
+  max-width: 100%;
+  box-sizing: border-box;
+  border-radius: 0.5rem;
+  background-color: ${() => theme.white};
 
-	&:focus-visible {
-		outline: none;
-	}
-	
-`
-);
+  &:focus-visible {
+    outline: none;
+  }
+`;
 
-const StyledOption = styled(
-  "option",
-  `
-	color: green;
-	background: red;
-	font-family: inherit;
-`
-);
+const StyledOption = styled.option`
+  color: green;
+  background: red;
+  font-family: inherit;
+`;

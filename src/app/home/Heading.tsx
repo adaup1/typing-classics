@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { robotoMono } from "../theme/fonts";
-import { styled } from "css-template-components/client";
+import { styled } from "next-yak";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFingerprint } from "@fortawesome/free-solid-svg-icons";
 import { Roboto_Mono } from "next/font/google";
@@ -40,49 +40,33 @@ export const Heading = () => {
   );
 };
 
-const StyledContainer = styled(
-  "div",
-  `
-    width 100%;
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 2rem;
-    height: 8rem;
-    margin-bottom: 2rem;
-    align-items: center;
-`
-);
+const StyledContainer = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  height: 8rem;
+  margin-bottom: 2rem;
+  align-items: center;
+`;
 
-const StyledTextContainer = styled(
-  "div",
-  `
-    display: flex;
-`
-);
+const StyledTextContainer = styled.div`
+  display: flex;
+`;
 
-const StyledH1 = styled(
-  "h1",
-  `
-    font-family: ${robotoMono.style.fontFamily};
-    font-size: 4rem;
-`
-);
+const StyledH1 = styled.h1`
+  font-family: ${() => robotoMono.style.fontFamily};
+  font-size: 4rem;
+`;
 
-const StyledCursor = styled(
-  "div",
-  () =>
-    `
-        font-family: ${robotoMono.style.fontFamily};
-        font-size: 4rem;
-      animation: blink 1s steps(1, start) infinite;
-    `
-);
+const StyledCursor = styled.div`
+  font-family: ${() => robotoMono.style.fontFamily};
+  font-size: 4rem;
+  animation: blink 1s steps(1, start) infinite;
+`;
 
-const StyledIcon = styled(
-  FontAwesomeIcon,
-  `
+const StyledIcon = styled(FontAwesomeIcon)`
   font-size: 4rem;
   width: fit-content;
-`
-);
+`;

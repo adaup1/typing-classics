@@ -1,5 +1,5 @@
 import React from "react";
-import { styled } from "css-template-components/server";
+import { styled } from "next-yak";
 import { theme } from "../theme";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
@@ -38,43 +38,31 @@ export const About = () => {
   );
 };
 
-const StyledContainer = styled(
-  "div",
-  `
-    width: 100%;
-    font-family: inherit;
-    color: ${theme["white"]};
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-`
-);
+const StyledContainer = styled.div`
+  width: 100%;
+  font-family: inherit;
+  color: ${() => theme.white};
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+`;
 
-const StyledH3 = styled(
-  "h3",
-  `
-    font-weight: 500;
-    font-size: 1.5rem;
-    border-bottom: ${theme["white"]} solid 2px;
-    padding-bottom: 1rem;
-    width: fit-content;
-`
-);
+const StyledH3 = styled.h3`
+  font-weight: 500;
+  font-size: 1.5rem;
+  border-bottom: ${() => theme.white} solid 2px;
+  padding-bottom: 1rem;
+  width: fit-content;
+`;
 
-const StyledParagraph = styled(
-  "div",
-  `
-    padding-top: 1rem;
-    font-size: 1rem;
-`
-);
+const StyledParagraph = styled.div`
+  padding-top: 1rem;
+  font-size: 1rem;
+`;
 
-const StyledIcon = styled(
-  FontAwesomeIcon,
-  `
-    width: 1rem;
-    padding-right: 12px;
-    display: inline;
-`
-);
+const StyledIcon = styled(FontAwesomeIcon)`
+  width: 1rem;
+  padding-right: 12px;
+  display: inline;
+`;

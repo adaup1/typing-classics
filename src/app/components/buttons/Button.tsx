@@ -28,15 +28,15 @@ interface StyledButtonProps {
 const StyledButton = styled.button<StyledButtonProps>`
   color: ${({ version, disabled }) => {
     if (version === "secondary") {
-      return disabled ? theme["gray"] : theme["white"];
+      return disabled ? theme.gray : theme.white;
     }
-    return disabled ? theme["ultraDarkPurple"] : theme["darkerPurple"];
+    return disabled ? theme.ultraDarkPurple : theme.darkerPurple;
   }};
   background: ${({ version, disabled }) => {
     if (version === "secondary") {
       return "none";
     }
-    return disabled ? theme["gray"] : theme["white"];
+    return disabled ? theme.gray : theme.white;
   }};
   border: none;
   cursor: ${({ disabled }) => (disabled ? "default" : "pointer")};
@@ -44,18 +44,20 @@ const StyledButton = styled.button<StyledButtonProps>`
   font-size: 1rem;
   border-bottom: ${({ version }) =>
     version === "secondary" ? "1px solid transparent" : "none"};
+  border-radius: ${({ version }) =>
+    version === "secondary" ? "none" : "0.5rem"};
   padding: ${({ version }) => (version === "secondary" ? 0 : "0.5rem")};
   filter: ${({ version }) =>
     version === "secondary"
       ? "none"
-      : `drop-shadow(0px 8px 4px ${theme["ultraDarkPurple"]})`};
+      : `drop-shadow(0px 8px 4px ${theme.ultraDarkPurple})`};
 
   &:hover {
-    color: ${({ version }) =>
-      version === "secondary" ? theme["white"] : theme["gray"]};
+    color: ${({ version, disabled }) =>
+      version === "secondary" && !disabled ? theme.white : theme.gray};
     border-bottom: ${({ version, disabled }) => {
       if (version === "secondary") {
-        return disabled ? "1px" : `1px solid ${theme["white"]}`;
+        return disabled ? "1px" : `1px solid ${theme.white}`;
       }
       return "none";
     }};

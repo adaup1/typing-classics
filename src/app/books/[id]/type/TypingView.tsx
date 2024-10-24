@@ -1,4 +1,4 @@
-import { styled } from "css-template-components/server";
+import { styled } from "next-yak";
 import { Book } from "@/app/lib/types";
 import { CoverImage } from "@/app/components/images/CoverImage";
 import { CharacterRenderer } from "./components/CharacterRenderer";
@@ -25,19 +25,15 @@ const TypingView = ({ bookData }: { bookData: Book }) => {
 
 export default TypingView;
 
-const StyledContainer = styled(
-  "div",
-  `
+const StyledContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 2rem;
   padding-top: 1rem;
 
-  
   @media (max-width: 1000px) {
     .coverImage {
       display: none;
     }
   }
-`
-);
+`;

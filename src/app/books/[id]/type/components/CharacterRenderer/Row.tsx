@@ -129,10 +129,8 @@ export const Row = ({ data, index, style }: ListChildComponentProps) => {
   );
 };
 
-console.log("theme", theme["white"]);
-
 const StyledContainer = styled.div`
-  color: ${() => theme["white"]};
+  color: ${() => theme.white};
 `;
 
 const StyledFlexContainer = styled.div`
@@ -150,13 +148,13 @@ const StyledCharacter = styled.div<StyledCharacterProps>`
   background-color: ${({ index, inputIndex, charactersMatch }) =>
     index <= inputIndex
       ? charactersMatch
-        ? theme["green"]
-        : theme["red"]
+        ? theme.green
+        : theme.red
       : "transparent"};
 `;
 
 const StyledInputValueContainer = styled.div`
-  color: ${() => theme["gray"]};
+  color: ${() => theme.gray};
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   display: flex;

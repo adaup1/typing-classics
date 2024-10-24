@@ -1,6 +1,6 @@
 import { getBook } from "@/app/lib/queries/getBook";
 import dynamic from "next/dynamic";
-import TypingViewSkeleton from "@/app/components/server/skeletons/TypingViewSkeleton";
+import TypingViewSkeleton from "@/app/components/skeletons/TypingViewSkeleton";
 
 const TypingView = dynamic(() => import("./TypingView"), {
   ssr: false,

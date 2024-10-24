@@ -1,8 +1,8 @@
 "use client";
 
-import { useCallback, useState, useMemo, useEffect } from "react";
+import { useCallback, useState, useMemo, useEffect, Suspense } from "react";
 import { SortOrder } from "@/app/lib/types.d";
-import { styled } from "css-template-components/client";
+import { styled } from "next-yak";
 import { theme } from "@/app/theme";
 import { useBooks } from "@/app/lib/queries/hooks/useBooks";
 import { useDebounce } from "@/app/helpers/hooks/useDebounce";
@@ -99,33 +99,21 @@ export const BooksSort = () => {
   );
 };
 
-const StyledContainer = styled(
-  "div",
-  `
-`
-);
+const StyledContainer = styled.div``;
 
-const StyledLoader = styled(
-  Loader,
-  `
+const StyledLoader = styled(Loader)`
   width: 15rem;
-`
-);
+`;
 
-const StyledOuterContainer = styled(
-  "div",
-  `
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    min-height: calc(100vh - 18rem);
-  `
-);
+const StyledOuterContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: calc(100vh - 18rem);
+`;
 
-const StyledBooksContainer = styled(
-  "div",
-  `
+const StyledBooksContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -134,32 +122,22 @@ const StyledBooksContainer = styled(
   gap: 1rem;
   margin-bottom: 1rem;
   height: 100%;
-`
-);
+`;
 
-const StyledPaginationContainer = styled(
-  "div",
-  `
+const StyledPaginationContainer = styled.div`
   width: 100%;
   padding-top: 0.5rem;
-  background: ${theme["ultraDarkPurple"]};
-`
-);
+  background: ${() => theme.ultraDarkPurple};
+`;
 
-const BodyContainer = styled(
-  "div",
-  `
+const BodyContainer = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: space-between;
-`
-);
+`;
 
-const StyledNoResultsContainer = styled(
-  "div",
-  `
+const StyledNoResultsContainer = styled.div`
   font-size: 2rem;
-`
-);
+`;

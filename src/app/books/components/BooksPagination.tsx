@@ -1,6 +1,6 @@
 import React from "react";
-import { styled } from "css-template-components/client";
-import { Button } from "@/app/components/Button";
+import { styled } from "next-yak";
+import { Button } from "@/app/components/buttons";
 
 interface BooksPaginationProps {
   handleNextPage: () => void;
@@ -14,7 +14,7 @@ export const BooksPagination = ({
   handleLastPage,
   disableNextPage,
   disableLastPage,
-}) => {
+}: BooksPaginationProps) => {
   return (
     <StyledFlexContainer>
       <Button
@@ -33,13 +33,9 @@ export const BooksPagination = ({
   );
 };
 
-const StyledFlexContainer = styled(
-  "div",
-  `
+const StyledFlexContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 2rem;
   padding-bottom: 1rem;
-
-`
-);
+`;

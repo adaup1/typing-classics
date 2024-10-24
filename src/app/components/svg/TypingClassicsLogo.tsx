@@ -4,16 +4,22 @@ import { theme } from "@/app/theme";
 interface TypingClassicsLogoProps {
   color?: string;
   secondaryColor?: string;
+  restOfProps?: any;
 }
 
 export const TypingClassicsLogo = ({
-  color = theme["darkerPurple"],
+  color = theme.darkerPurple,
   secondaryColor = color,
+  ...restOfProps
 }: TypingClassicsLogoProps) => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
       viewBox="343.47 342.02 393.06 395.96"
+      x="0px"
+      y="0px"
+      xmlSpace="preserve"
+      {...restOfProps}
     >
       <path
         vectorEffect="non-scaling-stroke"

@@ -1,24 +1,16 @@
 "use client";
 
-import React, {
-  useState,
-  useCallback,
-  useMemo,
-  useEffect,
-  useRef,
-} from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import VirtualizedText from "@/app/books/[id]/type/components/CharacterRenderer/VirtualizedText";
-import { AlwaysFocussedInput } from "@/app/components/client/inputs/AlwaysFocussedInput";
-import { useTypingContext } from "../../context/TypingContext";
-import { styled } from "css-template-components/client";
-import { dummyIndex, dummyInput } from "../DummyInputB";
+import { AlwaysFocussedInput } from "@/app/components/inputs/AlwaysFocussedInput";
+import { styled } from "next-yak";
+// import { dummyIndex, dummyInput } from "../DummyInputB";
 import { useUpdateContextInput } from "../hooks/useUpdateContextInput";
 import { useCountCorrectCharacters } from "./hooks/useCountCorrectCharacters";
 import { Stats } from "./Stats/Stats";
 import { MobileStats } from "./Stats/MobileStats";
 import { useMediaQuery } from "react-responsive";
 import { EasySpecialCharacters } from "./EasySpecialCharacters";
-import { TypingContextProvider } from "../../context/TypingContext";
 
 const CharacterRenderer = ({ text }: { text: string }) => {
   const [inputArray, setInputArray] = useState([""]);
@@ -92,12 +84,7 @@ const CharacterRenderer = ({ text }: { text: string }) => {
             setMatchMap={setMatchMap}
             easySpecialCharacters={easySpecialaCharacters}
           />
-          <StyledInputContainer>
-            <AlwaysFocussedInput
-              value={currentValue}
-              onChange={handleOnInputChange}
-            />
-          </StyledInputContainer>
+          <StyledInput value={currentValue} onChange={handleOnInputChange} />
         </StyledTextContainer>
       </div>
       {!isMobile && (
@@ -118,35 +105,30 @@ const CharacterRenderer = ({ text }: { text: string }) => {
   );
 };
 
-const StyledFlexContainer = styled(
-  "div",
-  `
+interface ExtraProps {
+  isMobile: boolean;
+}
+
+const StyledFlexContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 2rem;
   height: 100%;
-`
-);
+`;
 
-const StyledTextContainer = styled(
-  "div",
-  ({ isMobile }: { isMobile: boolean }) =>
-    `
-    width: ${isMobile ? "calc(100% - 1rem)" : "50vw"};
-    position: relative;
-    display: flex;
-    flex-direction: column;
-`
-);
+const StyledTextContainer = styled.div<ExtraProps>`
+  width: ${({ isMobile }) => (isMobile ? "calc(100% - 1rem)" : "50vw")};
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`;
 
-const StyledInputContainer = styled(
-  "div",
-  `
+const StyledInput = styled(AlwaysFocussedInput)`
   position: absolute;
   top: -50%;
   left: 50%;
   transform: translate(-50%, -50%);
-`
-);
+`;
 
 export default CharacterRenderer;

@@ -2,9 +2,9 @@
 
 import { useCallback } from "react";
 import { SortOrder } from "@/app/lib/types.d";
-import { styled } from "css-template-components/client";
+import { styled } from "next-yak";
 import { theme } from "@/app/theme";
-import { Select } from "@/app/components/client/dropdowns";
+import { Select } from "@/app/components/dropdowns";
 import { BooksPagination } from "./BooksPagination";
 
 interface BooksFiltersProps {
@@ -130,47 +130,34 @@ export const BooksFilters = ({
   );
 };
 
-const StyledContainer = styled(
-  "div",
-  `
-  background: ${theme["ultraDarkPurple"]};
+const StyledContainer = styled.div`
+  background: ${() => theme.ultraDarkPurple};
   margin-bottom: 1rem;
   cursor: default;
   padding-top: 1rem;
-`
-);
+`;
 
-const StyledFlexContainer = styled(
-  "div",
-  `
+const StyledFlexContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 2rem;
   padding-bottom: 1rem;
+`;
 
-`
-);
-
-const StyledInput = styled(
-  "input",
-  `
+const StyledInput = styled.input`
   font-size: 1rem;
   font-family: inherit;
   padding: 0.5rem;
   border: none;
   border-radius: 0.5rem;
-  
-  &:focus-visible {
-    outline-color: ${theme["purple"]};
-  }
-`
-);
 
-const StyledSelectContainer = styled(
-  "div",
-  `
+  &:focus-visible {
+    outline-color: ${() => theme.darkerPurple};
+  }
+`;
+
+const StyledSelectContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-`
-);
+`;
