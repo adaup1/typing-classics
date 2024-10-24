@@ -1,6 +1,4 @@
-import { useMemo, useEffect, useRef } from "react";
-import { useTypingContext } from "../../context/TypingContext";
-import { usePrevious } from "@/app/helpers/hooks";
+import { useEffect, useRef } from "react";
 
 interface UseAccuracyProps {
   inputIndex: number;
@@ -11,9 +9,7 @@ export const useAccuracy = ({
   inputIndex,
   correctCharacters,
 }: UseAccuracyProps) => {
-  // const { state } = useTypingContext();
   const accuracyRef = useRef(0);
-  const previousInputIndex = usePrevious(inputIndex);
 
   useEffect(() => {
     const totalCharacters = inputIndex + 1;
@@ -26,7 +22,6 @@ export const useAccuracy = ({
         (correctCharacters / totalCharacters) * 100
       );
     }
-    //}
   }, [correctCharacters, inputIndex]);
 
   return { accuracy: accuracyRef.current };

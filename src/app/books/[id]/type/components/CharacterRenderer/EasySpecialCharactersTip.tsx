@@ -1,7 +1,8 @@
-import { styled } from "css-template-components/client";
+import { styled } from "next-yak";
 import { theme } from "@/app/theme";
 import map from "lodash/map";
 import uniqueId from "lodash/uniqueId";
+import { robotoMono } from "@/app/theme/fonts";
 
 export const EasySpecialCharactersTipOld = `
   a: (æ, ã, å, ā, ă, ą, à, á, â, ä, ǎ) | A: (Æ, Ã, Å, Ā, Ă, Ą, À, Á, Â, Ä, Ǎ)\n
@@ -92,50 +93,39 @@ export const EasySpecialCharactersTip = () => {
   );
 };
 
-const StyledContainer = styled(
-  "div",
-  `
+const StyledContainer = styled.div`
   font-size: 1rem;
   max-width: 50rem;
   padding: 1rem;
-  background: ${theme["ultraDarkPurple"]};
+  background: ${() => theme.ultraDarkPurple};
   border-radius: 0.5rem;
   cursor: default;
-`
-);
+`;
 
-const StyledLabelContainer = styled(
-  "div",
-  `
+const StyledLabelContainer = styled.div`
   text-align: center;
   margin-bottom: 1rem;
-`
-);
+`;
 
-const StyledFlexContainer = styled(
-  "div",
-  `
+const StyledFlexContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
-`
-);
+  font-family: ${() => robotoMono.style.fontFamily}, monosapce;
+`;
 
-const StyledBold = styled(
-  "span",
-  `
+const StyledBold = styled.span`
   font-weight: 700;
   margin-right: 0.5rem;
-  color: ${theme["white"]};
-`
-);
+  color: ${() => theme.white};
+`;
 
-const StyledThin = styled(
-  "span",
-  ({ charIsLarge }: { charIsLarge: boolean }) =>
-    `
+interface ExtraProps {
+  charIsLarge: boolean;
+}
+
+const StyledThin = styled.span<ExtraProps>`
   margin-right: 0.5rem;
-  color: ${theme["gray"]};
-  font-size: ${charIsLarge ? "0.75rem" : "1rem"};
-`
-);
+  color: ${() => theme.gray};
+  font-size: ${({ charIsLarge }) => (charIsLarge ? "0.75rem" : "1rem")};
+`;

@@ -1,5 +1,5 @@
 import React, { useState, ReactNode } from "react";
-import { styled } from "css-template-components/client";
+import { styled } from "next-yak";
 import { theme } from "@/app/theme";
 
 interface TooltipProps {
@@ -21,30 +21,28 @@ export const Tooltip = ({ tip, children }) => {
   );
 };
 
-const TooltipContainer = styled(
-  "div",
-  `
+const TooltipContainer = styled.div`
   position: relative;
   display: inline-block;
-`
-);
+`;
 
-const TooltipNodeContainer = styled(
-  "div",
-  ({ visible }: { visible: boolean }) => `
+interface ExtraProps {
+  visible: boolean;
+}
+
+const TooltipNodeContainer = styled.div<ExtraProps>`
   width: max-content;
   max-width: calc(100vw - 2rem);
   position: absolute;
   right: 95%;
   bottom: 0;
-  background-color: ${theme["ultraDarkPurple"]};
-  color: ${theme["white"]};
+  background-color: ${() => theme.ultraDarkPurple};
+  color: ${() => theme.white};
   padding: 0.5rem;
   border-radius: 0.5rem;
   white-space: pre-wrap;
-  z-index: 5;
-  visibility: ${visible ? "visible" : "hidden"};
+  z-index: 9;
+  visibility: ${({ visible }) => (visible ? "visible" : "hidden")};
   filter: drop-shadow(0px 8px 4px #000000b8);
   transition: opacity 3s ease-in-out;
-`
-);
+`;

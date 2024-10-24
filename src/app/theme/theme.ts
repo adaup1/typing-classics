@@ -22,4 +22,5 @@ export const theme = {
   mediumBlue: "#5F90FA",
   darkBlue: "#255E9D",
   pink: "#DB949C",
+  black: "#0d0d0d",
 };

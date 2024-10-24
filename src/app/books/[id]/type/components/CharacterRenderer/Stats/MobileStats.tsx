@@ -1,9 +1,8 @@
 "use client";
 
-import { useMemo } from "react";
 import { theme } from "@/app/theme";
-import { styled } from "css-template-components/client";
-import { useTimer } from "../../../context/hooks.ts/useTimer";
+import { styled } from "next-yak";
+import { useTimer } from "../../hooks/useTimer";
 import { useAccuracy } from "../../hooks/useAccuracy";
 import { usePercentComplete } from "../../hooks/usePercentComplete";
 import { faGear } from "@fortawesome/free-solid-svg-icons/faGear";
@@ -56,25 +55,19 @@ export const MobileStats = ({
   );
 };
 
-const StyledContainer = styled(
-  "div",
-  `
-    filter: drop-shadow(0 0 0.5rem ${theme["gray"]});
-    border-radius: 0.5rem;
-    background: ${theme["darkerPurple"]};
-    height: fit-content;
-    margin-bottom: 1rem;
-`
-);
+const StyledContainer = styled.div`
+  filter: drop-shadow(0 0 0.5rem ${() => theme.gray});
+  border-radius: 0.5rem;
+  background: ${() => theme.darkerPurple};
+  height: fit-content;
+  margin-bottom: 1rem;
+`;
 
-const StyledIconContainer = styled(
-  "div",
-  `
+const StyledIconContainer = styled.div`
   display: flex;
   justify-content: flex-end;
   padding: 0.5rem;
-`
-);
+`;
 
 // const StyledIcon = styled(
 //   FontAwesomeIcon,
@@ -85,28 +78,18 @@ const StyledIconContainer = styled(
 // `
 // );
 
-const StyledFlexContainer = styled(
-  "div",
-  `
-    padding: 0 1rem 1rem 1rem;
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    gap: 0.5rem;
+const StyledFlexContainer = styled.div`
+  padding: 0 1rem 1rem 1rem;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+`;
 
-`
-);
-
-const StyledFlexItem = styled(
-  "div",
-  `
+const StyledFlexItem = styled.div`
   // width: 50%;
-`
-);
+`;
 
-const StyledLabel = styled(
-  "span",
-  `
-    font-style: italic;
-`
-);
+const StyledLabel = styled.span`
+  font-style: italic;
+`;

@@ -2,13 +2,15 @@
 
 import { useCallback } from "react";
 import { SortOrder } from "@/app/lib/types.d";
-import { styled } from "css-template-components/client";
+import { styled } from "next-yak";
 import { theme } from "@/app/theme";
-import { Select } from "@/app/components/client/dropdowns";
+import { Select } from "@/app/components/dropdowns";
 import { BooksPagination } from "./BooksPagination";
 
 interface BooksFiltersProps {
   setSortOrder: (arg: SortOrder) => void;
+  setPageSize: (arg: number) => void;
+  pageSize: number;
   sortOrder: SortOrder;
   searchInput: string;
   setSearchInput: (arg: string) => void;
@@ -19,7 +21,7 @@ interface BooksFiltersProps {
   disableLastPage: boolean;
 }
 
-const OPTIONS = [
+const SORT_OPTIONS = [
   {
     value: SortOrder.titleAsc,
     label: "Title A->Z",
@@ -28,11 +30,44 @@ const OPTIONS = [
     value: SortOrder.titleDesc,
     label: "Title Z->A",
   },
+  {
+    value: SortOrder.authorAsc,
+    label: "Author A->Z",
+  },
+  {
+    value: SortOrder.authorDesc,
+    label: "Author Z->A",
+  },
+  {
+    value: SortOrder.lengthAsc,
+    label: "Short->Long",
+  },
+  {
+    value: SortOrder.lengthDesc,
+    label: "Long->Short",
+  },
+];
+
+const PAGE_SIZE_OPTIONS = [
+  {
+    value: 10,
+    label: "10",
+  },
+  {
+    value: 25,
+    label: "25",
+  },
+  {
+    value: 50,
+    label: "50",
+  },
 ];
 
 export const BooksFilters = ({
   setSortOrder,
   sortOrder,
+  setPageSize,
+  pageSize,
   searchInput,
   setSearchInput,
   handleNextPage,
@@ -41,9 +76,14 @@ export const BooksFilters = ({
   disableNextPage,
   disableLastPage,
 }: BooksFiltersProps) => {
-  const handleOnChange = useCallback(
+  const handleSortOrderChange = useCallback(
     (e) => setSortOrder(e.target.value),
     [setSortOrder]
+  );
+
+  const handlePageSizeChange = useCallback(
+    (e) => setPageSize(e.target.value),
+    [setPageSize]
   );
 
   const handleInputChange = useCallback(
@@ -66,9 +106,17 @@ export const BooksFilters = ({
         <StyledSelectContainer>
           Sort by
           <Select
-            options={OPTIONS}
-            onChange={handleOnChange}
+            options={SORT_OPTIONS}
+            onChange={handleSortOrderChange}
             value={sortOrder}
+          />
+        </StyledSelectContainer>
+        <StyledSelectContainer>
+          Page size
+          <Select
+            options={PAGE_SIZE_OPTIONS}
+            onChange={handlePageSizeChange}
+            value={pageSize}
           />
         </StyledSelectContainer>
       </StyledFlexContainer>
@@ -82,47 +130,34 @@ export const BooksFilters = ({
   );
 };
 
-const StyledContainer = styled(
-  "div",
-  `
-  background: ${theme["ultraDarkPurple"]};
+const StyledContainer = styled.div`
+  background: ${() => theme.ultraDarkPurple};
   margin-bottom: 1rem;
   cursor: default;
   padding-top: 1rem;
-`
-);
+`;
 
-const StyledFlexContainer = styled(
-  "div",
-  `
+const StyledFlexContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 2rem;
   padding-bottom: 1rem;
+`;
 
-`
-);
-
-const StyledInput = styled(
-  "input",
-  `
+const StyledInput = styled.input`
   font-size: 1rem;
   font-family: inherit;
   padding: 0.5rem;
   border: none;
   border-radius: 0.5rem;
-  
-  &:focus-visible {
-    outline-color: ${theme["purple"]};
-  }
-`
-);
 
-const StyledSelectContainer = styled(
-  "div",
-  `
+  &:focus-visible {
+    outline-color: ${() => theme.darkerPurple};
+  }
+`;
+
+const StyledSelectContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
-`
-);
+`;

@@ -1,7 +1,6 @@
-import { styled } from "css-template-components/server";
+import { styled } from "next-yak";
 import { Book } from "@/app/lib/types";
-import { CoverImage } from "@/app/components/server/images/CoverImage";
-import dynamic from "next/dynamic";
+import { CoverImage } from "@/app/components/images/CoverImage";
 import { CharacterRenderer } from "./components/CharacterRenderer";
 
 const TypingView = ({ bookData }: { bookData: Book }) => {
@@ -13,6 +12,9 @@ const TypingView = ({ bookData }: { bookData: Book }) => {
         className="coverImage"
         src={cover_image_url}
         alt={`Cover of ${title_short}`}
+        title={`${bookData.title}`}
+        author={`${bookData.author_first_name} ${bookData.author_last_name}`}
+        width="18rem"
       />
       <div>
         <CharacterRenderer text={text} />
@@ -23,19 +25,15 @@ const TypingView = ({ bookData }: { bookData: Book }) => {
 
 export default TypingView;
 
-const StyledContainer = styled(
-  "div",
-  `
+const StyledContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 2rem;
   padding-top: 1rem;
 
-  
   @media (max-width: 1000px) {
     .coverImage {
       display: none;
     }
   }
-`
-);
+`;

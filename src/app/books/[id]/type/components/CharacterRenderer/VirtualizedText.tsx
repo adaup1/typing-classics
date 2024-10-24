@@ -11,9 +11,10 @@ import React, {
 import { FixedSizeList } from "react-window";
 import AutoSizer from "react-virtualized-auto-sizer";
 import isEmpty from "lodash/isEmpty";
-import { styled } from "css-template-components/client";
+import { styled } from "next-yak";
 import { theme } from "@/app/theme";
 import { Row } from "./Row";
+import { robotoMono } from "@/app/theme/fonts";
 
 interface VirtualizedTextProps {
   text: string;
@@ -156,13 +157,13 @@ const VirtualizedText: React.FC<VirtualizedTextProps> = ({
         <Suspense fallback={<div>hello there this is it</div>}>
           <AutoSizer>
             {({ width, height }) => (
-              <>
-                <StyledFixedSizeList
+              <StyledFixedSizeListContainer ref={innerRef}>
+                <FixedSizeList
                   height={height}
                   itemCount={lines.length}
                   layout="vertical"
                   overscanCount={2}
-                  style={{ color: theme["white"] }}
+                  style={{ color: theme.white }}
                   itemSize={60}
                   itemData={{
                     lines,
@@ -173,13 +174,12 @@ const VirtualizedText: React.FC<VirtualizedTextProps> = ({
                     easySpecialCharacters,
                   }}
                   width={width}
-                  ref={innerRef}
                   onItemsRendered={handleItemsRendered}
                 >
                   {Row}
-                </StyledFixedSizeList>
+                </FixedSizeList>
                 <StyledGradient width={width} height={height} />
-              </>
+              </StyledFixedSizeListContainer>
             )}
           </AutoSizer>
         </Suspense>
@@ -190,48 +190,54 @@ const VirtualizedText: React.FC<VirtualizedTextProps> = ({
 
 export default VirtualizedText;
 
-const StyledOuterContainer = styled(
-  "div",
-  `
+const StyledOuterContainer = styled.div`
   padding: 1rem;
-  background: ${theme["ultraDarkPurple"]};
+  background: ${() => theme.ultraDarkPurple};
   border-radius: 0.5rem;
-  filter: drop-shadow(0 0 0.5rem ${theme["gray"]});
-  position absolute;
-`
-);
+  filter: drop-shadow(0 0 0.5rem ${() => theme.gray});
+  position: absolute;
 
-const StyledGradient = styled(
-  "div",
-  ({ width, height }: { width: string; height: string }) =>
-    `
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: ${width}px;
-    height: ${height}px;
-    z-index: 10; 
-    background: linear-gradient(0deg, ${theme["ultraDarkPurple"]} 0%, transparent 90%);
-`
-);
+  // height: 78.5vh;
+  margin-bottom: 1rem;
+  width: -webkit-fill-available;
 
-const StyledContainer = styled(
-  "div",
-  `
-  position: relative; 
+  font-family: ${() => robotoMono.style.fontFamily}, monosapce;
+`;
+
+interface GradientProps {
+  width: number;
+  height: number;
+}
+
+const StyledGradient = styled.div<GradientProps>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: ${({ width }) => width}px;
+  height: ${({ height }) => height}px;
+  z-index: 10;
+  background: linear-gradient(
+    0deg,
+    ${() => theme.ultraDarkPurple} 0%,
+    transparent 90%
+  );
+`;
+
+const StyledContainer = styled.div`
+  position: relative;
   white-space: pre-wrap;
   font: inherit;
   overflow-x: hidden;
   overflow-y: hidden;
   height: calc(100vh - 16rem);
-`
-);
+`;
 
-const StyledFixedSizeList = styled(
-  FixedSizeList,
-  `
-  > * {
-   scrollbar-width: none;
-  }
-`
-);
+const StyledFixedSizeListContainer = styled.div`
+  /* width: "-webkit-fill-available"; */
+`;
+
+// const StyledFixedSizeList = styled(FixedSizeList)`
+//   > * {
+//     scrollbar-width: none;
+//   }
+// `;
