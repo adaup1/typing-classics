@@ -3,14 +3,23 @@ import { theme } from "./theme";
 import Link from "next/link";
 import { TypingClassicsLogo } from "./components/svg/TypingClassicsLogo";
 import { nunitoSans } from "./theme/fonts";
+import { faBook, faHouse } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function HeaderNav() {
   return (
     <StyledHeader>
       <StyledFlexContainer>
         <StyledNavLeft>
-          <StyledLink href="/">Home</StyledLink>
-          <StyledLink href="/books">Books</StyledLink>
+          <StyledLink href="/">
+            {/* <FontAwesomeIcon icon={faHouse} height={"1rem"} /> */}
+            HOME
+          </StyledLink>
+          <StyledLink href="/books">
+            {/* <FontAwesomeIcon icon={faBook} height={"1rem"} /> */}
+            BOOKS
+          </StyledLink>
+          <StyledLink href="/faq">FAQ</StyledLink>
         </StyledNavLeft>
         <StyledLogoLink href="/">
           <StyledLogoLeft>TYPING</StyledLogoLeft>
@@ -73,7 +82,7 @@ const StyledLogoRight = styled.div`
 
 const StyledNavLeft = styled.div`
   display: flex;
-  gap: 1rem;
+  gap: 2rem;
 `;
 
 const StyledNavRight = styled.div`
@@ -85,6 +94,10 @@ const StyledLink = styled(Link)`
   color: ${() => theme.darkerPurple};
   text-decoration: none;
   font-size: 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.5rem;
 
   &:hover {
     color: ${() => theme.gray};
