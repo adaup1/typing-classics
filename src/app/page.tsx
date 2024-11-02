@@ -6,6 +6,8 @@ import { getLatestBooks } from "./lib/queries/getLatestBooks";
 import { Button } from "./components/buttons";
 import Link from "next/link";
 
+export const revalidate = 3600;
+
 export default async function Home() {
   const hotBooks = await getHotBooks();
   const latestBooks = await getLatestBooks();

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { robotoMono } from "../theme/fonts";
-import { styled } from "next-yak";
+import { styled, keyframes } from "next-yak";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faFingerprint } from "@fortawesome/free-solid-svg-icons";
 import { Roboto_Mono } from "next/font/google";
@@ -60,10 +60,20 @@ const StyledH1 = styled.h1`
   font-size: 4rem;
 `;
 
+const blink = keyframes`
+  from,
+  to {
+    color: transparent;
+  }
+  50% {
+    color: inherit;
+  }
+`;
+
 const StyledCursor = styled.div`
   font-family: ${() => robotoMono.style.fontFamily};
   font-size: 4rem;
-  animation: blink 1s steps(1, start) infinite;
+  animation: ${blink} 1s steps(1, start) infinite;
 `;
 
 const StyledIcon = styled(FontAwesomeIcon)`

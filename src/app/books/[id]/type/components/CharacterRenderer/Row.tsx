@@ -8,7 +8,7 @@ import uniqueId from "lodash/uniqueId";
 import { theme } from "@/app/theme";
 import { useFindChunk } from "./hooks/useFindChunk";
 import { useMatchCharacters } from "./hooks/useMatchCharacters";
-import { styled } from "next-yak";
+import { styled, keyframes } from "next-yak";
 
 export const Row = ({ data, index, style }: ListChildComponentProps) => {
   const { text, lineFirstCharIndex } = useMemo(
@@ -165,6 +165,16 @@ const StyledInnerFlexContainer = styled.div`
   flex-direction: column;
 `;
 
+const blink = keyframes`
+  from,
+  to {
+    color: transparent;
+  }
+  50% {
+    color: inherit;
+  }
+`;
+
 const StyledCursor = styled.div`
-  animation: blink 1s steps(1, start) infinite;
+  animation: ${blink} 1s steps(1, start) infinite;
 `;

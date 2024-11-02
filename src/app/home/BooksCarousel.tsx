@@ -65,11 +65,28 @@ const StyledBooksContainer = styled.div`
   flex-wrap: none;
   gap: 1rem;
   width: calc(100vw - 4rem);
-  overflow: scroll;
+  overflow-x: scroll;
   padding: 1rem;
   margin: 1rem;
   background: ${() => theme.darkerPurple};
   border-radius: 1rem;
+
+  &::-webkit-scrollbar {
+    height: 0.75rem;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: ${() => theme.darkerPurple};
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: ${() => theme.ultraDarkPurple};
+    border-radius: 1rem;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: ${() => theme.gray};
+  }
 `;
 
 const StyledLeftGradient = styled.div`
@@ -79,7 +96,7 @@ const StyledLeftGradient = styled.div`
     transparent 100%
   );
   position: absolute;
-  height: 100%;
+  height: 22rem;
   width: 2.25rem;
   left: 0;
   z-index: 5;
@@ -92,7 +109,7 @@ const StyledRightGradient = styled.div`
     transparent 100%
   );
   position: absolute;
-  height: 100%;
+  height: 22rem;
   width: 2.25rem;
   right: 0;
   z-index: 5;

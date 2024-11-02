@@ -1,4 +1,4 @@
-import { styled } from "next-yak";
+import { styled, keyframes } from "next-yak";
 import { theme } from "@/app/theme";
 
 const TypingViewSkeleton = () => {
@@ -12,6 +12,15 @@ const TypingViewSkeleton = () => {
 };
 
 export default TypingViewSkeleton;
+
+const loading = keyframes`
+  0% {
+    background-color: #1f1f40;
+  }
+  100% {
+    background-color: #2f2e5f;
+  }
+`;
 
 const StyledContainer = styled.div`
   display: flex;
@@ -28,7 +37,7 @@ const StyledCenterContainer = styled.div`
   height: 100%;
   border-radius: 0.5rem;
   filter: drop-shadow(0 0 0.5rem ${() => theme.gray});
-  animation: skeleton-loading 0.5s linear infinite alternate;
+  animation: ${loading} 0.5s linear infinite alternate;
 `;
 
 const StyledLeftContainer = styled.div`
@@ -38,7 +47,7 @@ const StyledLeftContainer = styled.div`
   width: 18rem;
   border-radius: 0.5rem;
   filter: drop-shadow(0 0 0.5rem ${() => theme.gray});
-  animation: skeleton-loading 0.5s linear infinite alternate;
+  animation: ${loading} 0.5s linear infinite alternate;
 `;
 
 const StyledRightContainer = styled.div`
@@ -48,5 +57,5 @@ const StyledRightContainer = styled.div`
   border-radius: 0.5rem;
   width: 18rem;
   filter: drop-shadow(0 0 0.5rem ${() => theme.gray});
-  animation: skeleton-loading 0.5s linear infinite alternate;
+  animation: ${loading} 0.5s linear infinite alternate;
 `;

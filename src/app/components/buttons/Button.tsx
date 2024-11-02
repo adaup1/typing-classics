@@ -1,21 +1,30 @@
 import { styled } from "next-yak";
 import { theme } from "@/app/theme";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   text: string;
   version?: string;
   disabled?: boolean;
+  leftIcon?: any;
+  rightIcon?: any;
 }
 
 export const Button = ({
   text,
   version = "primary",
   disabled = false,
+  rightIcon,
+  leftIcon,
   ...restOfProps
 }: ButtonProps) => {
   return (
     <StyledButton version={version} disabled={disabled} {...restOfProps}>
-      {text}
+      <StyledFlexContainer>
+        {leftIcon && <FontAwesomeIcon icon={leftIcon} />}
+        <div>{text}</div>
+        {rightIcon && <FontAwesomeIcon icon={rightIcon} />}
+      </StyledFlexContainer>
     </StyledButton>
   );
 };
@@ -62,4 +71,11 @@ const StyledButton = styled.button<StyledButtonProps>`
       return "none";
     }};
   }
+`;
+
+const StyledFlexContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
 `;

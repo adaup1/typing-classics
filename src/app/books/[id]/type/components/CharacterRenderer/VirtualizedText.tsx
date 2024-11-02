@@ -159,11 +159,12 @@ const VirtualizedText: React.FC<VirtualizedTextProps> = ({
             {({ width, height }) => (
               <StyledFixedSizeListContainer ref={innerRef}>
                 <FixedSizeList
+                  className="virtualized-text-list"
                   height={height}
                   itemCount={lines.length}
                   layout="vertical"
                   overscanCount={2}
-                  style={{ color: theme.white }}
+                  style={{ color: theme.white, scrollbarWidth: "none" }}
                   itemSize={60}
                   itemData={{
                     lines,
