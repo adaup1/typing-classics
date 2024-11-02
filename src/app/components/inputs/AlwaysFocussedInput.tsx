@@ -1,6 +1,7 @@
 "use client";
 
-import React, { useRef, useEffect, useCallback } from "react";
+import React, { useRef, useEffect } from "react";
+import { useIsIOS } from "@/app/helpers/hooks";
 
 const blockAction = (e) => {
   e.preventDefault();
@@ -11,6 +12,7 @@ export const AlwaysFocussedInput = (
   props: React.InputHTMLAttributes<HTMLInputElement>
 ) => {
   const inputRef = useRef<HTMLInputElement | null>(null);
+  const isIOS = useIsIOS();
 
   useEffect(() => {
     const handleFocus = () => {
@@ -22,7 +24,11 @@ export const AlwaysFocussedInput = (
 
     const handleBlur = () => {
       if (inputRef.current) {
-        inputRef.current.focus();
+        if (isIOS) {
+          inputRef.current.click();
+        } else {
+          inputRef.current.focus();
+        }
       }
     };
 
@@ -46,7 +52,11 @@ export const AlwaysFocussedInput = (
       inputElement.addEventListener("blur", handleBlur);
       inputElement.addEventListener("input", handleInput);
       inputElement.addEventListener("keydown", handleKeyDown);
-      inputElement.focus();
+      if (isIOS) {
+        inputElement.click();
+      } else {
+        inputElement.focus();
+      }
       handleFocus();
     }
 
