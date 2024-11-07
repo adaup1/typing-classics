@@ -1,8 +1,6 @@
 import { StyledContainer, StyledH1 } from "./styled";
 import { theme } from "@/app/theme";
 import { styled } from "next-yak";
-import { getSelectorsByUserAgent } from "react-device-detect";
-import { headers } from "next/headers";
 
 const TEXT = "Books at Your Fingertips";
 

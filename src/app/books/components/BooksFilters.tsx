@@ -103,22 +103,24 @@ export const BooksFilters = ({
           onChange={handleInputChange}
           placeholder="Search..."
         />
-        <StyledSelectContainer>
-          Sort by
-          <Select
-            options={SORT_OPTIONS}
-            onChange={handleSortOrderChange}
-            value={sortOrder}
-          />
-        </StyledSelectContainer>
-        <StyledSelectContainer>
-          Page size
-          <Select
-            options={PAGE_SIZE_OPTIONS}
-            onChange={handlePageSizeChange}
-            value={pageSize}
-          />
-        </StyledSelectContainer>
+        <StyledSelectsContainer>
+          <StyledSelectContainer>
+            Sort by
+            <Select
+              options={SORT_OPTIONS}
+              onChange={handleSortOrderChange}
+              value={sortOrder}
+            />
+          </StyledSelectContainer>
+          <StyledSelectContainer>
+            Page size
+            <Select
+              options={PAGE_SIZE_OPTIONS}
+              onChange={handlePageSizeChange}
+              value={pageSize}
+            />
+          </StyledSelectContainer>
+        </StyledSelectsContainer>
       </StyledFlexContainer>
       <BooksPagination
         handleLastPage={handleLastPage}
@@ -135,6 +137,9 @@ const StyledContainer = styled.div`
   margin-bottom: 1rem;
   cursor: default;
   padding-top: 1rem;
+  @media (max-width: 768px) {
+    padding: 1rem 0;
+  }
 `;
 
 const StyledFlexContainer = styled.div`
@@ -142,6 +147,20 @@ const StyledFlexContainer = styled.div`
   justify-content: center;
   gap: 2rem;
   padding-bottom: 1rem;
+  @media (max-width: 768px) {
+    flex-direction: column;
+    gap: 1rem;
+  }
+`;
+
+const StyledSelectsContainer = styled.div`
+  display: flex;
+  gap: 2rem;
+  @media (max-width: 768px) {
+    flex-direction: row;
+    justify-content: center;
+    gap: 1rem;
+  }
 `;
 
 const StyledInput = styled.input`
@@ -150,6 +169,10 @@ const StyledInput = styled.input`
   padding: 0.5rem;
   border: none;
   border-radius: 0.5rem;
+  @media (max-width: 768px) {
+    width: calc(100% - 2rem);
+    margin: auto;
+  }
 
   &:focus-visible {
     outline-color: ${() => theme.darkerPurple};
@@ -160,4 +183,11 @@ const StyledSelectContainer = styled.div`
   display: flex;
   align-items: center;
   gap: 0.5rem;
+  @media (max-width: 768px) {
+    width: 45%;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+  }
 `;
