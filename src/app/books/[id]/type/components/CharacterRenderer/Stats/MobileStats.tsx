@@ -35,7 +35,7 @@ export const MobileStats = ({ correctCharacters, inputIndex }: StatsProps) => {
 const StyledContainer = styled.div`
   filter: drop-shadow(0 0 0.5rem ${() => theme.gray});
   border-radius: 0.5rem;
-  background: ${() => theme.darkerPurple};
+  background: ${() => theme.purple};
   height: fit-content;
   padding: 0.5rem;
   position: relative;
@@ -72,7 +72,7 @@ const StyledGradient = styled.div<StyledGradientProps>`
   width: 100%;
   height: 100%;
   z-index: 8;
-  background: ${() => theme.ultraDarkPurple};
+  background: ${() => theme.darkPurple};
   border-radius: 0.5rem;
   display: ${({ isPaused }) => (isPaused ? "flex" : "none")};
   justify-content: center;

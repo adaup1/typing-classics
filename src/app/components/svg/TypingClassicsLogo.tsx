@@ -8,7 +8,7 @@ interface TypingClassicsLogoProps {
 }
 
 export const TypingClassicsLogo = ({
-  color = theme.darkerPurple,
+  color = theme.purple,
   secondaryColor = color,
   ...restOfProps
 }: TypingClassicsLogoProps) => {

@@ -36,7 +36,7 @@ const TooltipNodeContainer = styled.div<ExtraProps>`
   position: absolute;
   right: 95%;
   bottom: 0;
-  background-color: ${() => theme.ultraDarkPurple};
+  background-color: ${() => theme.darkPurple};
   color: ${() => theme.white};
   padding: 0.5rem;
   border-radius: 0.5rem;

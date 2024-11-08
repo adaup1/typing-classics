@@ -73,7 +73,7 @@ const StyledInnerOverlay = styled.div`
   width: 100%;
   position: absolute;
   z-index: 6;
-  background-color: ${() => theme.ultraDarkPurple};
+  background-color: ${() => theme.darkPurple};
   transition: opacity 1s ease-in-out;
   border-radius: 0.5rem;
 `;
@@ -124,8 +124,7 @@ const StyledInnerContainer = styled.div<ExtraProps>`
   z-index: 5;
   background: linear-gradient(
     0deg,
-    ${() => theme.ultraDarkPurple}
-      ${({ isMobile }) => (isMobile ? "50%" : "30%")},
+    ${() => theme.darkPurple} ${({ isMobile }) => (isMobile ? "50%" : "30%")},
     transparent 70%
   );
   width: ${({ width }) => width};

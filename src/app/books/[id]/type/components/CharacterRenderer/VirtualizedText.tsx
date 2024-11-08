@@ -193,7 +193,7 @@ export default VirtualizedText;
 
 const StyledOuterContainer = styled.div`
   padding: 1rem;
-  background: ${() => theme.ultraDarkPurple};
+  background: ${() => theme.darkPurple};
   border-radius: 0.5rem;
   filter: drop-shadow(0 0 0.5rem ${() => theme.gray});
   position: relative;
@@ -216,7 +216,7 @@ const StyledGradient = styled.div<GradientProps>`
   z-index: 10;
   background: linear-gradient(
     0deg,
-    ${() => theme.ultraDarkPurple} 0%,
+    ${() => theme.darkPurple} 0%,
     transparent 90%
   );
 `;
