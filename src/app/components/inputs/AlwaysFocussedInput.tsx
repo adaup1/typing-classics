@@ -68,7 +68,7 @@ export const AlwaysFocussedInput = (
         inputElement.removeEventListener("keydown", handleKeyDown);
       }
     };
-  }, []);
+  }, [isIOS]);
 
   return (
     <input

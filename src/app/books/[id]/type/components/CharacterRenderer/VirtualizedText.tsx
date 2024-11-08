@@ -196,12 +196,9 @@ const StyledOuterContainer = styled.div`
   background: ${() => theme.ultraDarkPurple};
   border-radius: 0.5rem;
   filter: drop-shadow(0 0 0.5rem ${() => theme.gray});
-  position: absolute;
-
-  // height: 78.5vh;
-  margin-bottom: 1rem;
+  position: relative;
+  height: 100%;
   width: -webkit-fill-available;
-
   font-family: ${() => robotoMono.style.fontFamily}, monosapce;
 `;
 
@@ -230,7 +227,7 @@ const StyledContainer = styled.div`
   font: inherit;
   overflow-x: hidden;
   overflow-y: hidden;
-  height: calc(100vh - 16rem);
+  height: calc(100vh - 20rem);
 `;
 
 const StyledFixedSizeListContainer = styled.div`

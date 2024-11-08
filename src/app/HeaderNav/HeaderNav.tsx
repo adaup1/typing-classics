@@ -1,15 +1,17 @@
 import { styled } from "next-yak";
-import { theme } from "./theme";
+import { theme } from "../theme";
 import Link from "next/link";
-import { TypingClassicsLogo } from "./components/svg/TypingClassicsLogo";
-import { nunitoSans } from "./theme/fonts";
+import { TypingClassicsLogo } from "../components/svg/TypingClassicsLogo";
+import { nunitoSans } from "../theme/fonts";
 import { faBook, faHouse } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { MobileMenu } from "./MobileMenu";
 
 export default function HeaderNav() {
   return (
     <StyledHeader>
-      <StyledFlexContainer>
+      <StyledDesktopNav>
         <StyledNavLeft>
           <StyledLink href="/">
             {/* <FontAwesomeIcon icon={faHouse} height={"1rem"} /> */}
@@ -33,22 +35,42 @@ export default function HeaderNav() {
         <StyledNavRight>
           {/* <StyledLink href="/">Sign In</StyledLink> */}
         </StyledNavRight>
-      </StyledFlexContainer>
+      </StyledDesktopNav>
+      <StyledMobileMenuContainer>
+        <MobileMenu />
+      </StyledMobileMenuContainer>
     </StyledHeader>
   );
 }
+
+const StyledDesktopNav = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 1rem;
+`;
+
+const StyledMobileMenuContainer = styled.div`
+  display: none;
+  height: 100%;
+  width: 100%;
+`;
 
 const StyledHeader = styled.div`
   height: 3.5rem;
   width: 100%;
   background-color: ${() => theme.white};
-`;
+  position: relative;
+  z-index: 10;
 
-const StyledFlexContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  padding: 1rem;
+  @media (max-width: 800px) {
+    ${StyledDesktopNav} {
+      display: none;
+    }
+    ${StyledMobileMenuContainer} {
+      display: flex;
+    }
+  }
 `;
 
 const StyledLogoLink = styled(Link)`

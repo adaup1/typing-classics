@@ -1,10 +1,17 @@
 import { styled } from "next-yak";
 import { theme } from "./theme";
-import { About, BooksCarousel, Heading } from "./home";
+import { About, BooksCarousel } from "./home";
+import HeadingSkeleton from "./home/heading/HeadingSkeleton";
 import { getHotBooks } from "./lib/queries/getHotBooks";
 import { getLatestBooks } from "./lib/queries/getLatestBooks";
 import { Button } from "./components/buttons";
 import Link from "next/link";
+import dynamic from "next/dynamic";
+
+const Heading = dynamic(() => import("./home/heading/Heading"), {
+  ssr: false,
+  loading: () => <HeadingSkeleton />,
+});
 
 export const revalidate = 3600;
 

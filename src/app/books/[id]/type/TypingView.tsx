@@ -8,14 +8,15 @@ const TypingView = ({ bookData }: { bookData: Book }) => {
 
   return (
     <StyledContainer>
-      <CoverImage
-        className="coverImage"
-        src={cover_image_url}
-        alt={`Cover of ${title_short}`}
-        title={`${bookData.title}`}
-        author={`${bookData.author_first_name} ${bookData.author_last_name}`}
-        width="18rem"
-      />
+      <StyledCoverImageContainer className="coverImageContainer">
+        <CoverImage
+          src={cover_image_url}
+          alt={`Cover of ${title_short}`}
+          title={`${bookData.title}`}
+          author={`${bookData.author_first_name} ${bookData.author_last_name}`}
+          width="18rem"
+        />
+      </StyledCoverImageContainer>
       <div>
         <CharacterRenderer text={text} />
       </div>
@@ -25,14 +26,18 @@ const TypingView = ({ bookData }: { bookData: Book }) => {
 
 export default TypingView;
 
+const StyledCoverImageContainer = styled.div`
+  display: block;
+`;
+
 const StyledContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: 2rem;
   padding-top: 1rem;
 
-  @media (max-width: 1000px) {
-    .coverImage {
+  @media (max-width: 1300px) {
+    ${StyledCoverImageContainer} {
       display: none;
     }
   }

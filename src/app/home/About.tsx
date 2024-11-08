@@ -39,13 +39,13 @@ export const About = () => {
 };
 
 const StyledContainer = styled.div`
-  width: 100%;
   font-family: inherit;
   color: ${() => theme.white};
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  padding: 0 1rem 0 1rem;
 `;
 
 const StyledH3 = styled.h3`

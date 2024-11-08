@@ -73,17 +73,18 @@ const CharacterRenderer = ({ text }: { text: string }) => {
             <MobileStats
               correctCharacters={correctCharacters}
               inputIndex={inputIndex}
-              inputArray={inputArray}
               textLength={textLength}
             />
           )}
-          <VirtualizedText
-            text={text}
-            inputIndex={inputIndex}
-            inputArray={inputArray}
-            setMatchMap={setMatchMap}
-            easySpecialCharacters={easySpecialaCharacters}
-          />
+          <div className="virtualizedText">
+            <VirtualizedText
+              text={text}
+              inputIndex={inputIndex}
+              inputArray={inputArray}
+              setMatchMap={setMatchMap}
+              easySpecialCharacters={easySpecialaCharacters}
+            />
+          </div>
           <StyledInput value={currentValue} onChange={handleOnInputChange} />
         </StyledTextContainer>
       </div>
@@ -92,7 +93,6 @@ const CharacterRenderer = ({ text }: { text: string }) => {
           <Stats
             correctCharacters={correctCharacters}
             inputIndex={inputIndex}
-            inputArray={inputArray}
             textLength={textLength}
           />
           <EasySpecialCharacters
@@ -117,11 +117,16 @@ const StyledFlexContainer = styled.div`
 `;
 
 const StyledTextContainer = styled.div<ExtraProps>`
-  width: ${({ isMobile }) => (isMobile ? "calc(100% - 1rem)" : "50vw")};
+  width: ${({ isMobile }) => (isMobile ? "calc(100vw - 1rem)" : "50vw")};
   position: relative;
   display: flex;
   flex-direction: column;
+  gap: 1rem;
   height: 100%;
+
+  .virtualizedText {
+    flex: 1;
+  }
 `;
 
 const StyledInput = styled(AlwaysFocussedInput)`

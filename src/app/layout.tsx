@@ -1,7 +1,7 @@
 import "@/app/theme/global.css";
 import type { Metadata } from "next";
 import { robotoMono, raleway, nunitoSans } from "./theme/fonts";
-import HeaderNav from "./HeaderNav";
+import { HeaderNav } from "./HeaderNav";
 import Footer from "./Footer";
 
 export const metadata: Metadata = {

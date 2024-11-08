@@ -11,15 +11,9 @@ body {
   padding: none;
   margin: none;
   overscroll-behavior: none;
-
-  /* font-family: "__Nunito_Sans_7e1333"; */
-  /* __Roboto_Mono_b2aa37 */
-  /* "'__Roboto_Mono_e3ecbd', '__Roboto_Mono_Fallback_e3ecbd'" */
-  /* __Nunito_14f33d */
-  /* __Raleway_88131f */
-  /* __Nunito_Sans_7e1333 */
 }
 
 .body-container {
   min-height: calc(100vh - 7rem);
+  overflow-x: hidden;
 }

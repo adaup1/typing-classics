@@ -32,7 +32,7 @@ interface ExtraProps {
 
 const TooltipNodeContainer = styled.div<ExtraProps>`
   width: max-content;
-  max-width: calc(100vw - 2rem);
+  max-width: calc(100vw - 4rem);
   position: absolute;
   right: 95%;
   bottom: 0;
@@ -45,4 +45,11 @@ const TooltipNodeContainer = styled.div<ExtraProps>`
   visibility: ${({ visible }) => (visible ? "visible" : "hidden")};
   filter: drop-shadow(0px 8px 4px #000000b8);
   transition: opacity 3s ease-in-out;
+
+  @media (max-width: 1300px) {
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 120%;
+  }
 `;
