@@ -14,5 +14,6 @@ body {
 }
 
 .body-container {
-  min-height: calc(100vh - 8rem);
+  min-height: calc(100vh - 7rem);
+  overflow-x: hidden;
 }
