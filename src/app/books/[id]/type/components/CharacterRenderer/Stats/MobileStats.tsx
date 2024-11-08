@@ -4,53 +4,30 @@ import { theme } from "@/app/theme";
 import { styled } from "next-yak";
 import { useTimer } from "../../hooks/useTimer";
 import { useAccuracy } from "../../hooks/useAccuracy";
-import { usePercentComplete } from "../../hooks/usePercentComplete";
-import { faGear } from "@fortawesome/free-solid-svg-icons/faGear";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface StatsProps {
   correctCharacters: number;
   inputIndex: number;
-  inputArray: Array<string>;
   textLength: number;
 }
 
-export const MobileStats = ({
-  correctCharacters,
-  inputIndex,
-  inputArray,
-  textLength,
-}: StatsProps) => {
-  const { wpm, formattedTime } = useTimer({ correctCharacters });
-  const percentComplete = usePercentComplete({
-    inputIndex,
-    textLength,
-  });
+export const MobileStats = ({ correctCharacters, inputIndex }: StatsProps) => {
+  const { wpm, isPaused } = useTimer({ correctCharacters });
   const { accuracy } = useAccuracy({ correctCharacters, inputIndex });
 
   return (
     <StyledContainer>
-      <StyledIconContainer>
-        <FontAwesomeIcon icon={faGear} />
-      </StyledIconContainer>
       <StyledFlexContainer>
         <StyledFlexItem>
           <StyledLabel>Speed: </StyledLabel>
-          {`${wpm} WPM`}
+          <div>{`${wpm} WPM`}</div>
         </StyledFlexItem>
         <StyledFlexItem>
-          <StyledLabel>Accurracy: </StyledLabel>
-          {`${accuracy}%`}
-        </StyledFlexItem>
-        <StyledFlexItem>
-          <StyledLabel>Elapsed Time: </StyledLabel>
-          {formattedTime}
-        </StyledFlexItem>
-        <StyledFlexItem>
-          <StyledLabel>Percent complete: </StyledLabel>
-          {percentComplete}
+          <StyledLabel>Accuracy: </StyledLabel>
+          <div>{`${accuracy}%`}</div>
         </StyledFlexItem>
       </StyledFlexContainer>
+      <StyledGradient isPaused={isPaused}>Start Typing!</StyledGradient>
     </StyledContainer>
   );
 };
@@ -60,36 +37,46 @@ const StyledContainer = styled.div`
   border-radius: 0.5rem;
   background: ${() => theme.darkerPurple};
   height: fit-content;
-  margin-bottom: 1rem;
-`;
-
-const StyledIconContainer = styled.div`
-  display: flex;
-  justify-content: flex-end;
   padding: 0.5rem;
+  position: relative;
 `;
-
-// const StyledIcon = styled(
-//   FontAwesomeIcon,
-//   `
-//   position: absolute;
-//   right: 0;
-//   padding: 0.5rem;
-// `
-// );
 
 const StyledFlexContainer = styled.div`
-  padding: 0 1rem 1rem 1rem;
   display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  gap: 0.5rem;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  max-width: 100%;
 `;
 
 const StyledFlexItem = styled.div`
-  // width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 9rem;
 `;
 
 const StyledLabel = styled.span`
+  font-style: italic;
+  color: ${() => theme.white};
+  margin-bottom: 0.5rem;
+`;
+
+interface StyledGradientProps {
+  isPaused?: boolean;
+}
+
+const StyledGradient = styled.div<StyledGradientProps>`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 8;
+  background: ${() => theme.ultraDarkPurple};
+  border-radius: 0.5rem;
+  display: ${({ isPaused }) => (isPaused ? "flex" : "none")};
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
   font-style: italic;
 `;

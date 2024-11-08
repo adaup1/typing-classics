@@ -5,12 +5,10 @@ import { styled } from "next-yak";
 import { useTimer } from "../../hooks/useTimer";
 import { usePercentComplete } from "../../hooks/usePercentComplete";
 import { useAccuracy } from "../../hooks/useAccuracy";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface StatsProps {
   correctCharacters: number;
   inputIndex: number;
-  inputArray: Array<string>;
   textLength: number;
 }
 
@@ -91,10 +89,4 @@ const StyledGradient = styled.div<StyledGradientProps>`
   padding-top: 1rem;
   font-size: 2rem;
   font-style: italic;
-`;
-
-const StyledIcon = styled(FontAwesomeIcon)`
-  font-size: 1rem;
-  width: fit-content;
-  cursor: pointer;
 `;

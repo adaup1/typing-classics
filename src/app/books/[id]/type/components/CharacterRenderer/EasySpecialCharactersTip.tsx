@@ -76,7 +76,7 @@ export const EasySpecialCharactersTip = () => {
       </StyledLabelContainer>
       <StyledFlexContainer>
         {map(Object.keys(specialCharacterObject), (key) => (
-          <div key={`${key}_${uniqueId()}`}>
+          <div className="characterGroup" key={`${key}_${uniqueId()}`}>
             <StyledBold>{key}:</StyledBold>
             {map(specialCharacterObject[key], (char) => (
               <StyledThin
@@ -100,11 +100,20 @@ const StyledContainer = styled.div`
   background: ${() => theme.ultraDarkPurple};
   border-radius: 0.5rem;
   cursor: default;
+
+  @media (max-width: 768px) {
+    max-width: min(calc(100vw - 4rem), 20rem);
+    font-size: 0.875rem;
+  }
 `;
 
 const StyledLabelContainer = styled.div`
   text-align: center;
   margin-bottom: 1rem;
+
+  @media (max-width: 768px) {
+    font-size: 0.75rem;
+  }
 `;
 
 const StyledFlexContainer = styled.div`
@@ -112,6 +121,24 @@ const StyledFlexContainer = styled.div`
   flex-wrap: wrap;
   gap: 1rem;
   font-family: ${() => robotoMono.style.fontFamily}, monosapce;
+
+  @media (max-width: 1300px) {
+    gap: 0.25rem;
+    justify-content: center;
+  }
+
+  .characterGroup {
+    min-width: 6rem;
+    flex: 1 1 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    @media (max-width: 1300px) {
+      min-width: 3.5rem;
+      justify-content: center;
+    }
+  }
 `;
 
 const StyledBold = styled.span`
@@ -128,4 +155,9 @@ const StyledThin = styled.span<ExtraProps>`
   margin-right: 0.5rem;
   color: ${() => theme.gray};
   font-size: ${({ charIsLarge }) => (charIsLarge ? "0.75rem" : "1rem")};
+
+  @media (max-width: 768px) {
+    margin-right: 0.25rem;
+    font-size: ${({ charIsLarge }) => (charIsLarge ? "0.625rem" : "0.75rem")};
+  }
 `;
