@@ -45,7 +45,7 @@ const StyledBooksContainer = styled.div`
 `;
 
 const StyledAboutContainer = styled.div`
-  background: ${() => theme.ultraDarkPurple};
+  background: ${() => theme.darkPurple};
   padding-bottom: 2rem;
   padding-top: 1rem;
 `;

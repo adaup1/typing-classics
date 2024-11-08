@@ -127,7 +127,7 @@ const StyledBooksContainer = styled.div`
 const StyledPaginationContainer = styled.div`
   width: 100%;
   padding-top: 0.5rem;
-  background: ${() => theme.ultraDarkPurple};
+  background: ${() => theme.darkPurple};
 `;
 
 const BodyContainer = styled.div`

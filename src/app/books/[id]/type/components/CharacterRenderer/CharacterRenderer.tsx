@@ -4,7 +4,6 @@ import React, { useState, useCallback, useMemo } from "react";
 import VirtualizedText from "@/app/books/[id]/type/components/CharacterRenderer/VirtualizedText";
 import { AlwaysFocussedInput } from "@/app/components/inputs/AlwaysFocussedInput";
 import { styled } from "next-yak";
-// import { dummyIndex, dummyInput } from "../DummyInputB";
 import { useUpdateContextInput } from "../hooks/useUpdateContextInput";
 import { useCountCorrectCharacters } from "./hooks/useCountCorrectCharacters";
 import { Stats } from "./Stats/Stats";

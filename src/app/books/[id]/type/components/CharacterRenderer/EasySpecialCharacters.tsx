@@ -40,7 +40,7 @@ const StyledContainer = styled.div`
   width: 16rem;
   filter: drop-shadow(0 0 0.5rem ${() => theme.gray});
   border-radius: 0.5rem;
-  background: ${() => theme.darkerPurple};
+  background: ${() => theme.purple};
   display: flex;
   height: fit-content;
   margin-top: 1rem;

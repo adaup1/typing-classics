@@ -61,7 +61,7 @@ const StyledIconContainer = styled.div<ExtraProps>`
   justify-content: ${({ isOpen }) => (isOpen ? "center" : "flex-start")};
   width: 100%;
 
-  color: ${() => theme.darkerPurple};
+  color: ${() => theme.purple};
 
   &:hover {
     color: ${() => theme.gray};
@@ -89,7 +89,7 @@ const StyledDropdownItem = styled(Link)`
   display: flex;
   justify-content: center;
   font-size: 1.5rem;
-  color: ${() => theme.darkerPurple};
+  color: ${() => theme.purple};
   padding: 1rem;
   border-top: ${() => theme.darkPurple} solid 1px;
   width: calc(100% - 4rem);

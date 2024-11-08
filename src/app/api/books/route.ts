@@ -2,11 +2,6 @@ import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
 import get from "lodash/get";
 
-// export enum SortOrder {
-//   titleAsc = "titleAsc",
-//   titleDesc = "titleDesc",
-// }
-
 const ORDER_SQL_MAP = {
   titleAsc: "LOWER(title) ASC",
   titleDesc: "LOWER(title) DESC",
