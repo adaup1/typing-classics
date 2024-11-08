@@ -2,6 +2,8 @@
 
 A web application that allows users to practice typing while reading classic literature from the public domain.
 
+Go to https://typingclassics.com to try it out!
+
 ## Features
 
 - Type along to complete books from the public domain
