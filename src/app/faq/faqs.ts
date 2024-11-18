@@ -1,4 +1,15 @@
-export const faqs = [
+type LinkType = {
+  type: "link";
+  text: string;
+  href: string;
+};
+
+type FaqType = {
+  question: string;
+  answer: string | (string | LinkType)[];
+};
+
+export const faqs: FaqType[] = [
   {
     question:
       "What makes Typig Classics different from other typing tests/games?",
@@ -52,11 +63,11 @@ export const faqs = [
     answer: [
       "Texts are sourced from Project Gutenberg. The project is a volunteer effort to digitize and archive cultural works in the public domain. Visit ",
       {
-        type: "link",
+        type: "link" as const,
         text: "https://www.gutenberg.org",
         href: "https://www.gutenberg.org",
       },
       " to learn more.",
     ],
   },
-];
+] as const;

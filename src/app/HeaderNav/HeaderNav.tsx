@@ -75,7 +75,7 @@ const StyledHeader = styled.div`
 
 const StyledLogoLink = styled(Link)`
   position: absolute;
-  width: 30rem;
+  width: fit-content;
   left: 50%;
   transform: translateX(-50%);
   font-family: ${() => nunitoSans.style.fontFamily}, sans-serif;
