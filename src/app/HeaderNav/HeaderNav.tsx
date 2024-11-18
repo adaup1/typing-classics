@@ -131,10 +131,10 @@ const StyledSVGContainer = styled.div`
 `;
 
 const StyledSVG = styled(TypingClassicsLogo)`
-  height: 2.5rem;
+  height: 2rem;
   width: fit-content;
   position: relative;
-  bottom: 13%;
+  bottom: 7%;
 `;
 
 const StyledSpan = styled.span`
