@@ -4,14 +4,39 @@ import { theme } from "@/app/theme";
 
 interface FaqProps {
   question: string;
-  answer: string;
+  answer: string | Array<string | { type: "link"; text: string; href: string }>;
 }
 
 export const Faq = ({ question, answer }: FaqProps) => {
+  const renderAnswer = (
+    answer:
+      | string
+      | Array<string | { type: "link"; text: string; href: string }>
+  ) => {
+    if (typeof answer === "string") return answer;
+
+    return answer.map((part, index) => {
+      if (typeof part === "string") return part;
+      if (part.type === "link") {
+        return (
+          <StyledAnchor
+            key={index}
+            href={part.href}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {part.text}
+          </StyledAnchor>
+        );
+      }
+      return null;
+    });
+  };
+
   return (
     <StyledContainer>
       <StyledQuestion>{question}</StyledQuestion>
-      <StyledAnswer>{answer}</StyledAnswer>
+      <StyledAnswer>{renderAnswer(answer)}</StyledAnswer>
     </StyledContainer>
   );
 };
@@ -36,4 +61,8 @@ const StyledQuestion = styled.div`
 const StyledAnswer = styled.div`
   font-size: 1rem;
   font-weight: 200;
+`;
+
+const StyledAnchor = styled.a`
+  color: ${() => theme.white};
 `;

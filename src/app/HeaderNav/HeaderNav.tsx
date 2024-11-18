@@ -75,7 +75,7 @@ const StyledHeader = styled.div`
 
 const StyledLogoLink = styled(Link)`
   position: absolute;
-  width: 30rem;
+  width: fit-content;
   left: 50%;
   transform: translateX(-50%);
   font-family: ${() => nunitoSans.style.fontFamily}, sans-serif;
@@ -131,10 +131,10 @@ const StyledSVGContainer = styled.div`
 `;
 
 const StyledSVG = styled(TypingClassicsLogo)`
-  height: 2.5rem;
+  height: 2rem;
   width: fit-content;
   position: relative;
-  bottom: 13%;
+  bottom: 7%;
 `;
 
 const StyledSpan = styled.span`
