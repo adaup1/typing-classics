@@ -2,11 +2,6 @@ import { sql } from "@vercel/postgres";
 import { NextResponse } from "next/server";
 import get from "lodash/get";
 
-// export enum SortOrder {
-//   titleAsc = "titleAsc",
-//   titleDesc = "titleDesc",
-// }
-
 const ORDER_SQL_MAP = {
   titleAsc: "LOWER(title) ASC",
   titleDesc: "LOWER(title) DESC",
@@ -69,41 +64,4 @@ export async function GET(request: Request) {
   } catch (error) {
     return NextResponse.json({ error }, { status: 500 });
   }
-}
-
-export async function PUT(request: Request) {
-  const { searchParams } = new URL(request.url);
-  const api_key = get(searchParams, "api_key");
-  const api_token = get(searchParams, "api_token");
-
-  if (api_key && api_token) {
-    try {
-      const admin = await sql`
-      SELECT admin_id
-      FROM tc_admins
-      WHERE api_key = ${api_key}
-      AND api_token = ${api_token}
-      LIMIT 1;
-    `;
-
-      if (admin.rows.length > 0) {
-        const text = get(searchParams, "text");
-        const book_id = get(searchParams, "book_id");
-
-        if (!text || !book_id) {
-          return NextResponse.json(
-            { Parameter_Error: "text and book_id required" },
-            { status: 401 }
-          );
-        }
-      }
-    } catch (error) {
-      return NextResponse.json({ error }, { status: 500 });
-    }
-  }
-
-  return NextResponse.json(
-    { Parameter_Error: "api_key and api_token required" },
-    { status: 401 }
-  );
 }
