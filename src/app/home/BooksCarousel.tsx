@@ -68,7 +68,7 @@ const StyledBooksContainer = styled.div`
   overflow-x: scroll;
   padding: 1rem;
   margin: 1rem;
-  background: ${() => theme.darkerPurple};
+  background: ${() => theme.purple};
   border-radius: 1rem;
 
   &::-webkit-scrollbar {
@@ -76,11 +76,11 @@ const StyledBooksContainer = styled.div`
   }
 
   &::-webkit-scrollbar-track {
-    background: ${() => theme.darkerPurple};
+    background: ${() => theme.purple};
   }
 
   &::-webkit-scrollbar-thumb {
-    background: ${() => theme.ultraDarkPurple};
+    background: ${() => theme.darkPurple};
     border-radius: 1rem;
   }
 
@@ -92,7 +92,7 @@ const StyledBooksContainer = styled.div`
 const StyledLeftGradient = styled.div`
   background: linear-gradient(
     90deg,
-    ${() => theme.darkerPurple} 50%,
+    ${() => theme.purple} 50%,
     transparent 100%
   );
   position: absolute;
@@ -105,7 +105,7 @@ const StyledLeftGradient = styled.div`
 const StyledRightGradient = styled.div`
   background: linear-gradient(
     270deg,
-    ${() => theme.darkerPurple} 50%,
+    ${() => theme.purple} 50%,
     transparent 100%
   );
   position: absolute;

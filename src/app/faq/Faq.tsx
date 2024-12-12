@@ -44,7 +44,7 @@ export const Faq = ({ question, answer }: FaqProps) => {
 const StyledContainer = styled.div`
   width: 60rem;
   max-width: calc(100% - 2rem);
-  background-color: ${() => theme.ultraDarkPurple};
+  background-color: ${() => theme.darkPurple};
   padding: 1rem;
   margin-bottom: 1rem;
   border-radius: 0.5rem;

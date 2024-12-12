@@ -133,7 +133,7 @@ export const BooksFilters = ({
 };
 
 const StyledContainer = styled.div`
-  background: ${() => theme.ultraDarkPurple};
+  background: ${() => theme.darkPurple};
   margin-bottom: 1rem;
   cursor: default;
   padding-top: 1rem;
@@ -175,7 +175,7 @@ const StyledInput = styled.input`
   }
 
   &:focus-visible {
-    outline-color: ${() => theme.darkerPurple};
+    outline-color: ${() => theme.purple};
   }
 `;
 

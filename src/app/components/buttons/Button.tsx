@@ -39,7 +39,7 @@ const StyledButton = styled.button<StyledButtonProps>`
     if (version === "secondary") {
       return disabled ? theme.gray : theme.white;
     }
-    return disabled ? theme.ultraDarkPurple : theme.darkerPurple;
+    return disabled ? theme.darkPurple : theme.purple;
   }};
   background: ${({ version, disabled }) => {
     if (version === "secondary") {
@@ -59,7 +59,7 @@ const StyledButton = styled.button<StyledButtonProps>`
   filter: ${({ version }) =>
     version === "secondary"
       ? "none"
-      : `drop-shadow(0px 8px 4px ${theme.ultraDarkPurple})`};
+      : `drop-shadow(0px 8px 4px ${theme.darkPurple})`};
 
   &:hover {
     color: ${({ version, disabled }) =>

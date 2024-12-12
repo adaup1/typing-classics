@@ -76,7 +76,7 @@ const StyledContainer = styled.div`
   font-size: 1rem;
   max-width: 50rem;
   padding: 1rem;
-  background: ${() => theme.ultraDarkPurple};
+  background: ${() => theme.darkPurple};
   border-radius: 0.5rem;
   cursor: default;
 

@@ -26,7 +26,7 @@ export default function HeaderNav() {
         <StyledLogoLink href="/">
           <StyledLogoLeft>TYPING</StyledLogoLeft>
           <StyledSVGContainer>
-            <StyledSVG color={theme.darkerPurple} secondaryColor={theme.gray} />
+            <StyledSVG color={theme.purple} secondaryColor={theme.gray} />
           </StyledSVGContainer>
           <StyledLogoRight>
             <StyledSpan>C</StyledSpan>LASSICS
@@ -83,7 +83,7 @@ const StyledLogoLink = styled(Link)`
   justify-content: center;
   align-items: normal;
   text-decoration: none;
-  color: ${() => theme.darkerPurple};
+  color: ${() => theme.purple};
 `;
 
 const StyledLogoLeft = styled.div`
@@ -113,7 +113,7 @@ const StyledNavRight = styled.div`
 `;
 
 const StyledLink = styled(Link)`
-  color: ${() => theme.darkerPurple};
+  color: ${() => theme.purple};
   text-decoration: none;
   font-size: 1.25rem;
   display: flex;

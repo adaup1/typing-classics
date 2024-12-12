@@ -6,7 +6,7 @@ interface TypingClassicsLogoProps {
 }
 
 export const TypingClassicsLogoWithTitle = ({
-  color = theme["darkerPurple"],
+  color = theme["purple"],
   secondaryColor = color,
 }: TypingClassicsLogoProps) => {
   return (

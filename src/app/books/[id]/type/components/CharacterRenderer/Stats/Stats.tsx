@@ -45,7 +45,7 @@ const StyledContainer = styled.div`
   width: 16rem;
   filter: drop-shadow(0 0 0.25rem ${() => theme.gray});
   border-radius: 0.5rem;
-  background: ${() => theme.darkerPurple};
+  background: ${() => theme.purple};
   height: fit-content;
   padding: 1rem;
   position: relative;
@@ -80,7 +80,7 @@ const StyledGradient = styled.div<StyledGradientProps>`
   z-index: 8;
   background: linear-gradient(
     180deg,
-    ${() => theme.ultraDarkPurple} 40%,
+    ${() => theme.darkPurple} 40%,
     transparent 90%
   );
   border-radius: 0.5rem;

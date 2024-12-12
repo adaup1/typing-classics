@@ -5,9 +5,8 @@ import { styled } from "next-yak";
 const TEXT = "Books at Your Fingertips";
 
 const HeadingSkeleton = () => {
-
   return (
-    <StyledOuterContainer >
+    <StyledOuterContainer>
       <StyledContainer>
         <StyledH1>{TEXT}</StyledH1>
       </StyledContainer>
@@ -17,12 +16,11 @@ const HeadingSkeleton = () => {
 
 export default HeadingSkeleton;
 
-
 const StyledOuterContainer = styled.div`
-  color: ${()=> theme.darkerPurple};
+  color: ${() => theme.purple};
   cursor: default;
 
   @media (max-width: 1000px) {
-    color: ${()=> theme.white};
+    color: ${() => theme.white};
   }
 `;
