@@ -1,5 +1,4 @@
 import { styled } from "next-yak";
-import { theme } from "../theme";
 import map from "lodash/map";
 import { Faq } from "./Faq";
 import { faqs } from "./faqs";

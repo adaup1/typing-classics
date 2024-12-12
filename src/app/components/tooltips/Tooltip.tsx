@@ -3,11 +3,11 @@ import { styled } from "next-yak";
 import { theme } from "@/app/theme";
 
 interface TooltipProps {
-  tip: string | ReactNode;
+  tip: () => ReactNode;
   children: ReactNode;
 }
 
-export const Tooltip = ({ tip, children }) => {
+export const Tooltip = ({ tip, children }: TooltipProps) => {
   const [visible, setVisible] = useState(false);
 
   return (

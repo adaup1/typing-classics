@@ -3,9 +3,9 @@ import { theme } from "../theme";
 import Link from "next/link";
 import { TypingClassicsLogo } from "../components/svg/TypingClassicsLogo";
 import { nunitoSans } from "../theme/fonts";
-import { faBook, faHouse } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+// import { faBook, faHouse } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { MobileMenu } from "./MobileMenu";
 
 export default function HeaderNav() {

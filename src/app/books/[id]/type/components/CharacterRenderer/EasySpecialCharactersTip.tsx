@@ -4,28 +4,7 @@ import map from "lodash/map";
 import uniqueId from "lodash/uniqueId";
 import { robotoMono } from "@/app/theme/fonts";
 
-export const EasySpecialCharactersTipOld = `
-  a: (æ, ã, å, ā, ă, ą, à, á, â, ä, ǎ) | A: (Æ, Ã, Å, Ā, Ă, Ą, À, Á, Â, Ä, Ǎ)\n
-  c: (ç, ć, č, ċ) | C: (Ç, Ć, Č, Ċ)\n
-  d: (ď, ð) | D: (Ď, Ð)\n
-  e: (ë, é, è, ê, ě, ẽ, ē, ė, ę) | E: (Ë, É, È, Ê, Ě, Ẽ, Ē, Ė, Ę)\n
-  g: (ğ, ġ) | G: (Ğ, Ġ)\n
-  h: (ħ) | H: (Ħ)\n
-  i: (į, ı, ī, ĩ, ǐ, ï, í, ì, î) | I: (Į, İ, Ī, Ĩ, Ǐ, Ï, Í, Ì, Î)\n
-  k: (ķ) | K: (Ķ)\n
-  l: (ľ, ļ, ł) | L: (Ľ, Ļ, Ł)\n
-  n: (ň, ņ, ń, ñ) | N: (Ň, Ņ, Ń, Ñ)\n
-  o: (ő, ō, õ, ø, œ, ǒ, ö, ô, ó, ò, o) | O: (Ő, Ō, Õ, Ø, Œ, Ǒ, Ö, Ô, Ó, Ò)\n
-  r: (ř) |  R: (Ř)\n
-  s: (ß, ş, ș, ś, š) | S: (ẞ, Ś, Š, Ş, Ș)\n
-  t: (ț, ť, þ) | T: (Ț, Ť, Þ)\n
-  u: (ų, ů, ű, ū, ũ, ü, ú, ù, û, ǔ) | U: (Ų, Ů, Ű, Ū, Ũ, Ü, Ú, Ù, Û, Ǔ)\n
-  w: (ŵ) | W: (Ŵ)\n
-  y: (ÿ, ŷ, ý) | Y: (Ÿ, Ŷ, Ý)\n
-  z: (ź, ž, ż) | Z: (Ź, Ž, Ż)
-`;
-
-const specialCharacterObject = {
+const SPECIAL_CHARACTERS = {
   a: ["æ", "ã", "å", "ā", "ă", "ą", "à", "á", "â", "ä", "ǎ"],
   A: ["Æ", "Ã", "Å", "Ā", "Ă", "Ą", "À", "Á", "Â", "Ä", "Ǎ"],
   c: ["ç", "ć", "č", "ċ"],
@@ -75,10 +54,10 @@ export const EasySpecialCharactersTip = () => {
         standard English characters:`}
       </StyledLabelContainer>
       <StyledFlexContainer>
-        {map(Object.keys(specialCharacterObject), (key) => (
+        {map(Object.keys(SPECIAL_CHARACTERS), (key) => (
           <div className="characterGroup" key={`${key}_${uniqueId()}`}>
             <StyledBold>{key}:</StyledBold>
-            {map(specialCharacterObject[key], (char) => (
+            {map(SPECIAL_CHARACTERS[key], (char) => (
               <StyledThin
                 charIsLarge={largeChars.includes(char)}
                 key={`${key}_${char}_${uniqueId()}`}
