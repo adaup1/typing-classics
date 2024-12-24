@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useState, useMemo, useEffect } from "react";
+import { useCallback, useState, useMemo, useEffect, Suspense } from "react";
 import { SortOrder } from "@/app/lib/types.d";
 import { styled } from "next-yak";
 import { theme } from "@/app/theme";
@@ -15,7 +15,7 @@ import { BooksPagination } from "./BooksPagination";
 import { Loader } from "@/app/components/svg/Loader";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export const BooksSort = () => {
+const BooksContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -148,6 +148,15 @@ export const BooksSort = () => {
         />
       </StyledPaginationContainer>
     </StyledContainer>
+  );
+};
+
+// Main component wrapped with Suspense
+export const BooksSort = () => {
+  return (
+    <Suspense fallback={<StyledLoader />}>
+      <BooksContent />
+    </Suspense>
   );
 };
 
