@@ -13,18 +13,66 @@ import { useMediaQuery } from "react-responsive";
 import { BooksFilters } from "./BooksFilters";
 import { BooksPagination } from "./BooksPagination";
 import { Loader } from "@/app/components/svg/Loader";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export const BooksSort = () => {
-  const [sortOrder, setSortOrder] = useState<SortOrder>(SortOrder.titleAsc);
-  const [searchInput, setSearchInput] = useState("");
-  const [pageSize, setPageSize] = useState(10);
-  const [page, setPage] = useState(1);
+const BooksContent = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const [sortOrder, setSortOrder] = useState<SortOrder>(
+    (searchParams.get("sort") as SortOrder) || SortOrder.titleAsc
+  );
+  const [searchInput, setSearchInput] = useState(searchParams.get("q") || "");
+  const [pageSize, setPageSize] = useState(
+    parseInt(searchParams.get("size") || "10", 10)
+  );
+  const [page, setPage] = useState(
+    parseInt(searchParams.get("page") || "1", 10)
+  );
   const [totalBooks, setTotalBooks] = useState(0);
   const [debouncedSearchInput, setDebouncedSearchInput] = useState(searchInput);
-  const setDebouncedSearch = useCallback((value) => {
-    setDebouncedSearchInput(value);
-    setPage(1);
-  }, []);
+
+  const updateUrl = useCallback(
+    (params: { sort?: string; q?: string; size?: string; page?: string }) => {
+      const newSearchParams = new URLSearchParams(searchParams);
+      Object.entries(params).forEach(([key, value]) => {
+        if (value) {
+          newSearchParams.set(key, value);
+        } else {
+          newSearchParams.delete(key);
+        }
+      });
+      router.push(`/books?${newSearchParams.toString()}`);
+    },
+    [router, searchParams]
+  );
+
+  const setDebouncedSearch = useCallback(
+    (value: string) => {
+      setDebouncedSearchInput(value);
+      setPage(1);
+      updateUrl({ q: value, page: "1" });
+    },
+    [updateUrl]
+  );
+
+  const handleSetSortOrder = useCallback(
+    (value: SortOrder) => {
+      setSortOrder(value);
+      updateUrl({ sort: value });
+    },
+    [updateUrl]
+  );
+
+  const handleSetPageSize = useCallback(
+    (value: number) => {
+      setPageSize(value);
+      setPage(1);
+      updateUrl({ size: value.toString(), page: "1" });
+    },
+    [updateUrl]
+  );
+
   const debouncedSetSearchInput = useDebounce(setDebouncedSearch, 1000);
   const isMobile = useMediaQuery({ maxWidth: 1000 });
   const offset = useMemo(() => (page - 1) * pageSize, [page, pageSize]);
@@ -46,28 +94,32 @@ export const BooksSort = () => {
 
   const handleNextPage = useCallback(() => {
     if (!disableNextPage) {
-      setPage((prev) => prev + 1);
+      const nextPage = page + 1;
+      setPage(nextPage);
+      updateUrl({ page: nextPage.toString() });
     }
-  }, [disableNextPage]);
+  }, [disableNextPage, page, updateUrl]);
 
   const handleLastPage = useCallback(() => {
     if (page > 1) {
-      setPage((prev) => prev - 1);
+      const prevPage = page - 1;
+      setPage(prevPage);
+      updateUrl({ page: prevPage.toString() });
     }
-  }, [page]);
+  }, [page, updateUrl]);
 
   return (
     <StyledContainer>
       <BooksFilters
         sortOrder={sortOrder}
         pageSize={pageSize}
-        setPageSize={setPageSize}
+        setPageSize={handleSetPageSize}
         debouncedSetSearchInput={debouncedSetSearchInput}
         handleLastPage={handleLastPage}
         handleNextPage={handleNextPage}
         searchInput={searchInput}
         setSearchInput={setSearchInput}
-        setSortOrder={setSortOrder}
+        setSortOrder={handleSetSortOrder}
         disableNextPage={disableNextPage}
         disableLastPage={page <= 1}
       />
@@ -96,6 +148,15 @@ export const BooksSort = () => {
         />
       </StyledPaginationContainer>
     </StyledContainer>
+  );
+};
+
+// Main component wrapped with Suspense
+export const BooksSort = () => {
+  return (
+    <Suspense fallback={<StyledLoader />}>
+      <BooksContent />
+    </Suspense>
   );
 };
 
