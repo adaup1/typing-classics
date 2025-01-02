@@ -24,41 +24,48 @@ export async function GET(request: Request) {
     let result;
     if (q) {
       const query = `
-        SELECT book_id, title, title_short, author_first_name, author_last_name, cover_image_url, word_count
-        FROM tc_books
-        WHERE to_tsvector('english', lower(title) || ' ' || lower(author_first_name) || ' ' || lower(author_last_name)) @@ phraseto_tsquery('english', lower($1))
+        WITH matched_books AS (
+          SELECT book_id, title, title_short, author_first_name, author_last_name, cover_image_url, word_count
+          FROM tc_books
+          WHERE to_tsvector('english', lower(title) || ' ' || lower(author_first_name) || ' ' || lower(author_last_name)) @@ phraseto_tsquery('english', lower($1))
+        )
+        SELECT 
+          (SELECT COUNT(*) FROM matched_books) as total_count,
+          book_id, title, title_short, author_first_name, author_last_name, cover_image_url, word_count
+        FROM matched_books
         ORDER BY ${sortSqlString}
         LIMIT $2 OFFSET $3
       `;
       result = await sql.query(query, [q, limit, offset]);
     } else {
       const query = `
-        SELECT book_id, title, title_short, author_first_name, author_last_name, cover_image_url, word_count
-        FROM tc_books
+        WITH all_books AS (
+          SELECT book_id, title, title_short, author_first_name, author_last_name, cover_image_url, word_count
+          FROM tc_books
+        )
+        SELECT 
+          (SELECT COUNT(*) FROM all_books) as total_count,
+          book_id, title, title_short, author_first_name, author_last_name, cover_image_url, word_count
+        FROM all_books
         ORDER BY ${sortSqlString}
         LIMIT $1 OFFSET $2
       `;
       result = await sql.query(query, [limit, offset]);
     }
 
-    let total;
-    if (q) {
-      const query = `
-        SELECT count(book_id)
-        FROM tc_books
-        WHERE to_tsvector('english', lower(title) || ' ' || lower(author_first_name) || ' ' || lower(author_last_name)) @@ phraseto_tsquery('english', lower($1))
-      `;
-      total = await sql.query(query, [q]);
-    } else {
-      const query = `
-        SELECT count(book_id)
-        FROM tc_books
-      `;
-      total = await sql.query(query, []);
-    }
-
     return NextResponse.json(
-      { result: result.rows, total: get(total, ["rows", 0, "count"], 0) },
+      {
+        result: result.rows.map((row) => ({
+          book_id: row.book_id,
+          title: row.title,
+          title_short: row.title_short,
+          author_first_name: row.author_first_name,
+          author_last_name: row.author_last_name,
+          cover_image_url: row.cover_image_url,
+          word_count: row.word_count,
+        })),
+        total: result.rows[0]?.total_count || 0,
+      },
       { status: 200 }
     );
   } catch (error) {
