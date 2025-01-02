@@ -4,14 +4,15 @@ import { theme } from "@/app/theme";
 import { styled } from "next-yak";
 import { useTimer } from "../../hooks/useTimer";
 import { useAccuracy } from "../../hooks/useAccuracy";
+import { useCorrectCharacters } from "../hooks/useCorrectCharacters";
 
 interface StatsProps {
-  correctCharacters: number;
   inputIndex: number;
   textLength: number;
 }
 
-export const MobileStats = ({ correctCharacters, inputIndex }: StatsProps) => {
+export const MobileStats = ({ inputIndex }: StatsProps) => {
+  const { correctCharacters } = useCorrectCharacters();
   const { wpm, isPaused } = useTimer({ correctCharacters });
   const { accuracy } = useAccuracy({ correctCharacters, inputIndex });
 

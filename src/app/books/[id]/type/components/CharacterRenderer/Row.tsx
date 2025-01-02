@@ -9,6 +9,7 @@ import { theme } from "@/app/theme";
 import { useFindChunk } from "./hooks/useFindChunk";
 import { useMatchCharacters } from "./hooks/useMatchCharacters";
 import { styled, keyframes } from "next-yak";
+import { useMatchMap } from "./hooks/useMatchMap";
 
 export const Row = ({ data, index, style }: ListChildComponentProps) => {
   const { text, lineFirstCharIndex } = useMemo(
@@ -25,15 +26,8 @@ export const Row = ({ data, index, style }: ListChildComponentProps) => {
     () => get(data, "visibleStartIndex", 0),
     [data]
   );
-  const setMatchMap = useMemo(
-    () =>
-      get(
-        data,
-        "setMatchMap",
-        ({ key, count }: { key: number; count: number }) => {}
-      ),
-    [data]
-  );
+
+  const { setMatchMap } = useMatchMap();
 
   const { findCharacterLocation } = useFindChunk();
   const { matchCharacters } = useMatchCharacters({
