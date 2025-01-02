@@ -5,7 +5,6 @@ import VirtualizedText from "@/app/books/[id]/type/components/CharacterRenderer/
 import { AlwaysFocussedInput } from "@/app/components/inputs/AlwaysFocussedInput";
 import { styled } from "next-yak";
 import { useUpdateContextInput } from "../hooks/useUpdateContextInput";
-import { useCountCorrectCharacters } from "./hooks/useCountCorrectCharacters";
 import { Stats } from "./Stats/Stats";
 import { MobileStats } from "./Stats/MobileStats";
 import { useMediaQuery } from "react-responsive";
@@ -22,8 +21,6 @@ const CharacterRenderer = ({ text }: { text: string }) => {
     inputArray,
     inputIndex,
   });
-
-  const { setMatchMap, correctCharacters } = useCountCorrectCharacters();
 
   // Chunk the input text to avoid rendering entire book text in input
   const currentValue = useMemo(
@@ -69,18 +66,13 @@ const CharacterRenderer = ({ text }: { text: string }) => {
       <div>
         <StyledTextContainer isMobile={isMobile}>
           {!!isMobile && (
-            <MobileStats
-              correctCharacters={correctCharacters}
-              inputIndex={inputIndex}
-              textLength={textLength}
-            />
+            <MobileStats inputIndex={inputIndex} textLength={textLength} />
           )}
           <div className="virtualizedText">
             <VirtualizedText
               text={text}
               inputIndex={inputIndex}
               inputArray={inputArray}
-              setMatchMap={setMatchMap}
               easySpecialCharacters={easySpecialaCharacters}
             />
           </div>
@@ -89,11 +81,7 @@ const CharacterRenderer = ({ text }: { text: string }) => {
       </div>
       {!isMobile && (
         <div>
-          <Stats
-            correctCharacters={correctCharacters}
-            inputIndex={inputIndex}
-            textLength={textLength}
-          />
+          <Stats inputIndex={inputIndex} textLength={textLength} />
           <EasySpecialCharacters
             onChange={setEasySpecialChatacters}
             value={easySpecialaCharacters}

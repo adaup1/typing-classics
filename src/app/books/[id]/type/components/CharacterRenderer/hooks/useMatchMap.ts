@@ -1,15 +1,16 @@
-import { useState, useRef, useMemo, useCallback } from "react";
+import { useRef, useCallback } from "react";
+import { useMatchMapStore } from "./useMatchMapStore";
 
-export const useCountCorrectCharacters = () => {
+export const useMatchMap = () => {
   const matchRef = useRef(new Map());
-  const [matchMap, setMatchMap] = useState(new Map());
+  const { matchMap, setMatchMap } = useMatchMapStore();
 
   const handleSetMatchMap = useCallback(
     ({ key, count }: { key: number; count: number }) => {
       if (matchRef.current.get(key) !== count) {
         matchRef.current.set(key, count);
 
-        setMatchMap((prevMatchMap) => {
+        setMatchMap((prevMatchMap: Map<number, number>) => {
           const newMatchMap = new Map(prevMatchMap);
           newMatchMap.set(key, count);
 
@@ -24,17 +25,8 @@ export const useCountCorrectCharacters = () => {
     [setMatchMap]
   );
 
-  const correctCharacters = useMemo(() => {
-    let total = 0;
-    matchMap.forEach((value) => {
-      total += value;
-    });
-    return total;
-  }, [matchMap]);
-
   return {
     setMatchMap: handleSetMatchMap,
     matchMap,
-    correctCharacters,
   };
 };

@@ -5,18 +5,15 @@ import { styled } from "next-yak";
 import { useTimer } from "../../hooks/useTimer";
 import { usePercentComplete } from "../../hooks/usePercentComplete";
 import { useAccuracy } from "../../hooks/useAccuracy";
+import { useCorrectCharacters } from "../hooks/useCorrectCharacters";
 
 interface StatsProps {
-  correctCharacters: number;
   inputIndex: number;
   textLength: number;
 }
 
-export const Stats = ({
-  correctCharacters,
-  inputIndex,
-  textLength,
-}: StatsProps) => {
+export const Stats = ({ inputIndex, textLength }: StatsProps) => {
+  const { correctCharacters } = useCorrectCharacters();
   const { formattedTime, isPaused, wpm } = useTimer({ correctCharacters });
   const percentComplete = usePercentComplete({
     inputIndex,
